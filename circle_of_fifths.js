@@ -2,6 +2,7 @@
 // Circle of Fifths generator – fully parameterized with CSS styles
 
 (function () {
+  console.log('circle_of_fifths.js loaded');
   // ========== GEOMETRY CONSTANTS ==========
   const centerX = 490;
   const centerY = 490;
