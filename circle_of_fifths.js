@@ -138,21 +138,21 @@
         .staff-line { fill: #888; height: 0.8px; }
         .ring-outer { fill: #f4f2ec; stroke: #bbb; stroke-width: 1.2; }
         .ring-middle { fill: #dedad0; stroke: #aaa; stroke-width: 1.5; }
-        .ring-inner { fill: #d0cdc4; stroke: #999; stroke-width: 1; }
+        .ring-inner { fill: #f4f2ec; stroke: #999; stroke-width: 1; }
         .radial-line { stroke: #aaa; stroke-width: 1.2; }
         .label-majeur { fill: #8B0000; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
         .label-mineur { fill: #2E6B2E; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
-        .label-naturel { fill: #888; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
-        .arrow-path { fill: none; stroke: #003D7A; stroke-width: 2.2; }
-        .arrow-label { fill: #003D7A; font-family: Georgia, serif; font-size: 13px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
-        #arrowRed path { fill: none; stroke: #003D7A; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+        .label-naturel { fill: #4d4b4b; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
+        .arrow-path { fill: none; stroke: #4d4b4b; stroke-width: 2.2; }
+        .arrow-label { fill: #4d4b4b; font-family: Georgia, serif; font-size: 14px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
+        #arrowRed path { fill: none; stroke: #4d4b4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
       </style>
     `;
   }
 
   function buildArrow() {
     return `
-      <path d="M 475 235 C 470 265, 470 290, 480 310" class="arrow-path" marker-end="url(#arrowRed)"/>
+      <path d="M 475 235 C 465 268, 465 292, 480 310" class="arrow-path" marker-end="url(#arrowRed)"/>
       <text class="arrow-label" transform="translate(460,269) rotate(-95)">tierce mineure</text>
     `;
   }
