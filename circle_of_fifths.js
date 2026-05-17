@@ -2,27 +2,20 @@
 // Circle of Fifths generator – fully parameterized with CSS styles
 
 (function () {
-  console.log('circle_of_fifths.js loaded');
-  // ========== GEOMETRY CONSTANTS ==========
-  const centerX = 490;
-  const centerY = 490;
-  const outerRadius = 320;
-  const middleRadius = 215;
-  const innerRadius = 110;
-  const staffRadius = 380;
-  const majorRadius = 268;
-  const minorRadius = 168;
+  const DEG = Math.PI / 180;
+  const DEFAULT_CONFIG = {
+    width: 980,
+    height: 980,
+    centerX: 490,
+    centerY: 490,
+    outerRadius: 320,
+    middleRadius: 215,
+    innerRadius: 110,
+    staffRadius: 380,
+    majorRadius: 268,
+    minorRadius: 168
+  };
 
-  // Staff drawing parameters
-  const baselineOffset = 3.5;   // vertical adjustment for accidentals (11px font)
-
-  // Arrow parameters (flattened left curve)
-  const arrowStart = { x: 475, y: 235 };
-  const arrowEnd = { x: 480, y: 310 };
-  const arrowCtrl = { x1: 470, y1: 265, x2: 470, y2: 290 };
-  const labelPos = { x: 460, y: 269, rotate: -95 };
-
-  // Pitch to line/space y (staff lines at 0,5,10,15,20)
   const pitchPosition = {
     'F5': 0, 'E5': 2.5, 'D5': 5, 'C5': 7.5, 'B4': 10,
     'A4': 12.5, 'G4': 15, 'F4': 17.5, 'E4': 20, 'G5': -2.5
@@ -48,7 +41,6 @@
     { name: '♭', pitch: 'F4', y: pitchPosition['F4'] }
   ];
 
-  // Slices – enharmonic: true for keys that need double staves
   const slices = [
     { major: 'DO', minor: 'la', accidentals: 0, enharmonic: false },
     { major: 'SOL', minor: 'mi', accidentals: 1, enharmonic: false },
@@ -64,64 +56,78 @@
     { major: 'FA', minor: 'ré', accidentals: -1, enharmonic: false }
   ];
 
-  // Compute positions for staves (radius staffRadius)
-  const angles = [-90, -60, -30, 0, 30, 60, 90, 120, 150, 180, 210, 240].map(deg => deg * Math.PI / 180);
-  const positions = angles.map(angle => ({
-    cx: centerX + staffRadius * Math.cos(angle),
-    cy: centerY + staffRadius * Math.sin(angle)
-  }));
+  const leadingToneMap = {
+    DO: 'SI', 'DO#': 'SI#', 'DO##': 'SI##',
+    'RE♭': 'DO', RE: 'DO#', 'RE#': 'DO##',
+    'MI♭': 'RE', MI: 'RE#',
+    FA: 'MI', 'FA#': 'MI#', 'FA##': 'MI##',
+    'SOL♭': 'FA', SOL: 'FA#', 'SOL#': 'FA##',
+    'LA♭': 'SOL', LA: 'SOL#', 'LA#': 'SOL##',
+    'SI♭': 'LA', SI: 'LA#', 'SI#': 'LA##',
+    la: 'sol#', 'la#': 'sol##', 'si♭': 'la', si: 'la#',
+    do: 'si', 'do#': 'si#', 'ré♭': 'do', ré: 'do#',
+    'mi♭': 'ré', 'mi': 'ré#', 'fa': 'mi', 'fa#': 'mi#',
+    'sol♭': 'fa', 'sol': 'fa#', 'sol#': 'fa##'
+  };
 
-  // ---------- Leading tone computation ----------
   function getLeadingTone(tonic, isMajor) {
     let key = tonic;
-    if (key.includes('/')) key = key.split('/')[0];
-    if (!isMajor) key = key.toLowerCase();
-
-    const mapping = {
-      'DO': 'SI', 'DO#': 'SI#', 'DO##': 'SI##',
-      'RE♭': 'DO', 'RE': 'DO#', 'RE#': 'DO##',
-      'MI♭': 'RE', 'MI': 'RE#',
-      'FA': 'MI', 'FA#': 'MI#', 'FA##': 'MI##',
-      'SOL♭': 'FA', 'SOL': 'FA#', 'SOL#': 'FA##',
-      'LA♭': 'SOL', 'LA': 'SOL#', 'LA#': 'SOL##',
-      'SI♭': 'LA', 'SI': 'LA#', 'SI#': 'LA##',
-      'la': 'sol#', 'la#': 'sol##', 'si♭': 'la', 'si': 'la#',
-      'do': 'si', 'do#': 'si#', 'ré♭': 'do', 'ré': 'do#',
-      'mi♭': 'ré', 'mi': 'ré#', 'fa': 'mi', 'fa#': 'mi#',
-      'sol♭': 'fa', 'sol': 'fa#', 'sol#': 'fa##'
-    };
-    let result = mapping[key] || key;
-    return result.replace(/##/g, '𝄪');
-  }
-
-  function generateAccidentals(acc) {
-    const accidentalLeftOffset = 14; // horizontal offset for first accidental
-    const accidentalSpacing = 7; // horizontal spacing between accidentals
-
-    if (acc === 0) return '';
-    let items = [];
-    if (acc > 0) {
-      for (let i = 0; i < acc; i++) {
-        const s = sharpsOrder[i];
-        const x = accidentalLeftOffset + (i * accidentalSpacing);
-        const y = s.y + baselineOffset;
-        items.push(`<text class="accidental" x="${x}" y="${y}">${s.name}</text>`);
-      }
-    } else {
-      const count = -acc;
-      for (let i = 0; i < count; i++) {
-        const f = flatsOrder[i];
-        const x = accidentalLeftOffset + (i * accidentalSpacing);
-        const y = f.y + baselineOffset;
-        items.push(`<text class="accidental" x="${x}" y="${y}">${f.name}</text>`);
-      }
+    if (key.includes('/')) {
+      key = key.split('/')[0];
     }
-    return items.join('');
+    if (!isMajor) {
+      key = key.toLowerCase();
+    }
+    const result = leadingToneMap[key];
+    return (result || key).replace(/##/g, '𝄪');
   }
 
-  function buildSVG() {
-    // CSS styles
-    const styles = `
+  function renderStaffLines() {
+    return [
+      '<rect class="staff-line" width="64" x="0" y="0"/>',
+      '<rect class="staff-line" width="64" x="0" y="5"/>',
+      '<rect class="staff-line" width="64" x="0" y="10"/>',
+      '<rect class="staff-line" width="64" x="0" y="15"/>',
+      '<rect class="staff-line" width="64" x="0" y="20"/>'
+    ].join('');
+  }
+
+  function renderAccidentals(acc) {
+    const accidentalLeftOffset = 14;
+    const accidentalSpacing = 7;
+    if (acc === 0) {
+      return '';
+    }
+
+    const order = acc > 0 ? sharpsOrder : flatsOrder;
+    const count = Math.abs(acc);
+    return Array.from({ length: count }, (_, index) => {
+      const symbol = order[index];
+      const x = accidentalLeftOffset + index * accidentalSpacing;
+      const y = symbol.y + 3.5;
+      return `<text class="accidental" x="${x}" y="${y}">${symbol.name}</text>`;
+    }).join('');
+  }
+
+  function renderStaffGroup(cx, cy, content) {
+    return `
+      <g transform="translate(${cx - 32}, ${cy - 10})">
+        ${renderStaffLines()}
+        <text class="clef" x="-11" y="20">𝄞</text>
+        ${content}
+      </g>
+    `;
+  }
+
+  function renderAccidentalLabel(acc) {
+    if (acc === 0) {
+      return '';
+    }
+    return `${Math.abs(acc)}${acc > 0 ? '♯' : '♭'}`;
+  }
+
+  function buildStyleBlock() {
+    return `
       <style>
         .major-key { fill: #8B0000; font-family: Georgia, serif; font-size: 23px; font-weight: 700; text-anchor: middle; }
         .minor-key { fill: #2E6B2E; font-family: Georgia, serif; font-size: 19px; text-anchor: middle; }
@@ -134,130 +140,120 @@
         .ring-middle { fill: #dedad0; stroke: #aaa; stroke-width: 1.5; }
         .ring-inner { fill: #d0cdc4; stroke: #999; stroke-width: 1; }
         .radial-line { stroke: #aaa; stroke-width: 1.2; }
-        .label-majeur { fill: #555; font-family: Georgia, serif; font-size: 15px; text-anchor: middle; }
-        .label-mineur { fill: #777; font-family: Georgia, serif; font-size: 13px; font-style: italic; text-anchor: middle; }
+        .label-majeur { fill: #8B0000; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
+        .label-mineur { fill: #2E6B2E; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
         .label-naturel { fill: #888; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
-        .arrow-path { fill: none; stroke: #8B0000; stroke-width: 2.2; }
-        .arrow-label { fill: #8B0000; font-family: Georgia, serif; font-size: 13px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
+        .arrow-path { fill: none; stroke: #003D7A; stroke-width: 2.2; }
+        .arrow-label { fill: #003D7A; font-family: Georgia, serif; font-size: 13px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
+        #arrowRed path { fill: none; stroke: #003D7A; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
       </style>
     `;
+  }
 
-    let svg = `<svg width="980" height="980" xmlns="http://www.w3.org/2000/svg">
-${styles}
-<defs>
-  <marker id="arrowRed" markerHeight="7" markerWidth="7" orient="auto" refX="8" refY="5" viewBox="0 0 10 10">
-    <path d="m2,1l6,4l-6,4" fill="none" stroke="#8B0000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-  </marker>
-</defs>
-<!-- Rings -->
-<circle cx="${centerX}" cy="${centerY}" r="${outerRadius}" class="ring-outer"/>
-<circle cx="${centerX}" cy="${centerY}" r="${middleRadius}" class="ring-middle"/>
-<circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" class="ring-inner"/>
-`;
+  function buildArrow() {
+    return `
+      <path d="M 475 235 C 470 265, 470 290, 480 310" class="arrow-path" marker-end="url(#arrowRed)"/>
+      <text class="arrow-label" transform="translate(460,269) rotate(-95)">tierce mineure</text>
+    `;
+  }
 
-    // Radial lines (pie slices) – from inner to outer circle
-    for (let i = 0; i < slices.length; i++) {
-      const boundaryDeg = -90 + 15 + i * 30;
-      const angleRad = boundaryDeg * Math.PI / 180;
+  function buildSVG(options = {}) {
+    const config = Object.assign({}, DEFAULT_CONFIG, options);
+    const {
+      width,
+      height,
+      centerX,
+      centerY,
+      outerRadius,
+      middleRadius,
+      innerRadius,
+      staffRadius,
+      majorRadius,
+      minorRadius
+    } = config;
+
+    const angles = Array.from({ length: slices.length }, (_, index) => (-90 + index * 30) * DEG);
+    const positions = angles.map(angle => ({
+      cx: centerX + staffRadius * Math.cos(angle),
+      cy: centerY + staffRadius * Math.sin(angle)
+    }));
+
+    const parts = [];
+    parts.push(`<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">`);
+    parts.push(buildStyleBlock());
+    parts.push(`
+      <defs>
+        <marker id="arrowRed" markerHeight="7" markerWidth="7" orient="auto" refX="8" refY="5" viewBox="0 0 10 10">
+          <path d="m2,1l6,4l-6,4"/>
+        </marker>
+      </defs>
+      <circle cx="${centerX}" cy="${centerY}" r="${outerRadius}" class="ring-outer"/>
+      <circle cx="${centerX}" cy="${centerY}" r="${middleRadius}" class="ring-middle"/>
+      <circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" class="ring-inner"/>
+    `);
+
+    angles.forEach((_, index) => {
+      const boundaryDeg = -90 + 15 + index * 30;
+      const angleRad = boundaryDeg * DEG;
       const x1 = centerX + innerRadius * Math.cos(angleRad);
       const y1 = centerY + innerRadius * Math.sin(angleRad);
       const x2 = centerX + outerRadius * Math.cos(angleRad);
       const y2 = centerY + outerRadius * Math.sin(angleRad);
-      svg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="radial-line" />\n`;
-    }
+      parts.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="radial-line" />`);
+    });
 
-    svg += `<text x="${centerX}" y="${centerY - 302}" class="label-majeur">Majeur</text>
-<text x="${centerX}" y="${centerY}" class="label-mineur">Mineur</text>
-<text x="${centerX}" y="${centerY - 198}" class="label-naturel">♮</text>
-`;
+    parts.push(`
+      <text x="${centerX}" y="${centerY - 302}" class="label-majeur">Majeur</text>
+      <text x="${centerX}" y="${centerY}" class="label-mineur">Mineur</text>
+      <text x="${centerX}" y="${centerY - 198}" class="label-naturel">♮</text>
+    `);
 
-    for (let i = 0; i < slices.length; i++) {
-      const s = slices[i];
-      const pos = positions[i];
+    slices.forEach((slice, index) => {
+      const pos = positions[index];
+      const angleRad = angles[index];
+      const acc = slice.accidentals;
 
-      if (s.enharmonic) {
-        let leftAcc, rightAcc, label;
-        const acc = s.accidentals;
-        if (acc === 5) {
-          leftAcc = generateAccidentals(5);
-          rightAcc = generateAccidentals(-7);
-          label = "5♯/7♭";
-        } else if (acc === -5) {
-          leftAcc = generateAccidentals(-5);
-          rightAcc = generateAccidentals(7);
-          label = "5♭/7♯";
-        } else if (acc === 6) {
-          leftAcc = generateAccidentals(6);
-          rightAcc = generateAccidentals(-6);
-          label = "6♯/6♭";
-        } else {
-          leftAcc = generateAccidentals(acc);
-          rightAcc = generateAccidentals(-acc);
-          label = `${Math.abs(acc)}♯/${Math.abs(acc)}♭`;
-        }
+      if (slice.enharmonic) {
+        const leftAccidentals = renderAccidentals(acc);
+        const rightAccidentals = renderAccidentals(-acc);
+        const label = acc === 5 ? '5♯/7♭' : acc === -5 ? '5♭/7♯' : acc === 6 ? '6♯/6♭' : `${Math.abs(acc)}♯/${Math.abs(acc)}♭`;
         const leftCx = pos.cx - 45;
         const rightCx = pos.cx + 45;
-        svg += `<g transform="translate(${leftCx - 32}, ${pos.cy - 10})">
-  <rect class="staff-line" width="64" x="0" y="0"/><rect class="staff-line" width="64" x="0" y="5"/>
-  <rect class="staff-line" width="64" x="0" y="10"/><rect class="staff-line" width="64" x="0" y="15"/>
-  <rect class="staff-line" width="64" x="0" y="20"/>
-  <text class="clef" x="-11" y="20">𝄞</text>${leftAcc}</g>`;
-        svg += `<g transform="translate(${rightCx - 32}, ${pos.cy - 10})">
-  <rect class="staff-line" width="64" x="0" y="0"/><rect class="staff-line" width="64" x="0" y="5"/>
-  <rect class="staff-line" width="64" x="0" y="10"/><rect class="staff-line" width="64" x="0" y="15"/>
-  <rect class="staff-line" width="64" x="0" y="20"/>
-  <text class="clef" x="-11" y="20">𝄞</text>${rightAcc}</g>`;
-        svg += `<text x="${pos.cx}" y="${pos.cy - 35}" class="accidental-count">${label}</text>`;
+        parts.push(renderStaffGroup(leftCx, pos.cy, leftAccidentals));
+        parts.push(renderStaffGroup(rightCx, pos.cy, rightAccidentals));
+        parts.push(`<text x="${pos.cx}" y="${pos.cy - 35}" class="accidental-count">${label}</text>`);
       } else {
-        const acc = generateAccidentals(s.accidentals);
-        svg += `<g transform="translate(${pos.cx - 32}, ${pos.cy - 10})">
-  <rect class="staff-line" width="64" x="0" y="0"/><rect class="staff-line" width="64" x="0" y="5"/>
-  <rect class="staff-line" width="64" x="0" y="10"/><rect class="staff-line" width="64" x="0" y="15"/>
-  <rect class="staff-line" width="64" x="0" y="20"/>
-  <text class="clef" x="-11" y="20">𝄞</text>${acc}</g>`;
-        // Empty label if accidentaions are 0, else show accidentals count with appropriate symbol
-        let label = s.accidentals === 0 ? '' : (s.accidentals > 0 ? `${s.accidentals}♯` : `${-s.accidentals}♭`);
-        svg += `<text x="${pos.cx}" y="${pos.cy - 30}" class="accidental-count">${label}</text>`;
+        const accidentals = renderAccidentals(acc);
+        parts.push(renderStaffGroup(pos.cx, pos.cy, accidentals));
+        parts.push(`<text x="${pos.cx}" y="${pos.cy - 30}" class="accidental-count">${renderAccidentalLabel(acc)}</text>`);
       }
 
-      // Key names using computed radii
-      const angleRad = angles[i];
       const majX = centerX + majorRadius * Math.cos(angleRad);
       const majY = centerY + majorRadius * Math.sin(angleRad);
       const minX = centerX + minorRadius * Math.cos(angleRad);
       const minY = centerY + minorRadius * Math.sin(angleRad);
 
-      svg += `<text x="${majX}" y="${majY + 5}" class="major-key">${s.major}</text>`;
-      svg += `<text x="${minX}" y="${minY + 5}" class="minor-key">${s.minor}</text>`;
+      parts.push(`<text x="${majX}" y="${majY + 5}" class="major-key">${slice.major}</text>`);
+      parts.push(`<text x="${minX}" y="${minY + 5}" class="minor-key">${slice.minor}</text>`);
 
-      // Leading tones
-      let leadingMajor, leadingMinor;
-      if (s.enharmonic) {
-        const firstMajor = s.major.split('/')[0];
-        leadingMajor = getLeadingTone(firstMajor, true);
-        leadingMinor = getLeadingTone(s.minor, false);
-      } else {
-        leadingMajor = getLeadingTone(s.major, true);
-        leadingMinor = getLeadingTone(s.minor, false);
-      }
-      svg += `<text x="${majX}" y="${majY + 24}" class="leading-tone">(${leadingMajor})</text>`;
-      svg += `<text x="${minX}" y="${minY + 24}" class="leading-tone">(${leadingMinor})</text>`;
-    }
+      const firstMajor = slice.enharmonic ? slice.major.split('/')[0] : slice.major;
+      const leadingMajor = getLeadingTone(firstMajor, true);
+      const leadingMinor = getLeadingTone(slice.minor, false);
+      parts.push(`<text x="${majX}" y="${majY + 24}" class="leading-tone">(${leadingMajor})</text>`);
+      parts.push(`<text x="${minX}" y="${minY + 24}" class="leading-tone">(${leadingMinor})</text>`);
+    });
 
-    // Arrow and label (using constants)
-    svg += `<path d="M ${arrowStart.x} ${arrowStart.y} C ${arrowCtrl.x1} ${arrowCtrl.y1}, ${arrowCtrl.x2} ${arrowCtrl.y2}, ${arrowEnd.x} ${arrowEnd.y}" class="arrow-path" marker-end="url(#arrowRed)"/>
-<text class="arrow-label" transform="translate(${labelPos.x},${labelPos.y}) rotate(${labelPos.rotate})">tierce mineure</text>`;
-
-    svg += `</svg>`;
-    return svg;
+    parts.push(buildArrow());
+    parts.push('</svg>');
+    return parts.join('');
   }
 
-  window.renderCircleOfFifths = function (containerId) {
+  window.renderCircleOfFifths = function (containerId, options = {}) {
     const container = document.getElementById(containerId);
-    if (container) {
-      container.innerHTML = buildSVG();
-    } else {
+    if (!container) {
       console.error(`Container with id "${containerId}" not found.`);
+      return;
     }
+    container.innerHTML = buildSVG(options);
   };
 })();
