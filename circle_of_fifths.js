@@ -143,9 +143,9 @@
         .label-majeur { fill: #8B0000; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
         .label-mineur { fill: #2E6B2E; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
         .label-naturel { fill: #4d4b4b; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
-        .arrow-path { fill: none; stroke: #4d4b4b; stroke-width: 2.2; }
+        .arrow-path { fill: none; stroke: #4d4b4b; stroke-width: 1.6; stroke-dasharray: 4 4; }
         .arrow-label { fill: #4d4b4b; font-family: Georgia, serif; font-size: 14px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
-        #arrowRed path { fill: none; stroke: #4d4b4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+        #arrowRed path { fill: none; stroke: #4d4b4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.2; }
       </style>
     `;
   }
