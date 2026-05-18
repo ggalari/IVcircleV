@@ -248,6 +248,43 @@
     return parts.join('');
   }
 
+  function getCircleLayout(options = {}) {
+    const config = Object.assign({}, DEFAULT_CONFIG, options);
+    const {
+      centerX,
+      centerY,
+      outerRadius,
+      middleRadius,
+      innerRadius,
+      staffRadius,
+      majorRadius,
+      minorRadius
+    } = config;
+    const anglesDeg = Array.from({ length: slices.length }, (_, index) => -90 + index * 30);
+    const angles = anglesDeg.map(d => d * DEG);
+    const positions = angles.map(angle => ({
+      angleRad: angle,
+      angleDeg: angle / DEG,
+      major: { x: centerX + majorRadius * Math.cos(angle), y: centerY + majorRadius * Math.sin(angle) },
+      minor: { x: centerX + minorRadius * Math.cos(angle), y: centerY + minorRadius * Math.sin(angle) },
+      staff: { x: centerX + staffRadius * Math.cos(angle), y: centerY + staffRadius * Math.sin(angle) }
+    }));
+    return {
+      config: {
+        centerX,
+        centerY,
+        outerRadius,
+        middleRadius,
+        innerRadius,
+        staffRadius,
+        majorRadius,
+        minorRadius
+      },
+      anglesDeg,
+      positions
+    };
+  }
+
   window.renderCircleOfFifths = function (containerId, options = {}) {
     const container = document.getElementById(containerId);
     if (!container) {
@@ -255,5 +292,60 @@
       return;
     }
     container.innerHTML = buildSVG(options);
+    // expose layout data for overlays and interactions
+    try {
+      window.circleLayout = getCircleLayout(options);
+    } catch (e) {
+      // noop
+    }
+    if (options.exposeLayout) return window.circleLayout;
+
+    // Optional: draw neighbor overlay directly from layout when requested
+    if (options.showNeighbors && typeof document !== 'undefined') {
+      try {
+        const layout = getCircleLayout(options) || window.circleLayout;
+        const cfg = layout.config;
+        const ns = 'http://www.w3.org/2000/svg';
+        const svg = container.querySelector('svg');
+        if (svg) {
+          let overlay = svg.querySelector('.neighbor-overlay');
+          if (overlay) overlay.innerHTML = '';
+          else {
+            overlay = document.createElementNS(ns, 'g');
+            overlay.classList.add('neighbor-overlay');
+            svg.appendChild(overlay);
+          }
+
+          const idx = Number.isFinite(options.highlightIndex) ? options.highlightIndex : 0;
+          const indices = [idx, (idx + 1) % 12, (idx + 11) % 12];
+          const innerR = cfg.middleRadius + (options.padInner || 6);
+          const outerR = cfg.outerRadius - (options.padOuter || 6);
+          const type = options.type || 'major';
+          const s = d => d * DEG;
+
+          indices.forEach(i => {
+            const startDeg = -90 + i * 30 - 15;
+            const endDeg = startDeg + 30;
+            const ox1 = cfg.centerX + outerR * Math.cos(s(startDeg));
+            const oy1 = cfg.centerY + outerR * Math.sin(s(startDeg));
+            const ox2 = cfg.centerX + outerR * Math.cos(s(endDeg));
+            const oy2 = cfg.centerY + outerR * Math.sin(s(endDeg));
+            const ix2 = cfg.centerX + innerR * Math.cos(s(endDeg));
+            const iy2 = cfg.centerY + innerR * Math.sin(s(endDeg));
+            const ix1 = cfg.centerX + innerR * Math.cos(s(startDeg));
+            const iy1 = cfg.centerY + innerR * Math.sin(s(startDeg));
+            const d = `M ${ox1} ${oy1} A ${outerR} ${outerR} 0 0 1 ${ox2} ${oy2} L ${ix2} ${iy2} A ${innerR} ${innerR} 0 0 0 ${ix1} ${iy1} Z`;
+            const path = document.createElementNS(ns, 'path');
+            path.setAttribute('d', d);
+            const cls = type === 'minor' ? 'highlight-minor fade-in' : 'highlight-major fade-in';
+            path.setAttribute('class', cls);
+            overlay.appendChild(path);
+          });
+        }
+      } catch (e) {
+        // noop
+      }
+    }
   };
+  window.getCircleLayout = getCircleLayout;
 })();
