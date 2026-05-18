@@ -1,0 +1,18 @@
+{
+  "name": "circle-of-fifths",
+  "version": "1.0.0",
+  "description": "Circle of Fifths interactive SVG application",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "fast-check": "^3.23.2",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.4"
+  }
+}
