@@ -6,19 +6,96 @@ body {
   font-family: sans-serif;
 }
 .card {
+  position: relative;
   background: white;
   border-radius: 16px;
   padding: 24px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  max-width: 1040px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
-svg {
+#circle-container svg {
+  width: 100%;
+  height: auto;
+  max-width: 980px;
   display: block;
   margin: 0 auto;
-  border: 1px solid #ccc;
 }
-.toolbar {
-  margin-top: 20px;
-  text-align: center;
+#circle-container svg text {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  cursor: default;
+}
+.hamburger-wrapper {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+}
+.hamburger-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 150ms ease, box-shadow 150ms ease;
+  padding: 0;
+  margin: 0;
+}
+.hamburger-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.hamburger-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 6px 0;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.hamburger-dropdown[hidden] {
+  display: none;
+}
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: sans-serif;
+  color: #333;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 100ms ease;
+  margin: 0;
+  border-radius: 0;
+}
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+.dropdown-item:active {
+  background: #eee;
 }
 button {
   background: #8b0000;
@@ -57,50 +134,24 @@ button:hover {
 .legend .swatch { width: 18px; height: 12px; display: inline-block; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
 .legend .major-swatch { background: rgba(139,0,0,0.14); border: 1px solid rgba(139,0,0,0.3); }
 .legend .minor-swatch { background: rgba(46,107,46,0.12); border: 1px solid rgba(46,107,46,0.25); }
-.ctx-menu {
-  position: fixed;
-  z-index: 1000;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-  padding: 4px 0;
-  min-width: 160px;
-}
-.ctx-menu[hidden] {
-  display: none;
-}
-.ctx-menu-item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  border: none;
-  background: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: sans-serif;
-  color: inherit;
-}
-.ctx-menu-item:hover:not(:disabled) {
-  background: #f0f0f0;
-}
-.ctx-menu-item:disabled {
-  color: #aaa;
-  cursor: not-allowed;
-}
-textarea {
-  width: 100%;
-  height: 200px;
-  margin-top: 20px;
-  font-family: monospace;
-  font-size: 12px;
-}
-textarea[hidden] {
-  display: none;
-}
 .note {
   font-size: 12px;
   color: #555;
   text-align: center;
   margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 8px;
+  }
+  .card {
+    padding: 12px;
+    width: calc(100vw - 16px);
+  }
+  .note,
+  .legend {
+    font-size: 14px;
+    line-height: 1.3;
+  }
 }

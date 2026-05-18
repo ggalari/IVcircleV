@@ -1,25 +1,148 @@
 /**
- * Context menu — right-click on key labels to show/hide neighbor overlay.
- * All event binding is programmatic — no inline onclick handlers.
+ * Key interaction — long-press or right-click on key areas to toggle
+ * diatonic neighbor overlay directly (no menu).
+ *
+ * Uses invisible hit-area sectors (full 30° wedges) for reliable touch
+ * targeting on mobile, rather than tiny text labels.
  */
 
 import { showNeighbors, clearNeighbors } from '../overlays/neighbors.js';
 import { get } from '../state.js';
+import { sectorPath, DEFAULT_CONFIG } from '../circle/geometry.js';
+import { attachLongPress } from './long-press.js';
 
-/** @type {{ index: number, type: "major" | "minor" } | null} */
-let currentKeyInfo = null;
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+/** @type {function[]} Long-press cleanup functions */
+let longPressCleanups = [];
 
 /**
- * Resolve the circle-of-fifths index of a clicked key label element.
- * Finds the element among its sibling labels (major-key or minor-key)
- * and returns its positional index (0–11).
- * @param {Element} target - The clicked text element
- * @returns {number} Index 0–11, or -1 if not found
+ * Toggle the diatonic overlay for a given key.
+ * If the key is already active, clear the overlay.
+ * Otherwise, show neighbors for the new key.
  */
-function resolveKeyIndex(target) {
+function toggleNeighbors(index, type) {
+  const activeIndex = get('selectedKeyIndex');
+  const activeType = get('overlayType');
+
+  if (activeIndex === index && activeType === type) {
+    clearNeighbors();
+  } else {
+    showNeighbors({ index, type });
+  }
+}
+
+/**
+ * Create invisible hit-area sectors for all 24 keys (12 major + 12 minor)
+ * and attach long-press handlers to them.
+ */
+function createHitAreas() {
+  longPressCleanups.forEach(fn => fn());
+  longPressCleanups = [];
+
   const svg = document.querySelector('#circle-container svg');
-  if (!svg || !target) return -1;
-  const isMinor = target.classList && target.classList.contains('minor-key');
+  if (!svg) return;
+
+  // Remove any existing hit-area group
+  const existing = svg.querySelector('.hit-areas');
+  if (existing) existing.remove();
+
+  const { centerX, centerY, outerRadius, middleRadius, innerRadius } = DEFAULT_CONFIG;
+
+  const g = document.createElementNS(SVG_NS, 'g');
+  g.classList.add('hit-areas');
+
+  for (let i = 0; i < 12; i++) {
+    const startDeg = -90 + i * 30 - 15;
+    const endDeg = startDeg + 30;
+
+    // Outer ring hit area (major keys)
+    const majorPath = document.createElementNS(SVG_NS, 'path');
+    majorPath.setAttribute('d', sectorPath(centerX, centerY, middleRadius, outerRadius, startDeg, endDeg));
+    majorPath.setAttribute('fill', 'transparent');
+    majorPath.setAttribute('stroke', 'none');
+    majorPath.style.cursor = 'pointer';
+    majorPath.dataset.index = i;
+    majorPath.dataset.type = 'major';
+    g.appendChild(majorPath);
+
+    // Inner ring hit area (minor keys)
+    const minorPath = document.createElementNS(SVG_NS, 'path');
+    minorPath.setAttribute('d', sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg));
+    minorPath.setAttribute('fill', 'transparent');
+    minorPath.setAttribute('stroke', 'none');
+    minorPath.style.cursor = 'pointer';
+    minorPath.dataset.index = i;
+    minorPath.dataset.type = 'minor';
+    g.appendChild(minorPath);
+
+    // Attach long-press to both
+    const majorCleanup = attachLongPress(majorPath, {
+      threshold: 400,
+      moveThreshold: 12,
+      feedbackDelay: 200,
+      onLongPress: () => toggleNeighbors(i, 'major'),
+      onFeedbackStart: () => {},
+      onCancel: () => {},
+    });
+    longPressCleanups.push(majorCleanup);
+
+    const minorCleanup = attachLongPress(minorPath, {
+      threshold: 400,
+      moveThreshold: 12,
+      feedbackDelay: 200,
+      onLongPress: () => toggleNeighbors(i, 'minor'),
+      onFeedbackStart: () => {},
+      onCancel: () => {},
+    });
+    longPressCleanups.push(minorCleanup);
+  }
+
+  svg.appendChild(g);
+}
+
+/**
+ * Attach all key interaction listeners:
+ * - Right-click on hit areas to toggle overlay (desktop)
+ * - Long-press on hit areas to toggle overlay (touch)
+ */
+export function attachContextMenuListeners() {
+  const svg = document.querySelector('#circle-container svg');
+
+  // Right-click handler (desktop) — works on the hit-area paths
+  if (svg) {
+    svg.addEventListener('contextmenu', (ev) => {
+      const target = ev.target;
+      if (!target || !target.dataset) return;
+
+      // Check if it's a hit-area path or a text label
+      const index = target.dataset.index !== undefined
+        ? parseInt(target.dataset.index, 10)
+        : resolveKeyIndexFromText(target);
+
+      const type = target.dataset.type || getTypeFromText(target);
+
+      if (index === -1 || !type) return;
+      ev.preventDefault();
+      toggleNeighbors(index, type);
+    });
+  }
+
+  // Create hit areas and attach long-press
+  createHitAreas();
+}
+
+/**
+ * Fallback: resolve index from a text label element (for right-click on labels).
+ */
+function resolveKeyIndexFromText(target) {
+  if (!target || !target.classList) return -1;
+  if (!target.classList.contains('major-key') && !target.classList.contains('minor-key')) return -1;
+
+  const svg = document.querySelector('#circle-container svg');
+  if (!svg) return -1;
+
+  const isMinor = target.classList.contains('minor-key');
   const selector = isMinor ? 'text.minor-key' : 'text.major-key';
   const labels = Array.from(svg.querySelectorAll(selector));
   const targetText = target.textContent.trim();
@@ -28,87 +151,11 @@ function resolveKeyIndex(target) {
 }
 
 /**
- * Position and show the context menu at the given coordinates.
- * Disables the "Clear neighbors" button when no overlay is active.
- * @param {number} x - clientX coordinate
- * @param {number} y - clientY coordinate
- * @param {{ index: number, type: "major" | "minor" }} keyInfo
+ * Fallback: get type from a text label element.
  */
-export function showContextMenu(x, y, keyInfo) {
-  const menu = document.getElementById('ctx-menu');
-  if (!menu) return;
-  const clampedX = Math.min(x, window.innerWidth - menu.offsetWidth);
-  const clampedY = Math.min(y, window.innerHeight - menu.offsetHeight);
-  menu.style.left = clampedX + 'px';
-  menu.style.top = clampedY + 'px';
-  menu.removeAttribute('hidden');
-
-  // Disable "Clear neighbors" when no overlay is currently displayed
-  const clearBtn = menu.querySelector('[data-action="clear"]');
-  if (clearBtn) {
-    clearBtn.disabled = !get('overlayActive');
-  }
-
-  currentKeyInfo = keyInfo;
-}
-
-/**
- * Hide the context menu.
- */
-export function hideContextMenu() {
-  const menu = document.getElementById('ctx-menu');
-  if (!menu) return;
-  menu.hidden = true;
-}
-
-/**
- * Attach all context menu event listeners:
- * - Right-click on key labels to open the menu
- * - Click outside to dismiss
- * - Button actions (show/clear neighbors)
- */
-export function attachContextMenuListeners() {
-  // Right-click handler on key labels
-  const svg = document.querySelector('#circle-container svg');
-  if (svg) {
-    svg.addEventListener('contextmenu', (ev) => {
-      const target = ev.target;
-      if (!target || !target.classList) return;
-      if (target.classList.contains('major-key') || target.classList.contains('minor-key')) {
-        ev.preventDefault();
-        const type = target.classList.contains('minor-key') ? 'minor' : 'major';
-        const index = resolveKeyIndex(target);
-        if (index === -1) return;
-        showContextMenu(ev.clientX, ev.clientY, { index, type });
-      }
-    });
-  }
-
-  // Click outside to dismiss
-  document.addEventListener('click', (event) => {
-    const menu = document.getElementById('ctx-menu');
-    if (!menu) return;
-    if (!menu.hidden && !menu.contains(event.target)) {
-      hideContextMenu();
-    }
-  });
-
-  // Context menu button actions
-  const ctxMenu = document.getElementById('ctx-menu');
-  if (ctxMenu) {
-    ctxMenu.addEventListener('click', (event) => {
-      const action = event.target.getAttribute('data-action');
-      if (!action) return;
-      if (event.target.disabled) return;
-      if (action === 'show') {
-        if (currentKeyInfo) {
-          showNeighbors(currentKeyInfo);
-          hideContextMenu();
-        }
-      } else if (action === 'clear') {
-        clearNeighbors();
-        hideContextMenu();
-      }
-    });
-  }
+function getTypeFromText(target) {
+  if (!target || !target.classList) return null;
+  if (target.classList.contains('major-key')) return 'major';
+  if (target.classList.contains('minor-key')) return 'minor';
+  return null;
 }

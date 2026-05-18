@@ -9,24 +9,19 @@
   <body>
     <div class="card">
       <div id="circle-container"></div>
-      <div class="toolbar">
-        <button id="btn-toggle-code">📄 Show / Hide SVG Code</button>
-        <button id="btn-save">💾 Save SVG</button>
-        <button id="btn-print">🖨️ Print</button>
+      <div class="hamburger-wrapper">
+        <button class="hamburger-btn" aria-label="Menu" aria-expanded="false">☰</button>
+        <div class="hamburger-dropdown" hidden>
+          <button id="btn-save" class="dropdown-item">💾 Télécharger SVG</button>
+          <button id="btn-print" class="dropdown-item">🖨️ Imprimer</button>
+        </div>
       </div>
-      <textarea id="svgCodeArea" readonly hidden></textarea>
       <div class="note">
-        💡 Cliquez « Show / Hide SVG Code » pour voir ou copier le SVG brut.<br />
-        « Save SVG » pour télécharger, « Print » pour imprimer ou exporter en PDF.<br />
-        Clic droit sur une tonalité pour afficher ses accords diatoniques.
+        💡 Clic droit (ou appui long) sur une tonalité pour afficher ses accords diatoniques.
       </div>
       <div class="legend" aria-hidden="true">
         <div><span class="swatch major-swatch"></span>Accords majeurs</div>
         <div><span class="swatch minor-swatch"></span>Accords mineurs</div>
-      </div>
-      <div id="ctx-menu" class="ctx-menu" hidden>
-        <button data-action="show" class="ctx-menu-item">Accords diatoniques</button>
-        <button data-action="clear" class="ctx-menu-item">Effacer</button>
       </div>
     </div>
 

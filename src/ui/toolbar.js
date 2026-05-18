@@ -1,5 +1,5 @@
 /**
- * Toolbar actions: print, save SVG, and toggle SVG code visibility.
+ * Toolbar actions: print and save SVG.
  * All event binding is programmatic — no inline onclick handlers.
  */
 
@@ -33,10 +33,13 @@ export function saveSVG() {
   const clone = svgElement.cloneNode(true);
   clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
 
-  const originalWidth = svgElement.getAttribute('width');
-  const originalHeight = svgElement.getAttribute('height');
-  if (originalWidth) clone.setAttribute('width', originalWidth);
-  if (originalHeight) clone.setAttribute('height', originalHeight);
+  // Read dimensions from viewBox since we no longer use fixed width/height attributes
+  const viewBox = svgElement.getAttribute('viewBox');
+  if (viewBox) {
+    const [, , vbWidth, vbHeight] = viewBox.split(/\s+/);
+    clone.setAttribute('width', vbWidth);
+    clone.setAttribute('height', vbHeight);
+  }
 
   const serializer = new XMLSerializer();
   let svgString = serializer.serializeToString(clone);
@@ -65,14 +68,5 @@ export function attachToolbarListeners() {
   const printBtn = document.getElementById('btn-print');
   if (printBtn) {
     printBtn.addEventListener('click', printCircle);
-  }
-
-  const toggleCodeBtn = document.getElementById('btn-toggle-code');
-  if (toggleCodeBtn) {
-    toggleCodeBtn.addEventListener('click', () => {
-      const area = document.getElementById('svgCodeArea');
-      if (!area) return;
-      area.hidden = !area.hidden;
-    });
   }
 }

@@ -8,7 +8,7 @@
 - [x] Right-click context menu on key labels (Show neighbors / Clear neighbors)
 - [x] Neighbor key overlay with roman numeral scale degrees (I/IV/V/ii/iii/vi)
 - [x] Dual-ring highlighting (outer + inner) with tonic opacity differentiation
-- [x] Save SVG / Print / Show SVG code utilities
+- [x] Save SVG / Print utilities
 
 ## Planned Features
 
