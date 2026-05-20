@@ -54,7 +54,7 @@
 ### Quick Wins
 
 - [ ] Dark/light theme toggle
-- [ ] Mobile-friendly touch interactions (long-press instead of right-click)
+- [x] Mobile-friendly touch interactions (long-press instead of right-click)
 - [ ] Shareable URL state (encode overlay/selection in URL hash)
 
 ### Infrastructure

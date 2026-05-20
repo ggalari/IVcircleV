@@ -62,33 +62,35 @@ export function showNeighbors(keyInfo) {
   const relativeRing = keyInfo.type === 'major' ? 'inner' : 'outer';
 
   // Draw sectors on the tonic's ring (3 sectors: self + 2 neighbors)
-  addSector(idx, { type: keyInfo.type, ring: tonicRing, isTonic: true });
-  addSector(cwIdx, { type: keyInfo.type, ring: tonicRing });
-  addSector(ccwIdx, { type: keyInfo.type, ring: tonicRing });
+  // Color is based on the RING (outer=major/red, inner=minor/green) to match legend
+  addSector(idx, { type: 'major', ring: 'outer', isTonic: keyInfo.type === 'major' });
+  addSector(cwIdx, { type: 'major', ring: 'outer' });
+  addSector(ccwIdx, { type: 'major', ring: 'outer' });
 
-  // Draw sectors on the relative ring (3 sectors at same indices)
-  addSector(idx, { type: keyInfo.type, ring: relativeRing });
-  addSector(cwIdx, { type: keyInfo.type, ring: relativeRing });
-  addSector(ccwIdx, { type: keyInfo.type, ring: relativeRing });
+  // Draw sectors on the inner ring (3 sectors at same indices)
+  addSector(idx, { type: 'minor', ring: 'inner', isTonic: keyInfo.type === 'minor' });
+  addSector(cwIdx, { type: 'minor', ring: 'inner' });
+  addSector(ccwIdx, { type: 'minor', ring: 'inner' });
 
   // Add roman numeral labels on the tonic's ring
   const tonicDegrees = keyInfo.type === 'major' ? degrees.outer : degrees.inner;
-  addLabel(idx, tonicDegrees.self, keyInfo.type, tonicRing);
-  addLabel(cwIdx, tonicDegrees.cw, keyInfo.type, tonicRing);
-  addLabel(ccwIdx, tonicDegrees.ccw, keyInfo.type, tonicRing);
+  addLabel(idx, tonicDegrees.self, tonicRing === 'outer' ? 'major' : 'minor', tonicRing);
+  addLabel(cwIdx, tonicDegrees.cw, tonicRing === 'outer' ? 'major' : 'minor', tonicRing);
+  addLabel(ccwIdx, tonicDegrees.ccw, tonicRing === 'outer' ? 'major' : 'minor', tonicRing);
 
   // Add roman numeral labels on the relative ring
   const relativeDegrees = keyInfo.type === 'major' ? degrees.inner : degrees.outer;
-  addLabel(idx, relativeDegrees.self, keyInfo.type, relativeRing);
-  addLabel(cwIdx, relativeDegrees.cw, keyInfo.type, relativeRing);
-  addLabel(ccwIdx, relativeDegrees.ccw, keyInfo.type, relativeRing);
+  addLabel(idx, relativeDegrees.self, relativeRing === 'outer' ? 'major' : 'minor', relativeRing);
+  addLabel(cwIdx, relativeDegrees.cw, relativeRing === 'outer' ? 'major' : 'minor', relativeRing);
+  addLabel(ccwIdx, relativeDegrees.ccw, relativeRing === 'outer' ? 'major' : 'minor', relativeRing);
 
   // Draw the diminished chord sector (7th degree)
-  // Always 2 positions clockwise from tonic, on the inner ring
   if (degrees.dim) {
     const dimIdx = (idx + degrees.dim.offset) % 12;
-    addSector(dimIdx, { type: keyInfo.type, ring: degrees.dim.ring });
-    addLabel(dimIdx, degrees.dim.label, keyInfo.type, degrees.dim.ring);
+    // Color based on which ring it's on
+    const dimType = degrees.dim.ring === 'inner' ? 'minor' : 'major';
+    addSector(dimIdx, { type: dimType, ring: degrees.dim.ring });
+    addLabel(dimIdx, degrees.dim.label, dimType, degrees.dim.ring);
   }
 
   // Update state
@@ -148,9 +150,9 @@ function addLabel(index, numeral, type, ring) {
 
   const { centerX, centerY, outerRadius, middleRadius } = DEFAULT_CONFIG;
 
-  // Position near the outer boundary of the ring, offset clockwise by ~10°
-  const labelRadius = ring === 'outer' ? outerRadius - 18 : middleRadius - 18;
-  const angle = (-90 + index * 30 + 10) * Math.PI / 180;
+  // Position near the outer edge of the ring, offset clockwise by ~12°
+  const labelRadius = ring === 'outer' ? outerRadius - 12 : middleRadius - 12;
+  const angle = (-90 + index * 30 + 12) * Math.PI / 180;
   const x = centerX + labelRadius * Math.cos(angle);
   const y = centerY + labelRadius * Math.sin(angle);
 

@@ -1,10 +1,13 @@
 // src/circle/renderer.js
 // SVG rendering for the Circle of Fifths
+// Refactored with a reusable drawSlice() routine.
 
 import { SLICES, SHARPS_ORDER, FLATS_ORDER, getLeadingTone } from './keys.js';
-import { DEFAULT_CONFIG } from './geometry.js';
+import { DEFAULT_CONFIG, sectorPath } from './geometry.js';
 
 const DEG = Math.PI / 180;
+
+// ─── Shared helpers ───────────────────────────────────────────────────────────
 
 function renderStaffLines() {
   return [
@@ -17,157 +20,211 @@ function renderStaffLines() {
 }
 
 function renderAccidentals(acc) {
-  const accidentalLeftOffset = 14;
-  const accidentalSpacing = 7;
-  if (acc === 0) {
-    return '';
-  }
-
+  if (acc === 0) return '';
   const order = acc > 0 ? SHARPS_ORDER : FLATS_ORDER;
   const count = Math.abs(acc);
-  return Array.from({ length: count }, (_, index) => {
-    const symbol = order[index];
-    const x = accidentalLeftOffset + index * accidentalSpacing;
+  return Array.from({ length: count }, (_, i) => {
+    const symbol = order[i];
+    const x = 14 + i * 7;
     const y = symbol.y + 3.5;
     return `<text class="accidental" x="${x}" y="${y}">${symbol.name}</text>`;
   }).join('');
 }
 
 function renderStaffGroup(cx, cy, content) {
-  return `
-      <g transform="translate(${cx - 32}, ${cy - 10})">
-        ${renderStaffLines()}
-        <text class="clef" x="-11" y="20">𝄞</text>
-        ${content}
-      </g>
-    `;
+  return `<g transform="translate(${cx - 32}, ${cy - 10})">
+    ${renderStaffLines()}
+    <text class="clef" x="-11" y="20">𝄞</text>
+    ${content}
+  </g>`;
 }
 
 function renderAccidentalLabel(acc) {
-  if (acc === 0) {
-    return '';
-  }
+  if (acc === 0) return '';
   return `${Math.abs(acc)}${acc > 0 ? '♯' : '♭'}`;
 }
 
-function buildStyleBlock() {
-  return `
-      <style>
-        .major-key { fill: #8B0000; font-family: Georgia, serif; font-size: 23px; font-weight: 700; text-anchor: middle; }
-        .minor-key { fill: #2E6B2E; font-family: Georgia, serif; font-size: 19px; text-anchor: middle; }
-        .leading-tone { fill: #666; font-family: Georgia, serif; font-size: 11px; text-anchor: middle; }
-        .accidental-count { fill: #444; font-family: Georgia, serif; font-size: 13px; text-anchor: middle; }
-        .clef { fill: #555; font-family: serif; font-size: 40px; text-anchor: start; }
-        .accidental { fill: #000; font-family: Georgia, serif; font-size: 10px; font-weight: 700; text-anchor: middle; }
-        .staff-line { fill: #888; height: 0.8px; }
-        .ring-outer { fill: #f4f2ec; stroke: #bbb; stroke-width: 1.2; }
-        .ring-middle { fill: #dedad0; stroke: #aaa; stroke-width: 1.5; }
-        .ring-inner { fill: #f4f2ec; stroke: #999; stroke-width: 1; }
-        .radial-line { stroke: #aaa; stroke-width: 1.2; }
-        .label-majeur { fill: #8B0000; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
-        .label-mineur { fill: #2E6B2E; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
-        .label-naturel { fill: #4d4b4b; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
-        .arrow-path { fill: none; stroke: #4d4b4b; stroke-width: 1.6; stroke-dasharray: 4 4; }
-        .arrow-label { fill: #4d4b4b; font-family: Georgia, serif; font-size: 14px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
-        #arrowRed path { fill: none; stroke: #4d4b4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.2; }
-      </style>
-    `;
+// ─── drawSlice: the reusable slice-drawing routine ────────────────────────────
+
+/**
+ * Draw a single slice of the circle of fifths at a given angular position.
+ * Includes the ring background sectors, radial lines, key names, staff, etc.
+ * 
+ * @param {Object} options
+ * @param {number} options.sliceIndex - Which SLICES[] entry to use for data (0-11)
+ * @param {number} options.position - Angular position on the circle (0 = top/-90°, 1 = +30°, -1 = -30°, etc.)
+ * @param {Object} options.config - Circle geometry config (centerX, centerY, radii, etc.)
+ * @param {Object} [options.show] - What parts to draw
+ * @param {boolean} [options.show.major=true] - Draw major ring content (key name, leading tone)
+ * @param {boolean} [options.show.minor=true] - Draw minor ring content (key name, leading tone)
+ * @param {boolean} [options.show.staff=true] - Draw the staff with accidentals
+ * @param {boolean} [options.show.radialLine=true] - Draw the left radial boundary line
+ * @param {boolean} [options.show.leadingTones=true] - Draw leading tone labels
+ * @param {boolean} [options.show.background=true] - Draw the ring background sectors
+ * @returns {string} SVG markup for this slice
+ */
+export function drawSlice({
+  sliceIndex,
+  position,
+  config,
+  show = {}
+}) {
+  const {
+    centerX, centerY,
+    outerRadius, middleRadius, innerRadius,
+    staffRadius, majorRadius, minorRadius
+  } = config;
+
+  const showMajor = show.major !== false;
+  const showMinor = show.minor !== false;
+  const showStaff = show.staff !== false;
+  const showRadialLine = show.radialLine !== false;
+  const showLeadingTones = show.leadingTones !== false;
+  const showBackground = show.background !== false;
+  // Background can be drawn for a ring even if the text content is hidden
+  const showMajorBg = show.majorBg !== undefined ? show.majorBg : showMajor;
+  const showMinorBg = show.minorBg !== undefined ? show.minorBg : showMinor;
+
+  const slice = SLICES[sliceIndex];
+  const angleDeg = -90 + position * 30;
+  const angleRad = angleDeg * DEG;
+  const acc = slice.accidentals;
+
+  const startDeg = angleDeg - 15;
+  const endDeg = angleDeg + 15;
+
+  const parts = [];
+
+  // Ring background sectors
+  if (showBackground) {
+    // Outer ring sector
+    if (showMajorBg) {
+      parts.push(`<path d="${sectorPath(centerX, centerY, middleRadius, outerRadius, startDeg, endDeg)}" fill="#f4f2ec" stroke="#bbb" stroke-width="1.2"/>`);
+    }
+    // Inner ring sector (middle band)
+    if (showMinorBg) {
+      parts.push(`<path d="${sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg)}" fill="#dedad0" stroke="#aaa" stroke-width="1.5"/>`);
+    }
+    // Center area (no stroke — just fill to avoid white gaps)
+    parts.push(`<path d="${sectorPath(centerX, centerY, 0, innerRadius, startDeg, endDeg)}" fill="#f4f2ec" stroke="none"/>`);
+  }
+
+  // Left radial boundary line
+  if (showRadialLine) {
+    const bRad = startDeg * DEG;
+    const x1 = centerX + innerRadius * Math.cos(bRad);
+    const y1 = centerY + innerRadius * Math.sin(bRad);
+    const x2 = centerX + outerRadius * Math.cos(bRad);
+    const y2 = centerY + outerRadius * Math.sin(bRad);
+    parts.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="radial-line"/>`);
+  }
+
+  // Staff with accidentals (outside the outer ring)
+  if (showStaff) {
+    const staffCx = centerX + staffRadius * Math.cos(angleRad);
+    const staffCy = centerY + staffRadius * Math.sin(angleRad);
+
+    if (slice.enharmonic) {
+      const leftAcc = renderAccidentals(acc);
+      const rightAcc = renderAccidentals(-acc);
+      const label = acc === 5 ? '5♯/7♭' : acc === -5 ? '5♭/7♯' : acc === 6 ? '6♯/6♭' : `${Math.abs(acc)}♯/${Math.abs(acc)}♭`;
+      parts.push(renderStaffGroup(staffCx - 45, staffCy, leftAcc));
+      parts.push(renderStaffGroup(staffCx + 45, staffCy, rightAcc));
+      parts.push(`<text x="${staffCx}" y="${staffCy - 35}" class="accidental-count">${label}</text>`);
+    } else {
+      const accidentals = renderAccidentals(acc);
+      parts.push(renderStaffGroup(staffCx, staffCy, accidentals));
+      parts.push(`<text x="${staffCx}" y="${staffCy - 30}" class="accidental-count">${renderAccidentalLabel(acc)}</text>`);
+    }
+  }
+
+  // Major ring content (outer ring)
+  if (showMajor) {
+    const majX = centerX + majorRadius * Math.cos(angleRad);
+    const majY = centerY + majorRadius * Math.sin(angleRad);
+    parts.push(`<text x="${majX}" y="${majY + 5}" class="major-key">${slice.major}</text>`);
+    if (showLeadingTones) {
+      const firstMajor = slice.enharmonic ? slice.major.split('/')[0] : slice.major;
+      const leadingMajor = getLeadingTone(firstMajor, true);
+      parts.push(`<text x="${majX}" y="${majY + 24}" class="leading-tone">(${leadingMajor})</text>`);
+    }
+  }
+
+  // Minor ring content (inner ring)
+  if (showMinor) {
+    const minX = centerX + minorRadius * Math.cos(angleRad);
+    const minY = centerY + minorRadius * Math.sin(angleRad);
+    parts.push(`<text x="${minX}" y="${minY + 5}" class="minor-key">${slice.minor}</text>`);
+    if (showLeadingTones) {
+      const leadingMinor = getLeadingTone(slice.minor, false);
+      parts.push(`<text x="${minX}" y="${minY + 24}" class="leading-tone">(${leadingMinor})</text>`);
+    }
+  }
+
+  return parts.join('');
 }
 
-function buildArrow() {
-  return `
-      <path d="M 475 235 C 465 268, 465 292, 480 310" class="arrow-path" marker-end="url(#arrowRed)"/>
-      <text class="arrow-label" transform="translate(460,269) rotate(-95)">tierce mineure</text>
-    `;
+// ─── Full circle build ────────────────────────────────────────────────────────
+
+export function buildStyleBlock() {
+  return `<style>
+    .major-key { fill: #8B0000; font-family: Georgia, serif; font-size: 23px; font-weight: 700; text-anchor: middle; }
+    .minor-key { fill: #2E6B2E; font-family: Georgia, serif; font-size: 19px; text-anchor: middle; }
+    .leading-tone { fill: #666; font-family: Georgia, serif; font-size: 11px; text-anchor: middle; }
+    .accidental-count { fill: #444; font-family: Georgia, serif; font-size: 13px; text-anchor: middle; }
+    .clef { fill: #555; font-family: serif; font-size: 40px; text-anchor: start; }
+    .accidental { fill: #000; font-family: Georgia, serif; font-size: 10px; font-weight: 700; text-anchor: middle; }
+    .staff-line { fill: #888; height: 0.8px; }
+    .ring-outer { fill: #f4f2ec; stroke: #bbb; stroke-width: 1.2; }
+    .ring-middle { fill: #dedad0; stroke: #aaa; stroke-width: 1.5; }
+    .ring-inner { fill: #f4f2ec; stroke: #999; stroke-width: 1; }
+    .radial-line { stroke: #aaa; stroke-width: 1.2; }
+    .label-majeur { fill: #8B0000; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
+    .label-mineur { fill: #2E6B2E; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
+    .label-naturel { fill: #4d4b4b; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
+    .arrow-path { fill: none; stroke: #4d4b4b; stroke-width: 1.6; stroke-dasharray: 4 4; }
+    .arrow-label { fill: #4d4b4b; font-family: Georgia, serif; font-size: 14px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
+    #arrowRed path { fill: none; stroke: #4d4b4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.2; }
+    .highlight-neighbor { fill: rgba(139, 0, 0, 0.14); transition: opacity 180ms ease-in-out; }
+    .highlight-major { fill: rgba(139, 0, 0, 0.25); }
+    .highlight-minor { fill: rgba(46, 107, 46, 0.22); }
+    .fade-in { animation: fadeIn 220ms ease forwards; }
+    @keyframes fadeIn { from { opacity: 0; } }
+  </style>`;
 }
 
 export function buildSVG(options = {}) {
   const config = Object.assign({}, DEFAULT_CONFIG, options);
-  const {
-    width,
-    height,
-    centerX,
-    centerY,
-    outerRadius,
-    middleRadius,
-    innerRadius,
-    staffRadius,
-    majorRadius,
-    minorRadius
-  } = config;
-
-  const angles = Array.from({ length: SLICES.length }, (_, index) => (-90 + index * 30) * DEG);
-  const positions = angles.map(angle => ({
-    cx: centerX + staffRadius * Math.cos(angle),
-    cy: centerY + staffRadius * Math.sin(angle)
-  }));
+  const { width, height, centerX, centerY, outerRadius, middleRadius, innerRadius } = config;
 
   const parts = [];
   parts.push(`<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`);
   parts.push(buildStyleBlock());
-  parts.push(`
-      <defs>
-        <marker id="arrowRed" markerHeight="7" markerWidth="7" orient="auto" refX="8" refY="5" viewBox="0 0 10 10">
-          <path d="m2,1l6,4l-6,4"/>
-        </marker>
-      </defs>
-      <circle cx="${centerX}" cy="${centerY}" r="${outerRadius}" class="ring-outer"/>
-      <circle cx="${centerX}" cy="${centerY}" r="${middleRadius}" class="ring-middle"/>
-      <circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" class="ring-inner"/>
-    `);
+  parts.push(`<defs>
+    <marker id="arrowRed" markerHeight="7" markerWidth="7" orient="auto" refX="8" refY="5" viewBox="0 0 10 10">
+      <path d="m2,1l6,4l-6,4"/>
+    </marker>
+  </defs>`);
 
-  angles.forEach((_, index) => {
-    const boundaryDeg = -90 + 15 + index * 30;
-    const angleRad = boundaryDeg * DEG;
-    const x1 = centerX + innerRadius * Math.cos(angleRad);
-    const y1 = centerY + innerRadius * Math.sin(angleRad);
-    const x2 = centerX + outerRadius * Math.cos(angleRad);
-    const y2 = centerY + outerRadius * Math.sin(angleRad);
-    parts.push(`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="radial-line" />`);
-  });
+  // Ring backgrounds are now drawn by each slice as sectors
+  // (For the full circle, 12 sectors = complete rings)
+  // Add inner circle border (the center area boundary)
+  parts.push(`<circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" fill="none" stroke="#999" stroke-width="1"/>`);
 
-  parts.push(`
-      <text x="${centerX}" y="${centerY - 302}" class="label-majeur">Majeur</text>
-      <text x="${centerX}" y="${centerY}" class="label-mineur">Mineur</text>
-      <text x="${centerX}" y="${centerY - 198}" class="label-naturel">♮</text>
-    `);
+  // Center labels
+  parts.push(`<text x="${centerX}" y="${centerY - 302}" class="label-majeur">Majeur</text>`);
+  parts.push(`<text x="${centerX}" y="${centerY}" class="label-mineur">Mineur</text>`);
+  parts.push(`<text x="${centerX}" y="${centerY - 198}" class="label-naturel">♮</text>`);
 
-  SLICES.forEach((slice, index) => {
-    const pos = positions[index];
-    const angleRad = angles[index];
-    const acc = slice.accidentals;
+  // Draw all 12 slices (each draws its own background sector)
+  for (let i = 0; i < 12; i++) {
+    parts.push(drawSlice({ sliceIndex: i, position: i, config }));
+  }
 
-    if (slice.enharmonic) {
-      const leftAccidentals = renderAccidentals(acc);
-      const rightAccidentals = renderAccidentals(-acc);
-      const label = acc === 5 ? '5♯/7♭' : acc === -5 ? '5♭/7♯' : acc === 6 ? '6♯/6♭' : `${Math.abs(acc)}♯/${Math.abs(acc)}♭`;
-      const leftCx = pos.cx - 45;
-      const rightCx = pos.cx + 45;
-      parts.push(renderStaffGroup(leftCx, pos.cy, leftAccidentals));
-      parts.push(renderStaffGroup(rightCx, pos.cy, rightAccidentals));
-      parts.push(`<text x="${pos.cx}" y="${pos.cy - 35}" class="accidental-count">${label}</text>`);
-    } else {
-      const accidentals = renderAccidentals(acc);
-      parts.push(renderStaffGroup(pos.cx, pos.cy, accidentals));
-      parts.push(`<text x="${pos.cx}" y="${pos.cy - 30}" class="accidental-count">${renderAccidentalLabel(acc)}</text>`);
-    }
+  // Arrow decoration
+  parts.push(`<path d="M 475 235 C 465 268, 465 292, 480 310" class="arrow-path" marker-end="url(#arrowRed)"/>`);
+  parts.push(`<text class="arrow-label" transform="translate(460,269) rotate(-95)">tierce mineure</text>`);
 
-    const majX = centerX + majorRadius * Math.cos(angleRad);
-    const majY = centerY + majorRadius * Math.sin(angleRad);
-    const minX = centerX + minorRadius * Math.cos(angleRad);
-    const minY = centerY + minorRadius * Math.sin(angleRad);
-
-    parts.push(`<text x="${majX}" y="${majY + 5}" class="major-key">${slice.major}</text>`);
-    parts.push(`<text x="${minX}" y="${minY + 5}" class="minor-key">${slice.minor}</text>`);
-
-    const firstMajor = slice.enharmonic ? slice.major.split('/')[0] : slice.major;
-    const leadingMajor = getLeadingTone(firstMajor, true);
-    const leadingMinor = getLeadingTone(slice.minor, false);
-    parts.push(`<text x="${majX}" y="${majY + 24}" class="leading-tone">(${leadingMajor})</text>`);
-    parts.push(`<text x="${minX}" y="${minY + 24}" class="leading-tone">(${leadingMinor})</text>`);
-  });
-
-  parts.push(buildArrow());
   parts.push('</svg>');
   return parts.join('');
 }
@@ -183,17 +240,8 @@ export function renderCircle(containerId, options = {}) {
 
 export function getCircleLayout(options = {}) {
   const config = Object.assign({}, DEFAULT_CONFIG, options);
-  const {
-    centerX,
-    centerY,
-    outerRadius,
-    middleRadius,
-    innerRadius,
-    staffRadius,
-    majorRadius,
-    minorRadius
-  } = config;
-  const anglesDeg = Array.from({ length: SLICES.length }, (_, index) => -90 + index * 30);
+  const { centerX, centerY, outerRadius, middleRadius, innerRadius, staffRadius, majorRadius, minorRadius } = config;
+  const anglesDeg = Array.from({ length: SLICES.length }, (_, i) => -90 + i * 30);
   const angles = anglesDeg.map(d => d * DEG);
   const positions = angles.map(angle => ({
     angleRad: angle,
@@ -202,18 +250,5 @@ export function getCircleLayout(options = {}) {
     minor: { x: centerX + minorRadius * Math.cos(angle), y: centerY + minorRadius * Math.sin(angle) },
     staff: { x: centerX + staffRadius * Math.cos(angle), y: centerY + staffRadius * Math.sin(angle) }
   }));
-  return {
-    config: {
-      centerX,
-      centerY,
-      outerRadius,
-      middleRadius,
-      innerRadius,
-      staffRadius,
-      majorRadius,
-      minorRadius
-    },
-    anglesDeg,
-    positions
-  };
+  return { config: { centerX, centerY, outerRadius, middleRadius, innerRadius, staffRadius, majorRadius, minorRadius }, anglesDeg, positions };
 }
