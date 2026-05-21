@@ -78,8 +78,8 @@ function staffPositionToAbc(staffPos) {
  * For harmonic/melodic minor, the raised 6th/7th degrees need explicit accidentals.
  */
 function needsExplicitAccidental(scaleName, noteIndex) {
-  if (scaleName === 'Harmonic Minor' && noteIndex === 6) return true;
-  if (scaleName === 'Melodic Minor') {
+  if (scaleName === 'Mineure harmonique' && noteIndex === 6) return true;
+  if (scaleName === 'Mineure mélodique') {
     // Ascending: raised 6th (index 5) and 7th (index 6)
     if (noteIndex === 5 || noteIndex === 6) return true;
     // Descending: natural 6th and 7th need explicit naturals to cancel the raised versions
