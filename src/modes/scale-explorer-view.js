@@ -37,7 +37,7 @@ function renderScales(panel, activeKey) {
   panel.innerHTML = '';
 
   // Title
-  const title = document.createElement('h3');
+  const title = document.createElement('h2');
   title.className = 'scale-explorer-title';
   title.textContent = `${keyName} — Scales`;
   panel.appendChild(title);

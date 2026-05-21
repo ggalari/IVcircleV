@@ -99,14 +99,16 @@ export function drawSlice({
   if (showBackground) {
     // Outer ring sector
     if (showMajorBg) {
-      parts.push(`<path d="${sectorPath(centerX, centerY, middleRadius, outerRadius, startDeg, endDeg)}" fill="#f4f2ec" stroke="#bbb" stroke-width="1.2"/>`);
+      parts.push(`<path d="${sectorPath(centerX, centerY, middleRadius, outerRadius, startDeg, endDeg)}" class="ring-outer"/>`);
     }
     // Inner ring sector (middle band)
     if (showMinorBg) {
-      parts.push(`<path d="${sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg)}" fill="#dedad0" stroke="#aaa" stroke-width="1.5"/>`);
+      parts.push(`<path d="${sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg)}" class="ring-middle"/>`);
+      // Hatching overlay for minor ring (secondary indicator for color-blind users)
+      parts.push(`<path d="${sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg)}" fill="url(#minor-hatch)" stroke="none"/>`);
     }
     // Center area (no stroke — just fill to avoid white gaps)
-    parts.push(`<path d="${sectorPath(centerX, centerY, 0, innerRadius, startDeg, endDeg)}" fill="#f4f2ec" stroke="none"/>`);
+    parts.push(`<path d="${sectorPath(centerX, centerY, 0, innerRadius, startDeg, endDeg)}" class="ring-inner"/>`);
   }
 
   // Left radial boundary line
@@ -170,26 +172,34 @@ export function drawSlice({
 
 export function buildStyleBlock() {
   return `<style>
-    .major-key { fill: #8B0000; font-family: Georgia, serif; font-size: 23px; font-weight: 700; text-anchor: middle; }
-    .minor-key { fill: #2E6B2E; font-family: Georgia, serif; font-size: 19px; text-anchor: middle; }
-    .leading-tone { fill: #666; font-family: Georgia, serif; font-size: 11px; text-anchor: middle; }
-    .accidental-count { fill: #444; font-family: Georgia, serif; font-size: 13px; text-anchor: middle; }
-    .clef { fill: #555; font-family: serif; font-size: 40px; text-anchor: start; }
-    .accidental { fill: #000; font-family: Georgia, serif; font-size: 10px; font-weight: 700; text-anchor: middle; }
-    .staff-line { fill: #888; height: 0.8px; }
-    .ring-outer { fill: #f4f2ec; stroke: #bbb; stroke-width: 1.2; }
-    .ring-middle { fill: #dedad0; stroke: #aaa; stroke-width: 1.5; }
-    .ring-inner { fill: #f4f2ec; stroke: #999; stroke-width: 1; }
-    .radial-line { stroke: #aaa; stroke-width: 1.2; }
-    .label-majeur { fill: #8B0000; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
-    .label-mineur { fill: #2E6B2E; font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
-    .label-naturel { fill: #4d4b4b; font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
-    .arrow-path { fill: none; stroke: #4d4b4b; stroke-width: 1.6; stroke-dasharray: 4 4; }
-    .arrow-label { fill: #4d4b4b; font-family: Georgia, serif; font-size: 14px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
-    #arrowRed path { fill: none; stroke: #4d4b4b; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.2; }
-    .highlight-neighbor { fill: rgba(139, 0, 0, 0.14); transition: opacity 180ms ease-in-out; }
-    .highlight-major { fill: rgba(139, 0, 0, 0.25); }
-    .highlight-minor { fill: rgba(46, 107, 46, 0.22); }
+    .major-key { fill: var(--color-major, #8B0000); font-family: Georgia, serif; font-size: 23px; font-weight: 700; text-anchor: middle; }
+    .minor-key { fill: var(--color-minor, #2E6B2E); font-family: Georgia, serif; font-size: 19px; text-anchor: middle; }
+    .leading-tone { fill: var(--color-text-muted, #666); font-family: Georgia, serif; font-size: 11px; text-anchor: middle; }
+    .accidental-count { fill: var(--color-text-faint, #444); font-family: Georgia, serif; font-size: 13px; text-anchor: middle; }
+    .clef { fill: var(--color-text-secondary, #555); font-family: serif; font-size: 40px; text-anchor: start; }
+    .accidental { fill: var(--color-text-primary, #000); font-family: Georgia, serif; font-size: 10px; font-weight: 700; text-anchor: middle; }
+    .staff-line { fill: var(--color-border-dark, #888); height: 0.8px; }
+    .ring-outer { fill: var(--color-surface-parchment, #f4f2ec); stroke: var(--color-border-medium, #bbb); stroke-width: 1.2; }
+    .ring-middle { fill: var(--color-surface-parchment-dark, #dedad0); stroke: var(--color-border-dark, #aaa); stroke-width: 1.5; }
+    .ring-inner { fill: var(--color-surface-card, #fff); stroke: none; }
+    .ring-border { fill: none; stroke: var(--color-border-ring, #999); stroke-width: 1; }
+    .radial-line { stroke: var(--color-border-dark, #aaa); stroke-width: 1.2; }
+    .label-majeur { fill: var(--color-major, #8B0000); font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
+    .label-mineur { fill: var(--color-minor, #2E6B2E); font-family: Georgia, serif; font-size: 15px; font-weight: 700; font-style: italic; text-anchor: middle; }
+    .label-naturel { fill: var(--color-text-muted, #4d4b4b); font-family: Georgia, serif; font-size: 18px; text-anchor: middle; dominant-baseline: central; }
+    .arrow-path { fill: none; stroke: var(--color-text-muted, #4d4b4b); stroke-width: 1.6; stroke-dasharray: 4 4; }
+    .arrow-label { fill: var(--color-text-muted, #4d4b4b); font-family: Georgia, serif; font-size: 14px; font-style: italic; letter-spacing: 0.3px; text-anchor: middle; }
+    #arrowRed path { fill: none; stroke: var(--color-text-muted, #4d4b4b); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.2; }
+    .highlight-neighbor { fill: var(--color-highlight-major, rgba(139, 0, 0, 0.14)); transition: opacity 180ms ease-in-out; }
+    .highlight-major { fill: var(--color-highlight-major, rgba(139, 0, 0, 0.25)); }
+    .highlight-minor { fill: var(--color-highlight-minor, rgba(46, 107, 46, 0.22)); }
+    .roman-numeral { font-family: Georgia, serif; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .roman-numeral--major { fill: var(--color-major, #8B0000); }
+    .roman-numeral--minor { fill: var(--color-minor, #2E6B2E); }
+    .roman-numeral--outer { font-size: 15px; }
+    .roman-numeral--inner { font-size: 13px; }
+    .center-key-name { font-family: Georgia, serif; font-size: 32px; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .center-key-type { font-family: Georgia, serif; font-size: 16px; font-style: italic; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
     .fade-in { animation: fadeIn 220ms ease forwards; }
     @keyframes fadeIn { from { opacity: 0; } }
   </style>`;
@@ -200,22 +210,27 @@ export function buildSVG(options = {}) {
   const { width, height, centerX, centerY, outerRadius, middleRadius, innerRadius } = config;
 
   const parts = [];
-  parts.push(`<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">`);
+  parts.push(`<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="circle-title circle-desc">`);
+  parts.push(`<title id="circle-title">Cercle des quintes</title>`);
+  parts.push(`<desc id="circle-desc">Diagramme interactif du cercle des quintes montrant 12 tonalités majeures et 12 tonalités mineures avec leurs armures</desc>`);
   parts.push(buildStyleBlock());
   parts.push(`<defs>
     <marker id="arrowRed" markerHeight="7" markerWidth="7" orient="auto" refX="8" refY="5" viewBox="0 0 10 10">
       <path d="m2,1l6,4l-6,4"/>
     </marker>
+    <pattern id="minor-hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="var(--color-border-dark, #aaa)" stroke-width="0.8" stroke-opacity="0.4"/>
+    </pattern>
   </defs>`);
 
   // Ring backgrounds are now drawn by each slice as sectors
   // (For the full circle, 12 sectors = complete rings)
   // Add inner circle border (the center area boundary)
-  parts.push(`<circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" fill="none" stroke="#999" stroke-width="1"/>`);
+  parts.push(`<circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" fill="none" class="ring-border"/>`);
 
-  // Center labels
+  // Center labels (ring type indicators)
   parts.push(`<text x="${centerX}" y="${centerY - 302}" class="label-majeur">Majeur</text>`);
-  parts.push(`<text x="${centerX}" y="${centerY}" class="label-mineur">Mineur</text>`);
+  parts.push(`<text x="${centerX}" y="${centerY + 65}" class="label-mineur">Mineur</text>`);
   parts.push(`<text x="${centerX}" y="${centerY - 198}" class="label-naturel">♮</text>`);
 
   // Draw all 12 slices (each draws its own background sector)

@@ -22,7 +22,7 @@ function renderContent(panel, activeKey) {
   panel.innerHTML = '';
 
   // Title
-  const title = document.createElement('h3');
+  const title = document.createElement('h2');
   title.className = 'chord-explorer__title';
   title.textContent = `${keyName} — Diatonic Chords`;
   panel.appendChild(title);

@@ -6,6 +6,8 @@
 import { DEFAULT_CONFIG, sectorPath } from '../circle/geometry.js';
 import { drawSlice, buildStyleBlock } from '../circle/renderer.js';
 import { getNeighborDegrees } from '../theory/degrees.js';
+import { SLICES } from '../circle/keys.js';
+import { getCenterLabelSetting } from '../overlays/neighbors.js';
 import { set } from '../state.js';
 
 const DEG = Math.PI / 180;
@@ -44,33 +46,33 @@ function getZoomSlices(activeKeyIndex, activeKeyType) {
 
   // Diminished chord slice (partial) — always at offset +2 on the inner ring
   if (activeKeyType === 'major') {
-    // Position +2: only minor ring content (vii°), but draw both ring backgrounds + staff
+    // Position +2: only minor ring content (vii°), no outer ring background
     slices.push({
       sliceIndex: ((activeKeyIndex + 2) % 12 + 12) % 12,
       position: 2,
       show: {
         major: false,
         minor: true,
-        majorBg: true,
+        majorBg: false,
         minorBg: true,
         staff: true,
-        radialLine: true,
+        radialLine: false,
         leadingTones: true,
         background: true
       }
     });
   } else {
-    // Position +2: only minor ring content (ii°), but draw both ring backgrounds + staff
+    // Position +2: only minor ring content (ii°), no outer ring background
     slices.push({
       sliceIndex: ((activeKeyIndex + 2) % 12 + 12) % 12,
       position: 2,
       show: {
         major: false,
         minor: true,
-        majorBg: true,
+        majorBg: false,
         minorBg: true,
         staff: true,
-        radialLine: true,
+        radialLine: false,
         leadingTones: true,
         background: true
       }
@@ -103,15 +105,20 @@ function buildNeighborSVG(activeKey) {
   const parts = [];
   parts.push(`<svg viewBox="0 0 ${config.width} ${config.height}" xmlns="http://www.w3.org/2000/svg">`);
   parts.push(buildStyleBlock());
+  parts.push(`<defs><pattern id="minor-hatch" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="var(--color-border-dark, #aaa)" stroke-width="0.8" stroke-opacity="0.4"/></pattern></defs>`);
 
   // Draw slices (backgrounds + content)
   zoomSlices.forEach(({ sliceIndex, position, show }) => {
     parts.push(drawSlice({ sliceIndex, position, config: zoomConfig, show }));
   });
 
-  // Right boundary of last slice
+  // Right boundary of last slice (only spans the minor ring since dim has no outer ring)
   const lastRad = arcEndDeg * DEG;
-  parts.push(`<line x1="${centerX + innerRadius * Math.cos(lastRad)}" y1="${centerY + innerRadius * Math.sin(lastRad)}" x2="${centerX + outerRadius * Math.cos(lastRad)}" y2="${centerY + outerRadius * Math.sin(lastRad)}" class="radial-line"/>`);
+  parts.push(`<line x1="${centerX + innerRadius * Math.cos(lastRad)}" y1="${centerY + innerRadius * Math.sin(lastRad)}" x2="${centerX + middleRadius * Math.cos(lastRad)}" y2="${centerY + middleRadius * Math.sin(lastRad)}" class="radial-line"/>`);
+
+  // Right boundary of the position +1 slice (full height, outer ring ends here)
+  const pos1EndDeg = (-90 + 1 * 30 + 15) * DEG;
+  parts.push(`<line x1="${centerX + middleRadius * Math.cos(pos1EndDeg)}" y1="${centerY + middleRadius * Math.sin(pos1EndDeg)}" x2="${centerX + outerRadius * Math.cos(pos1EndDeg)}" y2="${centerY + outerRadius * Math.sin(pos1EndDeg)}" class="radial-line"/>`);
 
   // Draw overlay highlights (outer ring = major/red, inner ring = minor/green — matches legend)
   zoomSlices.forEach(({ position, show }) => {
@@ -127,13 +134,15 @@ function buildNeighborSVG(activeKey) {
       if (show.major || show.majorBg) {
         const outerD = sectorPath(centerX, centerY, middleRadius, outerRadius, startDeg, endDeg);
         const opacity = (isTonic && activeKey.type === 'major') ? 1 : 0.45;
-        parts.push(`<path d="${outerD}" class="highlight-major" opacity="${opacity}" style="pointer-events:none"/>`);
+        const stroke = (isTonic && activeKey.type === 'major') ? ' stroke="var(--color-major, #8B0000)" stroke-width="2" stroke-opacity="0.6"' : '';
+        parts.push(`<path d="${outerD}" class="highlight-major" opacity="${opacity}"${stroke} style="pointer-events:none"/>`);
       }
       // Inner ring = minor/green
       if (show.minor || show.minorBg) {
         const innerD = sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg);
         const opacity = (isTonic && activeKey.type === 'minor') ? 1 : 0.45;
-        parts.push(`<path d="${innerD}" class="highlight-minor" opacity="${opacity}" style="pointer-events:none"/>`);
+        const stroke = (isTonic && activeKey.type === 'minor') ? ' stroke="var(--color-minor, #2E6B2E)" stroke-width="2" stroke-opacity="0.6"' : '';
+        parts.push(`<path d="${innerD}" class="highlight-minor" opacity="${opacity}"${stroke} style="pointer-events:none"/>`);
       }
     }
     if (isDim) {
@@ -162,8 +171,9 @@ function buildNeighborSVG(activeKey) {
         const la = (angleDeg + 12) * DEG;
         const lx = centerX + lr * Math.cos(la);
         const ly = centerY + lr * Math.sin(la);
-        const color = tonicRing === 'outer' ? '#8B0000' : '#2E6B2E';
-        parts.push(`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="14" font-family="Georgia, serif" font-weight="700" fill="${color}" style="pointer-events:none">${romanLabel}</text>`);
+        const typeClass = tonicRing === 'outer' ? 'roman-numeral--major' : 'roman-numeral--minor';
+        const sizeClass = tonicRing === 'outer' ? 'roman-numeral--outer' : 'roman-numeral--inner';
+        parts.push(`<text x="${lx}" y="${ly}" class="roman-numeral ${typeClass} ${sizeClass}">${romanLabel}</text>`);
       }
 
       // Relative ring roman numeral
@@ -173,8 +183,9 @@ function buildNeighborSVG(activeKey) {
         const rla = (angleDeg + 12) * DEG;
         const rlx = centerX + rlr * Math.cos(rla);
         const rly = centerY + rlr * Math.sin(rla);
-        const rcolor = relativeRing === 'outer' ? '#8B0000' : '#2E6B2E';
-        parts.push(`<text x="${rlx}" y="${rly}" text-anchor="middle" dominant-baseline="central" font-size="12" font-family="Georgia, serif" font-weight="700" fill="${rcolor}" style="pointer-events:none">${relRoman}</text>`);
+        const rTypeClass = relativeRing === 'outer' ? 'roman-numeral--major' : 'roman-numeral--minor';
+        const rSizeClass = relativeRing === 'outer' ? 'roman-numeral--outer' : 'roman-numeral--inner';
+        parts.push(`<text x="${rlx}" y="${rly}" class="roman-numeral ${rTypeClass} ${rSizeClass}">${relRoman}</text>`);
       }
     }
 
@@ -185,9 +196,33 @@ function buildNeighborSVG(activeKey) {
       const la = (angleDeg + 12) * DEG;
       const lx = centerX + lr * Math.cos(la);
       const ly = centerY + lr * Math.sin(la);
-      parts.push(`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="12" font-family="Georgia, serif" font-weight="700" fill="#2E6B2E" style="pointer-events:none">${dimLabel}</text>`);
+      parts.push(`<text x="${lx}" y="${ly}" class="roman-numeral roman-numeral--minor roman-numeral--inner">${dimLabel}</text>`);
     }
   });
+
+  // Center area: card-colored background (arc only, matching visible slices) + active key label
+  // Draw a sector-shaped center fill that only covers the visible arc
+  const centerArcStart = -90 + minPos * 30 - 15;
+  const centerArcEnd = -90 + maxPos * 30 + 15;
+  const centerD = sectorPath(centerX, centerY, 0, innerRadius, centerArcStart, centerArcEnd);
+  parts.push(`<path d="${centerD}" fill="var(--color-surface-card, #fff)" stroke="none"/>`);
+  // Inner ring border (arc only)
+  const arcStartRad = centerArcStart * DEG;
+  const arcEndRad = centerArcEnd * DEG;
+  const ix1 = centerX + innerRadius * Math.cos(arcStartRad);
+  const iy1 = centerY + innerRadius * Math.sin(arcStartRad);
+  const ix2 = centerX + innerRadius * Math.cos(arcEndRad);
+  const iy2 = centerY + innerRadius * Math.sin(arcEndRad);
+  parts.push(`<path d="M ${ix1} ${iy1} A ${innerRadius} ${innerRadius} 0 0 1 ${ix2} ${iy2}" fill="none" stroke="var(--color-border-ring, #999)" stroke-width="1"/>`);
+
+  if (getCenterLabelSetting()) {
+    const slice = SLICES[activeKey.index];
+    const keyName = activeKey.type === 'major' ? slice.major : slice.minor;
+    const typeLabel = activeKey.type === 'major' ? 'Majeur' : 'mineur';
+    const typeClass = activeKey.type === 'major' ? 'roman-numeral--major' : 'roman-numeral--minor';
+    parts.push(`<text x="${centerX}" y="${centerY - 12}" class="center-key-name ${typeClass}">${keyName}</text>`);
+    parts.push(`<text x="${centerX}" y="${centerY + 22}" class="center-key-type ${typeClass}">${typeLabel}</text>`);
+  }
 
   parts.push('</svg>');
   return parts.join('');

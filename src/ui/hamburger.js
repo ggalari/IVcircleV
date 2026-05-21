@@ -41,6 +41,13 @@ export function attachHamburgerMenu() {
     close();
   }
 
+  function handleKeydown(e) {
+    if (e.key === 'Escape' && !dropdown.hidden) {
+      close();
+      btn.focus();
+    }
+  }
+
   function handleItemClick() {
     // Let the action's own handler fire first, then close
     setTimeout(close, 0);
@@ -48,6 +55,7 @@ export function attachHamburgerMenu() {
 
   btn.addEventListener('click', toggle);
   document.addEventListener('click', handleOutsideClick);
+  document.addEventListener('keydown', handleKeydown);
 
   const items = dropdown.querySelectorAll('.dropdown-item');
   items.forEach(item => item.addEventListener('click', handleItemClick));
@@ -55,6 +63,7 @@ export function attachHamburgerMenu() {
   return function cleanup() {
     btn.removeEventListener('click', toggle);
     document.removeEventListener('click', handleOutsideClick);
+    document.removeEventListener('keydown', handleKeydown);
     items.forEach(item => item.removeEventListener('click', handleItemClick));
   };
 }
