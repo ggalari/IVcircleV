@@ -35,7 +35,7 @@ describe('SCALE_INTERVALS', () => {
 describe('getScale', () => {
   it('returns C major scale for keyIndex 0, major', () => {
     const result = getScale(0, 'major', 'major');
-    expect(result.name).toBe('Major');
+    expect(result.name).toBe('Majeure');
     expect(result.tonic).toBe('DO');
     expect(result.notes).toHaveLength(8);
     expect(result.notes[0]).toBe('DO');
@@ -55,7 +55,7 @@ describe('getScale', () => {
   it('returns A natural minor scale for keyIndex 0, minor', () => {
     // SLICES[0] minor = 'la', relative minor of C major
     const result = getScale(0, 'minor', 'naturalMinor');
-    expect(result.name).toBe('Natural Minor');
+    expect(result.name).toBe('Mineure naturelle');
     expect(result.tonic).toBe('la');
     expect(result.notes).toHaveLength(8);
     expect(result.notes[0]).toBe('LA');
@@ -84,7 +84,7 @@ describe('getScale', () => {
 
   it('returns A harmonic minor scale', () => {
     const result = getScale(0, 'minor', 'harmonicMinor');
-    expect(result.name).toBe('Harmonic Minor');
+    expect(result.name).toBe('Mineure harmonique');
     expect(result.notes[0]).toBe('LA');
     expect(result.notes[7]).toBe('LA');
     // A B C D E F G# A
@@ -95,7 +95,7 @@ describe('getScale', () => {
 
   it('returns A melodic minor ascending and descending scale', () => {
     const result = getScale(0, 'minor', 'melodicMinor');
-    expect(result.name).toBe('Melodic Minor');
+    expect(result.name).toBe('Mineure mélodique');
     expect(result.notes[0]).toBe('LA');
     expect(result.notes[7]).toBe('LA');
     // Ascending: A B C D E F# G# A, Descending: G F E D C B
@@ -126,19 +126,19 @@ describe('getAllScales', () => {
   it('returns 4 ScaleResult objects for a major key', () => {
     const results = getAllScales(0, 'major');
     expect(results).toHaveLength(4);
-    expect(results[0].name).toBe('Major');
-    expect(results[1].name).toBe('Natural Minor');
-    expect(results[2].name).toBe('Harmonic Minor');
-    expect(results[3].name).toBe('Melodic Minor');
+    expect(results[0].name).toBe('Majeure');
+    expect(results[1].name).toBe('Mineure naturelle');
+    expect(results[2].name).toBe('Mineure harmonique');
+    expect(results[3].name).toBe('Mineure mélodique');
   });
 
   it('returns 4 ScaleResult objects for a minor key', () => {
     const results = getAllScales(0, 'minor');
     expect(results).toHaveLength(4);
-    expect(results[0].name).toBe('Major');
-    expect(results[1].name).toBe('Natural Minor');
-    expect(results[2].name).toBe('Harmonic Minor');
-    expect(results[3].name).toBe('Melodic Minor');
+    expect(results[0].name).toBe('Majeure');
+    expect(results[1].name).toBe('Mineure naturelle');
+    expect(results[2].name).toBe('Mineure harmonique');
+    expect(results[3].name).toBe('Mineure mélodique');
   });
 
   it('major key: first scale is the major scale of that key', () => {
@@ -171,7 +171,7 @@ describe('getAllScales', () => {
   it('each result has correct number of notes', () => {
     const results = getAllScales(3, 'major');
     for (const scale of results) {
-      if (scale.name === 'Melodic Minor') {
+      if (scale.name === 'Mineure mélodique') {
         // Melodic minor: 8 ascending + 6 descending = 14
         expect(scale.notes).toHaveLength(14);
       } else {

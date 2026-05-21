@@ -3,6 +3,7 @@
 
 import { subscribe, get } from '../state.js';
 import { showNeighbors } from '../overlays/neighbors.js';
+import { showOnboardingHint } from '../ui/onboarding.js';
 
 /**
  * Initialize the Full Circle View inside the first mode panel.
@@ -28,6 +29,9 @@ export function initFullCircleView(panel) {
   // Move the legend element into this panel
   const legend = document.querySelector('.card > .legend');
   if (legend) panel.appendChild(legend);
+
+  // Show first-run onboarding hint
+  showOnboardingHint(panel);
 
   // Show neighbors for the current active key (default: C Major)
   const activeKey = get('activeKey') || { index: 0, type: 'major' };

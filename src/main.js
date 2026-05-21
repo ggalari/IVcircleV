@@ -5,7 +5,7 @@ import { attachContextMenuListeners } from './ui/context-menu.js';
 import { attachToolbarListeners } from './ui/toolbar.js';
 import { attachTouchHandlers } from './ui/touch-handler.js';
 import { attachHamburgerMenu } from './ui/hamburger.js';
-import { set } from './state.js';
+import { set, subscribe } from './state.js';
 import { createModeSwitcher } from './modes/mode-switcher.js';
 import { initFullCircleView } from './modes/full-circle-view.js';
 import { initChordExplorerView } from './modes/chord-explorer-view.js';
@@ -15,6 +15,7 @@ import { createChevrons } from './ui/chevrons.js';
 import { attachKeyboardNav } from './ui/keyboard-nav.js';
 import { attachSwipeHandler } from './modes/swipe-handler.js';
 import { hitTestKey } from './modes/hit-test.js';
+import { SLICES } from './circle/keys.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   try {
@@ -94,6 +95,21 @@ document.addEventListener('DOMContentLoaded', () => {
           set('activeKey', { index: hit.index, type: hit.type });
         }
       },
+    });
+
+    // 11. Aria-live region for screen reader key announcements
+    const liveRegion = document.createElement('div');
+    liveRegion.setAttribute('aria-live', 'polite');
+    liveRegion.setAttribute('aria-atomic', 'true');
+    liveRegion.className = 'sr-only';
+    document.body.appendChild(liveRegion);
+
+    subscribe('activeKey', (key) => {
+      if (!key) return;
+      const slice = SLICES[key.index];
+      const name = key.type === 'major' ? slice.major : slice.minor;
+      const type = key.type === 'major' ? 'Majeur' : 'mineur';
+      liveRegion.textContent = `${name} ${type}`;
     });
   } catch (err) {
     document.getElementById('circle-container').innerHTML =

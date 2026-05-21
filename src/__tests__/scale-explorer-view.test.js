@@ -43,8 +43,8 @@ describe('scale-explorer-view', () => {
   describe('initialization', () => {
     it('renders scale content for the default key (C Major) on init', () => {
       cleanup = initScaleExplorerView(panel);
-      expect(panel.innerHTML).toContain('DO Major');
-      expect(panel.innerHTML).toContain('Scales');
+      expect(panel.innerHTML).toContain('DO Majeur');
+      expect(panel.innerHTML).toContain('Gammes');
     });
 
     it('renders 4 scale sections on init', () => {
@@ -55,10 +55,10 @@ describe('scale-explorer-view', () => {
 
     it('renders scale type labels', () => {
       cleanup = initScaleExplorerView(panel);
-      expect(panel.innerHTML).toContain('Major');
-      expect(panel.innerHTML).toContain('Natural Minor');
-      expect(panel.innerHTML).toContain('Harmonic Minor');
-      expect(panel.innerHTML).toContain('Melodic Minor');
+      expect(panel.innerHTML).toContain('Majeure');
+      expect(panel.innerHTML).toContain('Mineure naturelle');
+      expect(panel.innerHTML).toContain('Mineure harmonique');
+      expect(panel.innerHTML).toContain('Mineure mélodique');
     });
   });
 
@@ -66,7 +66,7 @@ describe('scale-explorer-view', () => {
     it('updates content when activeKey changes', () => {
       cleanup = initScaleExplorerView(panel);
       set('activeKey', { index: 1, type: 'major' });
-      expect(panel.innerHTML).toContain('SOL Major');
+      expect(panel.innerHTML).toContain('SOL Majeur');
     });
 
     it('renders 4 scale sections after key change', () => {

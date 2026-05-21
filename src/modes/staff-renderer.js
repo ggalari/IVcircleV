@@ -174,6 +174,17 @@ function getTonicChromaticFromSlice(sliceIndex, keyType) {
 }
 
 /**
+ * Get responsive staff width based on available container width.
+ * Wider on desktop, narrower on mobile but never below 240.
+ */
+function getStaffWidth() {
+  const viewportWidth = window.innerWidth || 360;
+  if (viewportWidth <= 400) return Math.max(240, viewportWidth - 80);
+  if (viewportWidth <= 600) return Math.min(320, viewportWidth - 60);
+  return 340;
+}
+
+/**
  * Render a chord staff into a container element using abcjs.
  */
 export function renderChordStaff(container, { sliceIndex, keyType, chords, labels }) {
@@ -184,7 +195,7 @@ export function renderChordStaff(container, { sliceIndex, keyType, chords, label
   container.appendChild(staffDiv);
 
   abcjs.renderAbc(staffDiv, abcString, {
-    staffwidth: 280,
+    staffwidth: getStaffWidth(),
     paddingtop: 0,
     paddingbottom: 0,
     paddingleft: 0,
@@ -209,7 +220,7 @@ export function renderScaleStaff(container, { sliceIndex, keyType, scale, noteLa
   container.appendChild(staffDiv);
 
   abcjs.renderAbc(staffDiv, abcString, {
-    staffwidth: 280,
+    staffwidth: getStaffWidth(),
     paddingtop: 0,
     paddingbottom: 0,
     paddingleft: 0,

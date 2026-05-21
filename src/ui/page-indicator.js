@@ -1,37 +1,40 @@
 import { subscribe, get } from '../state.js';
 
-const NUM_DOTS = 3;
+const VIEW_LABELS = ['Cercle', 'Accords', 'Gammes'];
 
 /**
- * Create the page indicator DOM element and subscribe to mode changes.
+ * Create the page indicator with labeled tabs and subscribe to mode changes.
  * @param {HTMLElement} container - Parent element to append indicator to
  * @returns {function} Cleanup function
  */
 export function createPageIndicator(container) {
-  const indicator = document.createElement('div');
+  const indicator = document.createElement('nav');
   indicator.className = 'page-indicator';
+  indicator.setAttribute('aria-label', 'Vues');
 
-  const dots = [];
-  for (let i = 0; i < NUM_DOTS; i++) {
-    const dot = document.createElement('span');
-    dot.className = 'page-dot';
-    indicator.appendChild(dot);
-    dots.push(dot);
+  const tabs = [];
+  for (let i = 0; i < VIEW_LABELS.length; i++) {
+    const tab = document.createElement('span');
+    tab.className = 'page-tab';
+    tab.textContent = VIEW_LABELS[i];
+    tab.dataset.index = i;
+    indicator.appendChild(tab);
+    tabs.push(tab);
   }
 
   container.appendChild(indicator);
 
-  function updateDots(modeIndex) {
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].className = i === modeIndex ? 'page-dot page-dot--active' : 'page-dot';
+  function updateTabs(modeIndex) {
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].className = i === modeIndex ? 'page-tab page-tab--active' : 'page-tab';
     }
   }
 
   // Set initial active state
-  updateDots(get('currentMode') ?? 0);
+  updateTabs(get('currentMode') ?? 0);
 
   // Subscribe to mode changes
-  const unsubscribe = subscribe('currentMode', updateDots);
+  const unsubscribe = subscribe('currentMode', updateTabs);
 
   return function cleanup() {
     unsubscribe();

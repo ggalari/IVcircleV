@@ -13,7 +13,7 @@ import { renderCircleZoom } from './circle-zoom.js';
 function getKeyDisplayName(activeKey) {
   const slice = SLICES[((activeKey.index % 12) + 12) % 12];
   const name = activeKey.type === 'major' ? slice.major : slice.minor;
-  const typeLabel = activeKey.type === 'major' ? 'Major' : 'Minor';
+  const typeLabel = activeKey.type === 'major' ? 'Majeur' : 'mineur';
   return `${name} ${typeLabel}`;
 }
 
@@ -39,7 +39,7 @@ function renderScales(panel, activeKey) {
   // Title
   const title = document.createElement('h2');
   title.className = 'scale-explorer-title';
-  title.textContent = `${keyName} — Scales`;
+  title.textContent = `${keyName} — Gammes`;
   panel.appendChild(title);
 
   // Zoomed circle
@@ -74,11 +74,15 @@ export function initScaleExplorerView(panel) {
   const activeKey = get('activeKey') || { index: 0, type: 'major' };
   renderScales(panel, activeKey);
 
-  const unsubscribe = subscribe('activeKey', (newKey) => {
+  const unsubKey = subscribe('activeKey', (newKey) => {
     if (newKey) {
       renderScales(panel, newKey);
     }
   });
+  const unsubLabel = subscribe('labelToggle', () => {
+    const key = get('activeKey') || { index: 0, type: 'major' };
+    renderScales(panel, key);
+  });
 
-  return unsubscribe;
+  return () => { unsubKey(); unsubLabel(); };
 }

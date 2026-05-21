@@ -4,7 +4,7 @@
  */
 
 import { getCenterLabelSetting, setCenterLabelSetting, showNeighbors } from '../overlays/neighbors.js';
-import { get } from '../state.js';
+import { get, set } from '../state.js';
 
 /**
  * Clone the rendered SVG, open a new window, write it in, and trigger print.
@@ -60,16 +60,19 @@ export function saveSVG() {
 }
 
 /**
- * Toggle the center label setting and refresh the overlay.
+ * Toggle the center label setting and refresh all views.
  */
 export function toggleCenterLabel() {
   const current = getCenterLabelSetting();
   setCenterLabelSetting(!current);
-  // Refresh the overlay to show/hide the label
+  // Refresh the full circle overlay
   const activeKey = get('activeKey');
   if (activeKey) {
     showNeighbors(activeKey);
   }
+  // Force chord/scale views to re-render by bumping a counter
+  // (activeKey hasn't changed, so we need a separate trigger)
+  set('labelToggle', (get('labelToggle') || 0) + 1);
   // Update button text
   updateToggleLabelButton();
 }

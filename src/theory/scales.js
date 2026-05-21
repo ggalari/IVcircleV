@@ -23,10 +23,10 @@ export const SCALE_INTERVALS = {
 
 /** Display names for scale types */
 const SCALE_NAMES = {
-  major: 'Major',
-  naturalMinor: 'Natural Minor',
-  harmonicMinor: 'Harmonic Minor',
-  melodicMinor: 'Melodic Minor'
+  major: 'Majeure',
+  naturalMinor: 'Mineure naturelle',
+  harmonicMinor: 'Mineure harmonique',
+  melodicMinor: 'Mineure mélodique'
 };
 
 /** The 7 natural note names in French solfège, in order */

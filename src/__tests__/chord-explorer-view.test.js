@@ -50,7 +50,7 @@ describe('chord-explorer-view', () => {
       cleanup = initChordExplorerView(panel);
       const title = panel.querySelector('.chord-explorer__title');
       expect(title).not.toBeNull();
-      expect(title.textContent).toContain('DO Major');
+      expect(title.textContent).toContain('DO Majeur');
     });
 
     it('renders two staff sections (triads and sevenths)', () => {
@@ -71,14 +71,14 @@ describe('chord-explorer-view', () => {
       cleanup = initChordExplorerView(panel);
       set('activeKey', { index: 1, type: 'major' });
       const title = panel.querySelector('.chord-explorer__title');
-      expect(title.textContent).toContain('SOL Major');
+      expect(title.textContent).toContain('SOL Majeur');
     });
 
     it('updates content for minor keys', () => {
       cleanup = initChordExplorerView(panel);
       set('activeKey', { index: 0, type: 'minor' });
       const title = panel.querySelector('.chord-explorer__title');
-      expect(title.textContent).toContain('la minor');
+      expect(title.textContent).toContain('la mineur');
     });
   });
 

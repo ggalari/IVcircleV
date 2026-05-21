@@ -10,7 +10,7 @@ import { renderCircleZoom } from './circle-zoom.js';
 function getKeyDisplayName(activeKey) {
   const slice = SLICES[activeKey.index];
   const name = activeKey.type === 'major' ? slice.major : slice.minor;
-  const typeLabel = activeKey.type === 'major' ? 'Major' : 'minor';
+  const typeLabel = activeKey.type === 'major' ? 'Majeur' : 'mineur';
   return `${name} ${typeLabel}`;
 }
 
@@ -24,7 +24,7 @@ function renderContent(panel, activeKey) {
   // Title
   const title = document.createElement('h2');
   title.className = 'chord-explorer__title';
-  title.textContent = `${keyName} — Diatonic Chords`;
+  title.textContent = `${keyName} — Accords diatoniques`;
   panel.appendChild(title);
 
   // Zoomed circle
@@ -36,7 +36,7 @@ function renderContent(panel, activeKey) {
   triadsSection.className = 'chord-explorer__staff chord-explorer__staff--triads';
   const triadsSubtitle = document.createElement('h4');
   triadsSubtitle.className = 'chord-explorer__subtitle';
-  triadsSubtitle.textContent = 'Triads';
+  triadsSubtitle.textContent = 'Triades';
   triadsSection.appendChild(triadsSubtitle);
   renderChordStaff(triadsSection, {
     sliceIndex: activeKey.index,
@@ -52,7 +52,7 @@ function renderContent(panel, activeKey) {
   seventhsSection.className = 'chord-explorer__staff chord-explorer__staff--sevenths';
   const seventhsSubtitle = document.createElement('h4');
   seventhsSubtitle.className = 'chord-explorer__subtitle';
-  seventhsSubtitle.textContent = 'Seventh Chords';
+  seventhsSubtitle.textContent = 'Accords de septième';
   seventhsSection.appendChild(seventhsSubtitle);
   renderChordStaff(seventhsSection, {
     sliceIndex: activeKey.index,
@@ -67,8 +67,12 @@ function renderContent(panel, activeKey) {
 export function initChordExplorerView(panel) {
   const initialKey = get('activeKey') || { index: 0, type: 'major' };
   renderContent(panel, initialKey);
-  const unsubscribe = subscribe('activeKey', (activeKey) => {
+  const unsubKey = subscribe('activeKey', (activeKey) => {
     renderContent(panel, activeKey);
   });
-  return unsubscribe;
+  const unsubLabel = subscribe('labelToggle', () => {
+    const activeKey = get('activeKey') || { index: 0, type: 'major' };
+    renderContent(panel, activeKey);
+  });
+  return () => { unsubKey(); unsubLabel(); };
 }

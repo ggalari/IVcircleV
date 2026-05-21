@@ -27,45 +27,53 @@ describe('page-indicator', () => {
       expect(indicator).not.toBeNull();
     });
 
-    it('creates 3 dot elements', () => {
-      const dots = container.querySelectorAll('.page-dot');
-      expect(dots.length).toBe(3);
+    it('creates 3 tab elements with labels', () => {
+      const tabs = container.querySelectorAll('.page-tab');
+      expect(tabs.length).toBe(3);
+      expect(tabs[0].textContent).toBe('Cercle');
+      expect(tabs[1].textContent).toBe('Accords');
+      expect(tabs[2].textContent).toBe('Gammes');
+    });
+
+    it('has aria-label for navigation', () => {
+      const nav = container.querySelector('.page-indicator');
+      expect(nav.getAttribute('aria-label')).toBe('Vues');
     });
   });
 
   describe('initial state', () => {
-    it('sets first dot as active when currentMode is 0', () => {
-      const dots = container.querySelectorAll('.page-dot');
-      expect(dots[0].classList.contains('page-dot--active')).toBe(true);
-      expect(dots[1].classList.contains('page-dot--active')).toBe(false);
-      expect(dots[2].classList.contains('page-dot--active')).toBe(false);
+    it('sets first tab as active when currentMode is 0', () => {
+      const tabs = container.querySelectorAll('.page-tab');
+      expect(tabs[0].classList.contains('page-tab--active')).toBe(true);
+      expect(tabs[1].classList.contains('page-tab--active')).toBe(false);
+      expect(tabs[2].classList.contains('page-tab--active')).toBe(false);
     });
   });
 
   describe('state subscription', () => {
-    it('updates active dot when currentMode changes to 1', () => {
+    it('updates active tab when currentMode changes to 1', () => {
       set('currentMode', 1);
-      const dots = container.querySelectorAll('.page-dot');
-      expect(dots[0].classList.contains('page-dot--active')).toBe(false);
-      expect(dots[1].classList.contains('page-dot--active')).toBe(true);
-      expect(dots[2].classList.contains('page-dot--active')).toBe(false);
+      const tabs = container.querySelectorAll('.page-tab');
+      expect(tabs[0].classList.contains('page-tab--active')).toBe(false);
+      expect(tabs[1].classList.contains('page-tab--active')).toBe(true);
+      expect(tabs[2].classList.contains('page-tab--active')).toBe(false);
     });
 
-    it('updates active dot when currentMode changes to 2', () => {
+    it('updates active tab when currentMode changes to 2', () => {
       set('currentMode', 2);
-      const dots = container.querySelectorAll('.page-dot');
-      expect(dots[0].classList.contains('page-dot--active')).toBe(false);
-      expect(dots[1].classList.contains('page-dot--active')).toBe(false);
-      expect(dots[2].classList.contains('page-dot--active')).toBe(true);
+      const tabs = container.querySelectorAll('.page-tab');
+      expect(tabs[0].classList.contains('page-tab--active')).toBe(false);
+      expect(tabs[1].classList.contains('page-tab--active')).toBe(false);
+      expect(tabs[2].classList.contains('page-tab--active')).toBe(true);
     });
 
-    it('returns to first dot when mode goes back to 0', () => {
+    it('returns to first tab when mode goes back to 0', () => {
       set('currentMode', 2);
       set('currentMode', 0);
-      const dots = container.querySelectorAll('.page-dot');
-      expect(dots[0].classList.contains('page-dot--active')).toBe(true);
-      expect(dots[1].classList.contains('page-dot--active')).toBe(false);
-      expect(dots[2].classList.contains('page-dot--active')).toBe(false);
+      const tabs = container.querySelectorAll('.page-tab');
+      expect(tabs[0].classList.contains('page-tab--active')).toBe(true);
+      expect(tabs[1].classList.contains('page-tab--active')).toBe(false);
+      expect(tabs[2].classList.contains('page-tab--active')).toBe(false);
     });
   });
 
@@ -74,18 +82,15 @@ describe('page-indicator', () => {
       cleanup();
       const indicator = container.querySelector('.page-indicator');
       expect(indicator).toBeNull();
-      // Prevent afterEach from calling cleanup again
       cleanup = () => {};
     });
 
     it('unsubscribes from state changes after cleanup', () => {
-      const dots = container.querySelectorAll('.page-dot');
+      const tabs = container.querySelectorAll('.page-tab');
       cleanup();
-      // After cleanup, changing state should not affect the (now removed) dots
       set('currentMode', 2);
-      // Dots still exist in memory but should not have been updated
-      expect(dots[0].classList.contains('page-dot--active')).toBe(true);
-      // Prevent afterEach from calling cleanup again
+      // Tabs still exist in memory but should not have been updated
+      expect(tabs[0].classList.contains('page-tab--active')).toBe(true);
       cleanup = () => {};
     });
   });
