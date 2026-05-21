@@ -126,7 +126,9 @@ export function drawSlice({
 
     if (slice.enharmonic) {
       const leftAcc = renderAccidentals(acc);
-      const rightAcc = renderAccidentals(-acc);
+      const absAcc = Math.abs(acc);
+      const rightCount = absAcc === 6 ? -acc : (acc > 0 ? -(12 - absAcc) : (12 - absAcc));
+      const rightAcc = renderAccidentals(rightCount);
       const label = acc === 5 ? '5♯/7♭' : acc === -5 ? '5♭/7♯' : acc === 6 ? '6♯/6♭' : `${Math.abs(acc)}♯/${Math.abs(acc)}♭`;
       parts.push(renderStaffGroup(staffCx - 45, staffCy, leftAcc));
       parts.push(renderStaffGroup(staffCx + 45, staffCy, rightAcc));

@@ -247,9 +247,24 @@ button:hover {
 }
 
 .chord-explorer__subtitle {
-  font-size: 12px;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-style: normal;
   margin: 8px 0 12px;
-  color: #666;
+  color: #555;
+  text-align: center;
+}
+
+.scale-staff-title {
+  font-size: 16px;
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-style: normal;
+  color: #555;
+  margin: 8px 0 12px;
+  padding-left: 0;
+  text-align: center;
 }
 
 .chord-explorer__staff {
@@ -272,22 +287,14 @@ button:hover {
   margin-bottom: 0;
 }
 
-.scale-staff-title {
-  font-size: 11px;
-  color: #555;
-  margin: 0;
-  padding-left: 4px;
-  font-style: italic;
-}
-
 /* abcjs staff rendering */
 .abcjs-staff {
   overflow: hidden;
+  text-align: center;
 }
 
 .abcjs-staff svg {
-  display: block;
-  width: 100%;
+  display: inline-block;
   height: auto;
 }
 

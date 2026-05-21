@@ -28,6 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
     attachTouchHandlers(circleContainer);
 
     attachContextMenuListeners();
+
+    // Desktop click handler for key selection in circle view
+    if (svg) {
+      svg.addEventListener('click', (e) => {
+        const hit = hitTestKey({ x: e.clientX, y: e.clientY }, svg);
+        if (hit) {
+          set('activeKey', { index: hit.index, type: hit.type });
+        }
+      });
+    }
+
     attachToolbarListeners();
     attachHamburgerMenu();
 

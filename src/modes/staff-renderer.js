@@ -8,7 +8,7 @@ import { SLICES } from '../circle/keys.js';
  * Map a circle-of-fifths slice index to an ABC key signature string.
  */
 function getAbcKey(sliceIndex, keyType) {
-  const majorKeys = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Gb', 'Db', 'Ab', 'Eb', 'Bb'];
+  const majorKeys = ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'Db', 'Ab', 'Eb', 'Bb', 'F'];
   const minorKeys = ['Am', 'Em', 'Bm', 'F#m', 'C#m', 'G#m', 'Ebm', 'Bbm', 'Fm', 'Cm', 'Gm', 'Dm'];
   return keyType === 'major' ? majorKeys[sliceIndex] : minorKeys[sliceIndex];
 }
@@ -79,7 +79,13 @@ function staffPositionToAbc(staffPos) {
  */
 function needsExplicitAccidental(scaleName, noteIndex) {
   if (scaleName === 'Harmonic Minor' && noteIndex === 6) return true;
-  if (scaleName === 'Melodic Minor' && (noteIndex === 5 || noteIndex === 6)) return true;
+  if (scaleName === 'Melodic Minor') {
+    // Ascending: raised 6th (index 5) and 7th (index 6)
+    if (noteIndex === 5 || noteIndex === 6) return true;
+    // Descending: natural 6th and 7th need explicit naturals to cancel the raised versions
+    // Index 8 = descending 7th degree (was raised in ascending), index 9 = descending 6th degree
+    if (noteIndex === 8 || noteIndex === 9) return true;
+  }
   return false;
 }
 
@@ -126,12 +132,19 @@ function buildScaleAbc(sliceIndex, keyType, scale, noteLabels) {
 function buildChordAbc(sliceIndex, keyType, chords, labels) {
   const key = getAbcKey(sliceIndex, keyType);
 
-  // For chords, we need to determine the starting staff position.
-  // The tonic (degree 1) should start at the same position as the scale tonic.
-  // Staff positions: A=-2, B=-1, C=0, D=1, E=2, F=3, G=4
-  const tonicChromatic = getTonicChromaticFromSlice(sliceIndex, keyType);
-  const letterToStartPos = [0, 0, 1, 1, 2, 3, 3, 4, 4, -2, -2, -1];
-  const tonicStaffPos = letterToStartPos[tonicChromatic];
+  // Map slice index directly to the tonic's diatonic staff position.
+  // Staff positions: C=0, D=1, E=2, F=3, G=4, A=5(or -2), B=6(or -1)
+  // For chords we want the tonic near middle C, so use positions relative to C=0.
+  // Circle of fifths order for major: C G D A E B F#/Gb Db Ab Eb Bb F
+  const majorTonicStaffPos = [0, 4, 1, 5, 2, 6, 3, 1, 5, 2, 6, 3];
+  // Circle of fifths order for minor: Am Em Bm F#m C#m G#m Ebm Bbm Fm Cm Gm Dm
+  const minorTonicStaffPos = [5, 2, 6, 3, 0, 4, 2, 6, 3, 0, 4, 1];
+
+  // Normalize to keep chords in a readable range (near middle C)
+  // We want the tonic between staff positions -2 and 4 (A below middle C to G above)
+  let tonicStaffPos = keyType === 'major' ? majorTonicStaffPos[sliceIndex] : minorTonicStaffPos[sliceIndex];
+  // Bring into range: if >= 5, subtract 7 to put it below middle C
+  if (tonicStaffPos >= 5) tonicStaffPos -= 7;
 
   const abcChords = chords.map(chord => {
     const rootDegreeIdx = chord.degree - 1;
@@ -171,12 +184,11 @@ export function renderChordStaff(container, { sliceIndex, keyType, chords, label
   container.appendChild(staffDiv);
 
   abcjs.renderAbc(staffDiv, abcString, {
-    staffwidth: container.clientWidth ? container.clientWidth - 20 : 320,
+    staffwidth: 280,
     paddingtop: 0,
-    paddingbottom: 5,
+    paddingbottom: 0,
     paddingleft: 0,
     paddingright: 0,
-    responsive: 'resize',
     add_classes: true
   });
 }
@@ -197,12 +209,11 @@ export function renderScaleStaff(container, { sliceIndex, keyType, scale, noteLa
   container.appendChild(staffDiv);
 
   abcjs.renderAbc(staffDiv, abcString, {
-    staffwidth: container.clientWidth ? container.clientWidth - 20 : 320,
+    staffwidth: 280,
     paddingtop: 0,
-    paddingbottom: 5,
+    paddingbottom: 0,
     paddingleft: 0,
     paddingright: 0,
-    responsive: 'resize',
     add_classes: true
   });
 }

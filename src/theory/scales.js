@@ -146,6 +146,32 @@ export function getScale(keyIndex, keyType, scaleType) {
     staffPositions.push(startPos + i);
   }
 
+  // For melodic minor: append descending natural minor (from 7th degree back to tonic)
+  if (scaleType === 'melodicMinor') {
+    const naturalIntervals = SCALE_INTERVALS.naturalMinor;
+    // Generate descending natural minor notes (degrees 7 down to 1)
+    let descChromatic = tonicChromatic; // start from tonic, go up with natural intervals to find degree 8
+    for (let i = 0; i < 7; i++) {
+      descChromatic = (descChromatic + naturalIntervals[i]) % 12;
+    }
+    // Now descend from degree 7 (one below the octave) back to tonic
+    const descendingNotes = [];
+    const descendingPositions = [];
+    let currentDesc = descChromatic;
+    for (let i = 6; i >= 0; i--) {
+      currentDesc = (currentDesc - naturalIntervals[i] + 12) % 12;
+      const letterIdx = (tonicLetterIdx + i) % 7;
+      descendingNotes.push(formatNoteName(letterIdx, currentDesc));
+      descendingPositions.push(startPos + i);
+    }
+    // Remove the last note (tonic) since it duplicates the start
+    descendingNotes.pop();
+    descendingPositions.pop();
+    
+    notes.push(...descendingNotes);
+    staffPositions.push(...descendingPositions);
+  }
+
   return {
     name: SCALE_NAMES[scaleType],
     tonic,

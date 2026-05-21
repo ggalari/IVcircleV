@@ -7,7 +7,7 @@
  */
 
 import { showNeighbors, clearNeighbors } from '../overlays/neighbors.js';
-import { get } from '../state.js';
+import { get, set } from '../state.js';
 import { sectorPath, DEFAULT_CONFIG } from '../circle/geometry.js';
 import { attachLongPress } from './long-press.js';
 
@@ -22,6 +22,9 @@ let longPressCleanups = [];
  * Otherwise, show neighbors for the new key.
  */
 function toggleNeighbors(index, type) {
+  // Update activeKey for cross-view consistency (explorer views reflect circle selection)
+  set('activeKey', { index, type });
+
   const activeIndex = get('selectedKeyIndex');
   const activeType = get('overlayType');
 
