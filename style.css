@@ -86,19 +86,21 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* Dark mode: override abcjs rendered staves */
-:root[data-theme="dark"] .abcjs-staff svg path,
-:root[data-theme="dark"] .abcjs-staff svg line {
+/* Dark mode: override abcjs rendered staves (color only, preserve stroke-width) */
+:root[data-theme="dark"] .abcjs-staff svg path {
   fill: var(--color-text-secondary) !important;
+}
+
+:root[data-theme="dark"] .abcjs-staff svg path[stroke] {
+  stroke: var(--color-text-secondary) !important;
+}
+
+:root[data-theme="dark"] .abcjs-staff svg line {
   stroke: var(--color-text-secondary) !important;
 }
 
 :root[data-theme="dark"] .abcjs-staff svg text {
   fill: var(--color-text-secondary) !important;
-}
-
-:root[data-theme="dark"] .abcjs-staff svg .abcjs-staff-extra {
-  stroke: var(--color-text-muted) !important;
 }
 
 /* Dark mode: align SVG key signature staves to same color as abcjs */
