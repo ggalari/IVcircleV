@@ -1,10 +1,11 @@
 /**
- * Toolbar actions: print, save SVG, and toggle center label.
+ * Toolbar actions: print, save SVG, toggle center label, and theme.
  * All event binding is programmatic — no inline onclick handlers.
  */
 
 import { getCenterLabelSetting, setCenterLabelSetting, showNeighbors } from '../overlays/neighbors.js';
 import { get, set } from '../state.js';
+import { toggleTheme, initTheme, updateThemeButton } from './theme.js';
 
 /**
  * Clone the rendered SVG, open a new window, write it in, and trigger print.
@@ -84,13 +85,23 @@ function updateToggleLabelButton() {
   const btn = document.getElementById('btn-toggle-label');
   if (!btn) return;
   const enabled = getCenterLabelSetting();
-  btn.textContent = enabled ? '🏷️ Masquer tonalité' : '🏷️ Afficher tonalité';
+  // Find the text content after the SVG icon
+  const nodes = btn.childNodes;
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    if (nodes[i].nodeType === Node.TEXT_NODE && nodes[i].textContent.trim()) {
+      nodes[i].textContent = enabled ? ' Masquer tonalité' : ' Afficher tonalité';
+      return;
+    }
+  }
 }
 
 /**
  * Attach click listeners to toolbar buttons by their IDs.
  */
 export function attachToolbarListeners() {
+  // Initialize theme on load (before any rendering)
+  initTheme();
+
   const saveBtn = document.getElementById('btn-save');
   if (saveBtn) {
     saveBtn.addEventListener('click', saveSVG);
@@ -105,5 +116,11 @@ export function attachToolbarListeners() {
   if (toggleLabelBtn) {
     toggleLabelBtn.addEventListener('click', toggleCenterLabel);
     updateToggleLabelButton();
+  }
+
+  const toggleThemeBtn = document.getElementById('btn-toggle-theme');
+  if (toggleThemeBtn) {
+    toggleThemeBtn.addEventListener('click', toggleTheme);
+    updateThemeButton();
   }
 }

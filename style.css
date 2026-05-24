@@ -40,6 +40,77 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Dark theme overrides */
+:root[data-theme="dark"] {
+  --color-surface-dark: #1a1816;
+  --color-surface-card: #2a2725;
+  --color-surface-parchment: #3a3633;
+  --color-surface-parchment-dark: #4a4542;
+
+  --color-major: #e05050;
+  --color-major-hover: #f06060;
+  --color-minor: #5cb85c;
+
+  --color-highlight-major: rgba(224, 80, 80, 0.3);
+  --color-highlight-minor: rgba(92, 184, 92, 0.25);
+
+  --color-text-primary: #f0ece8;
+  --color-text-secondary: #c8c2bc;
+  --color-text-muted: #a09890;
+  --color-text-faint: #b8b0a8;
+
+  --color-border-light: #3a3633;
+  --color-border-medium: #5a5550;
+  --color-border-dark: #6a6560;
+  --color-border-ring: #7a7570;
+  --color-border-major: rgba(224, 80, 80, 0.4);
+  --color-border-minor: rgba(92, 184, 92, 0.35);
+}
+
+:root[data-theme="dark"] .card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="dark"] .hamburger-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="dark"] .hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+:root[data-theme="dark"] .hamburger-dropdown {
+  background: #3a3633;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark mode: override abcjs rendered staves */
+:root[data-theme="dark"] .abcjs-staff svg path,
+:root[data-theme="dark"] .abcjs-staff svg line {
+  fill: var(--color-text-secondary) !important;
+  stroke: var(--color-text-secondary) !important;
+}
+
+:root[data-theme="dark"] .abcjs-staff svg text {
+  fill: var(--color-text-secondary) !important;
+}
+
+:root[data-theme="dark"] .abcjs-staff svg .abcjs-staff-extra {
+  stroke: var(--color-text-muted) !important;
+}
+
+/* Dark mode: align SVG key signature staves to same color as abcjs */
+:root[data-theme="dark"] #circle-container .staff-line {
+  fill: var(--color-text-secondary);
+}
+
+:root[data-theme="dark"] #circle-container .clef,
+:root[data-theme="dark"] #circle-container .accidental {
+  fill: var(--color-text-secondary);
+}
+
 body {
   background: var(--color-surface-dark);
   display: flex;
@@ -129,7 +200,9 @@ body {
   display: none;
 }
 .dropdown-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   text-align: left;
   background: none;
@@ -144,6 +217,17 @@ body {
   margin: 0;
   border-radius: 0;
 }
+
+.dropdown-icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* Theme icon: show sun in dark mode, moon in light mode */
+.dropdown-icon--theme-light { display: none; }
+.dropdown-icon--theme-dark { display: inline; }
+:root[data-theme="dark"] .dropdown-icon--theme-light { display: inline; }
+:root[data-theme="dark"] .dropdown-icon--theme-dark { display: none; }
 .dropdown-item:hover {
   background: var(--color-surface-parchment);
 }
