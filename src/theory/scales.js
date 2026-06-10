@@ -164,9 +164,7 @@ export function getScale(keyIndex, keyType, scaleType) {
       descendingNotes.push(formatNoteName(letterIdx, currentDesc));
       descendingPositions.push(startPos + i);
     }
-    // Remove the last note (tonic) since it duplicates the start
-    descendingNotes.pop();
-    descendingPositions.pop();
+    // Keep the tonic at the end — the scale should resolve back to the starting note
     
     notes.push(...descendingNotes);
     staffPositions.push(...descendingPositions);

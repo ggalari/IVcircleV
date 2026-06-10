@@ -406,6 +406,19 @@ button:hover {
   transform: translateY(-4px);
 }
 
+/* Interactive note elements in scale staves (tap-to-play) */
+.abcjs-staff .abcjs-note[role="button"] {
+  cursor: pointer;
+  outline: none;
+  transition: transform 150ms ease, filter 200ms ease-out;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.abcjs-staff .abcjs-note[role="button"]:focus-visible {
+  filter: drop-shadow(0 0 3px var(--color-major, #8b0000));
+}
+
 /* Labels are now rendered by abcjs via w: lines — no external label divs needed */
 
 @media (max-width: 600px) {
@@ -500,6 +513,174 @@ button:focus-visible {
   opacity: 1;
 }
 
+/* ─── Audio Playback UI ─────────────────────────────────────────────────── */
+
+/* Section headers (scale & chord) — centered titles */
+.scale-section-header,
+.chord-explorer__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.scale-section-header .scale-staff-title,
+.chord-explorer__section-header .chord-explorer__subtitle {
+  margin: 12px 0 8px;
+  text-align: center;
+}
+
+/* Staff row — staff and play button on same line, centered */
+.scale-staff-row,
+.chord-staff-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+}
+
+.scale-staff-row .play-button,
+.chord-staff-row .play-button {
+  margin-top: 16px; /* Align vertically with the 5-line staff area */
+}
+
+.scale-staff-row .abcjs-staff,
+.chord-staff-row .abcjs-staff {
+  flex: 0 1 auto;
+}
+
+/* Tempo Slider */
+.tempo-slider-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.tempo-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 6px;
+  background: var(--color-border-medium, #bbb8b4);
+  border-radius: var(--radius-button, 6px);
+  outline: none;
+  cursor: pointer;
+}
+
+.tempo-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-major, #8b0000);
+  border: 2px solid var(--color-surface-card, #fffefa);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.tempo-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.tempo-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-major, #8b0000);
+  border: 2px solid var(--color-surface-card, #fffefa);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.tempo-slider::-moz-range-track {
+  height: 6px;
+  background: var(--color-border-medium, #bbb8b4);
+  border-radius: var(--radius-button, 6px);
+  border: none;
+}
+
+.tempo-slider:focus-visible {
+  outline: 3px solid var(--color-major, #8b0000);
+  outline-offset: 2px;
+}
+
+.tempo-slider-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-text-secondary, #554f4b);
+  min-width: 52px;
+  text-align: right;
+}
+
+/* Bouncing Sphere — complementary glow using accent color */
+.bouncing-sphere {
+  filter: drop-shadow(0 0 4px var(--color-major, #8b0000));
+}
+
+/* Play Button overrides via stylesheet (complements inline styles in component) */
+.play-button {
+  border: 1px solid var(--color-border-light, #ece9e5);
+  border-radius: var(--radius-button, 6px);
+  background: transparent;
+  color: var(--color-text-primary, #2e2a28);
+  font-family: var(--font-body);
+}
+
+.play-button:focus-visible {
+  outline: 3px solid var(--color-major, #8b0000);
+  outline-offset: 2px;
+}
+
+.play-button:hover:not(:disabled) {
+  background-color: var(--color-surface-parchment, #f4f2ec);
+  border-color: var(--color-border-medium, #bbb8b4);
+}
+
+.play-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Dark theme: audio playback elements */
+:root[data-theme="dark"] .play-button {
+  border-color: var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="dark"] .play-button:hover:not(:disabled) {
+  background-color: var(--color-surface-parchment);
+  border-color: var(--color-border-medium);
+}
+
+:root[data-theme="dark"] .tempo-slider {
+  background: var(--color-border-medium);
+}
+
+:root[data-theme="dark"] .tempo-slider::-webkit-slider-thumb {
+  background: var(--color-major);
+  border-color: var(--color-surface-card);
+}
+
+:root[data-theme="dark"] .tempo-slider::-moz-range-thumb {
+  background: var(--color-major);
+  border-color: var(--color-surface-card);
+}
+
+:root[data-theme="dark"] .tempo-slider::-moz-range-track {
+  background: var(--color-border-medium);
+}
+
+:root[data-theme="dark"] .tempo-slider-label {
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme="dark"] .bouncing-sphere {
+  filter: drop-shadow(0 0 6px var(--color-major));
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .mode-track {
@@ -517,6 +698,15 @@ button:focus-visible {
   .hamburger-dropdown,
   .page-tab,
   .chevron-btn {
+    transition: none;
+  }
+  .bouncing-sphere {
+    transition: none !important;
+  }
+  .play-button {
+    transition: none;
+  }
+  .tempo-slider::-webkit-slider-thumb {
     transition: none;
   }
 }
