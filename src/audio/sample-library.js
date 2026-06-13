@@ -198,6 +198,7 @@ export async function loadSamples(audioContext, instrument = 'guitar') {
  * Add enharmonic aliases to the buffer cache so that both sharp and flat
  * names resolve to the same AudioBuffer.
  * E.g., if "Gb4" is in the cache, also set "F#4" → same buffer.
+ * Also adds boundary cases (E#→F, B#→C, Cb→B, Fb→E) and double accidentals.
  */
 function addEnharmonicAliases() {
   const SHARP_TO_FLAT = { 'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb' };
@@ -223,27 +224,73 @@ function addEnharmonicAliases() {
       }
     }
   }
+
+  // Add boundary enharmonics and double accidentals for all octaves in range
+  // These map unusual note spellings to the actual buffer they should use
+  const BOUNDARY_ALIASES = [
+    // Boundary sharps: E# = F, B# = C (next octave)
+    { from: 'E#', to: 'F', octaveShift: 0 },
+    { from: 'B#', to: 'C', octaveShift: 1 },
+    // Boundary flats: Cb = B (prev octave), Fb = E
+    { from: 'Cb', to: 'B', octaveShift: -1 },
+    { from: 'Fb', to: 'E', octaveShift: 0 },
+    // Double sharps
+    { from: 'C##', to: 'D', octaveShift: 0 },
+    { from: 'D##', to: 'E', octaveShift: 0 },
+    { from: 'E##', to: 'Gb', octaveShift: 0 },
+    { from: 'F##', to: 'G', octaveShift: 0 },
+    { from: 'G##', to: 'A', octaveShift: 0 },
+    { from: 'A##', to: 'B', octaveShift: 0 },
+    { from: 'B##', to: 'Db', octaveShift: 1 },
+    // Double flats
+    { from: 'Dbb', to: 'C', octaveShift: 0 },
+    { from: 'Ebb', to: 'D', octaveShift: 0 },
+    { from: 'Fbb', to: 'Eb', octaveShift: 0 },
+    { from: 'Gbb', to: 'F', octaveShift: 0 },
+    { from: 'Abb', to: 'G', octaveShift: 0 },
+    { from: 'Bbb', to: 'A', octaveShift: 0 },
+    { from: 'Cbb', to: 'Bb', octaveShift: -1 },
+  ];
+
+  for (let oct = 3; oct <= 5; oct++) {
+    for (const { from, to, octaveShift } of BOUNDARY_ALIASES) {
+      const aliasKey = `${from}${oct}`;
+      const targetOct = oct + octaveShift;
+      const targetKey = `${to}${targetOct}`;
+      if (bufferCache.has(targetKey) && !bufferCache.has(aliasKey)) {
+        bufferCache.set(aliasKey, bufferCache.get(targetKey));
+      }
+    }
+  }
 }
 
 /**
- * Enharmonic equivalents: maps sharp-based keys to the flat-based names
- * used in CHROMATIC_KEYS. This resolves lookups like "F#4" → "Gb4".
+ * Enharmonic equivalents: maps non-standard or uncommon note spellings
+ * to the flat-based names used in CHROMATIC_KEYS.
+ * This resolves lookups like "F#4" → "Gb4", "E#4" → "F4", "Fbb4" → "Eb4".
  */
 const ENHARMONIC_MAP = {
+  // Simple sharps → flat equivalents
   'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb',
-  // Double sharps and unusual spellings
-  'D##': 'E', 'E#': 'F', 'B#': 'C',
+  // Enharmonic boundary notes (sharp side)
+  'E#': 'F', 'B#': 'C',
+  // Enharmonic boundary notes (flat side)
   'Cb': 'B', 'Fb': 'E',
+  // Double sharps
+  'C##': 'D', 'D##': 'E', 'E##': 'Gb', 'F##': 'G', 'G##': 'A', 'A##': 'B', 'B##': 'Db',
+  // Double flats
+  'Dbb': 'C', 'Ebb': 'D', 'Fbb': 'Eb', 'Gbb': 'F', 'Abb': 'G', 'Bbb': 'A', 'Cbb': 'Bb',
 };
 
 /**
  * Normalize a sample key to match the CHROMATIC_KEYS naming convention (flat-based).
- * E.g., "F#4" → "Gb4", "C#3" → "Db3"
- * @param {string} key - Sample key like "F#4", "Gb4", "C4"
+ * Handles sharps, flats, double-sharps, double-flats, and enharmonic boundary cases.
+ * E.g., "F#4" → "Gb4", "E#4" → "F4", "B#3" → "C4", "Cb5" → "B4"
+ * @param {string} key - Sample key like "F#4", "Gb4", "C4", "E#3", "Fbb4"
  * @returns {string} Normalized key matching CHROMATIC_KEYS
  */
 function normalizeKey(key) {
-  // Extract note name and octave
+  // Extract note name (with any accidentals) and octave
   const match = key.match(/^([A-G][#b]*)(\d+)$/);
   if (!match) return key;
   const [, noteName, octave] = match;
@@ -251,15 +298,18 @@ function normalizeKey(key) {
   // Check if it needs remapping
   if (ENHARMONIC_MAP[noteName]) {
     const mapped = ENHARMONIC_MAP[noteName];
-    // Handle octave shift for B#→C (goes up an octave) and Cb→B (goes down)
     let oct = parseInt(octave);
-    if (noteName === 'B#' || noteName === 'E#' && mapped === 'F') {
-      // B# is actually C of the next octave
-      if (noteName === 'B#') oct += 1;
+
+    // Octave shifts for boundary crossings:
+    // B# → C (next octave), B## → Db (next octave)
+    if (noteName === 'B#' || noteName === 'B##') {
+      oct += 1;
     }
-    if (noteName === 'Cb') {
+    // Cb → B (previous octave), Cbb → Bb (previous octave)
+    if (noteName === 'Cb' || noteName === 'Cbb') {
       oct -= 1;
     }
+
     return `${mapped}${oct}`;
   }
 
