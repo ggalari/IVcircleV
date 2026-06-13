@@ -1,7 +1,7 @@
 // Audio Engine: central module managing audio lifecycle and playback.
 // Lazy AudioContext creation, sample loading, playback scheduling, and state coordination.
 
-import { mapScaleToSampleKeys, mapChordToSampleKeys } from './pitch-mapper.js';
+import { mapScaleToSampleKeys, mapChordToSampleKeys, mapChordSequenceToSampleKeys } from './pitch-mapper.js';
 import { loadSamples, getBuffer } from './sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from './scheduler.js';
 import { get, set, subscribe } from '../state.js';
@@ -136,7 +136,7 @@ export function playScale(sectionId, scaleResult, tempo, callbacks = {}) {
   // Stop any current playback first
   stopPlaybackImmediate();
 
-  const sampleKeys = mapScaleToSampleKeys(scaleResult.notes, 3);
+  const sampleKeys = mapScaleToSampleKeys(scaleResult.notes, 3, scaleResult.staffPositions);
 
   const startTime = audioContext.currentTime + 0.05; // Small offset for scheduling
   const { stopFn, immediateStopFn, scheduledEndTime } = scheduleScale(
@@ -196,10 +196,8 @@ export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, c
   // Stop any current playback first
   stopPlaybackImmediate();
 
-  // Map each chord to an array of sample keys
-  const chordSampleKeys = chords.map(chord => {
-    return mapChordToSampleKeys(chord.root, chord.intervals, 3);
-  });
+  // Map the chord sequence with ascending octave logic
+  const chordSampleKeys = mapChordSequenceToSampleKeys(chords, 3);
 
   const startTime = audioContext.currentTime + 0.05;
   const { stopFn, immediateStopFn, scheduledEndTime } = scheduleChordSequence(

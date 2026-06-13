@@ -10,6 +10,14 @@ import { initAudioEngine, playScale, playSingleNote, stopPlayback, isReady, getP
 import { createPlayButton } from '../audio/play-button.js';
 import { createBouncingSphere } from '../audio/bouncing-sphere.js';
 import { mapScaleToSampleKeys } from '../audio/pitch-mapper.js';
+import {
+  SCALE_TEMPO_MS,
+  SPHERE_NOTE_OFFSET_Y,
+  TAP_SPHERE_VISIBLE_MS,
+  TAP_SPHERE_DESTROY_DELAY_MS,
+  TAP_SPHERE_OFFSET_Y,
+  SOUNDING_HIGHLIGHT_MS
+} from '../config.js';
 
 /**
  * Get the display name for the active key.
@@ -44,7 +52,7 @@ function makeNoteElementsInteractive(scaleDiv, scale) {
   if (!noteElements.length) return;
 
   // Pre-compute sample keys for correct octave assignment
-  const sampleKeys = mapScaleToSampleKeys(scale.notes, 3);
+  const sampleKeys = mapScaleToSampleKeys(scale.notes, 3, scale.staffPositions);
 
   noteElements.forEach((noteEl, i) => {
     // Only process notes that correspond to scale.notes entries
@@ -121,7 +129,7 @@ function makeNoteElementsInteractive(scaleDiv, scale) {
 }
 
 /**
- * Show a temporary bouncing sphere at a note element's position for 400ms.
+ * Show a temporary bouncing sphere at a note element's position.
  * @param {HTMLElement} container - The staff container to position the sphere within
  * @param {Element} noteEl - The target note element
  */
@@ -135,7 +143,7 @@ function showTapSphere(container, noteEl) {
   const rect = noteEl.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
   const x = rect.left + rect.width / 2 - containerRect.left;
-  const y = rect.top - containerRect.top - 24; // Position sphere above the note
+  const y = rect.top - containerRect.top - TAP_SPHERE_OFFSET_Y;
 
   sphere.moveTo(x, y, 0);
   sphere.show();
@@ -143,13 +151,13 @@ function showTapSphere(container, noteEl) {
   setTimeout(() => {
     sphere.hide();
     // Destroy after fade out completes
-    setTimeout(() => sphere.destroy(), 100);
-  }, 400);
+    setTimeout(() => sphere.destroy(), TAP_SPHERE_DESTROY_DELAY_MS);
+  }, TAP_SPHERE_VISIBLE_MS);
 }
 
 /**
  * Apply the "sounding" highlight (glow) to a note element.
- * Persists for 400ms, then fades out over 200ms.
+ * Persists for SOUNDING_HIGHLIGHT_MS, then fades out.
  * @param {Element} noteEl - The SVG note element
  */
 function applySoundingHighlight(noteEl) {
@@ -163,7 +171,7 @@ function applySoundingHighlight(noteEl) {
     noteEl.style.filter = '';
     noteEl.style.transform = '';
     delete noteEl.dataset.sounding;
-  }, 400);
+  }, SOUNDING_HIGHLIGHT_MS);
 }
 
 /**
@@ -208,10 +216,6 @@ function renderScales(panel, activeKey, context) {
     scaleDiv.className = 'scale-staff-container';
     scaleDiv.style.position = 'relative'; // Needed for absolute sphere positioning
 
-    // Create header row with label and play button
-    const headerRow = document.createElement('div');
-    headerRow.className = 'scale-section-header';
-
     const sectionId = `scale-${scale.name}`;
 
     // Create bouncing sphere for this section
@@ -228,30 +232,52 @@ function renderScales(panel, activeKey, context) {
             context.playButtons.forEach(b => b.setDisabled(false));
           }
         }
-        const tempo = 1000; // 1 second between notes
-        playScale(sectionId, scale, tempo, {
+        // Reset sphere to start position before new playback
+        sphere.reset();
+        playScale(sectionId, scale, SCALE_TEMPO_MS, {
           onNoteStart: (index) => {
-            // Position sphere above the current note element
+            // Position sphere above the current note element and highlight note
             const staffEl = scaleDiv.querySelector('.abcjs-staff');
             if (staffEl) {
               const noteEls = staffEl.querySelectorAll('.abcjs-note');
+
+              // Highlight current note, clear previous
+              noteEls.forEach(el => {
+                el.style.filter = '';
+                el.style.transform = '';
+                el.style.transition = 'filter 150ms ease-out, transform 150ms ease-out';
+              });
               const noteEl = noteEls[index];
               if (noteEl) {
+                noteEl.style.transition = 'filter 0ms, transform 0ms';
+                noteEl.style.filter = 'drop-shadow(0 0 6px var(--color-major, #8b0000)) drop-shadow(0 0 10px var(--color-major, #8b0000))';
+                noteEl.style.transform = 'scale(1.1)';
+                noteEl.style.transformOrigin = 'center';
+                noteEl.style.transformBox = 'fill-box';
+
                 const containerRect = scaleDiv.getBoundingClientRect();
                 const noteRect = noteEl.getBoundingClientRect();
                 const x = noteRect.left - containerRect.left + noteRect.width / 2;
                 // Position sphere directly above the note
-                const y = noteRect.top - containerRect.top - 20;
-                const currentTempo = 1000;
+                const y = noteRect.top - containerRect.top - SPHERE_NOTE_OFFSET_Y;
                 if (index === 0) {
                   sphere.show();
                 }
-                sphere.moveTo(x, y, currentTempo);
+                sphere.moveTo(x, y, SCALE_TEMPO_MS);
               }
             }
           },
           onComplete: () => {
             sphere.hide();
+            // Clear note highlights
+            const staffEl = scaleDiv.querySelector('.abcjs-staff');
+            if (staffEl) {
+              staffEl.querySelectorAll('.abcjs-note').forEach(el => {
+                el.style.filter = '';
+                el.style.transform = '';
+                el.style.transition = 'filter 200ms ease-out, transform 200ms ease-out';
+              });
+            }
           }
         });
       },
@@ -295,22 +321,32 @@ function renderScales(panel, activeKey, context) {
   panel.appendChild(scalesContainer);
 
   // Sync button states with current playback state
-  syncPlayButtonStates(context);
+  syncPlayButtonStates(context, panel);
 }
 
 /**
  * Sync play button states with current playback state.
- * Also hides spheres when playback stops.
+ * Also hides spheres and clears note highlights when playback stops.
  */
-function syncPlayButtonStates(context) {
+function syncPlayButtonStates(context, panel) {
   const state = getPlaybackState();
   context.playButtons.forEach(btn => {
     const isThisPlaying = state.isPlaying && state.sectionId === btn._sectionId;
     btn.setPlaying(isThisPlaying);
   });
-  // Hide all spheres when playback stops
-  if (!state.isPlaying && context.spheres) {
-    context.spheres.forEach(s => s.hide());
+  // Hide all spheres and clear highlights when playback stops
+  if (!state.isPlaying) {
+    if (context.spheres) {
+      context.spheres.forEach(s => s.hide());
+    }
+    // Clear all note highlights
+    if (panel) {
+      panel.querySelectorAll('.scale-staff-container .abcjs-note').forEach(el => {
+        el.style.filter = '';
+        el.style.transform = '';
+        el.style.transition = 'filter 200ms ease-out, transform 200ms ease-out';
+      });
+    }
   }
 }
 
@@ -340,7 +376,7 @@ export function initScaleExplorerView(panel) {
 
   // Subscribe to playback state changes to update button icons
   const unsubPlayback = subscribe('playbackState', () => {
-    syncPlayButtonStates(context);
+    syncPlayButtonStates(context, panel);
   });
 
   return () => {

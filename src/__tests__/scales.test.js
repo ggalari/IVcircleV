@@ -98,10 +98,10 @@ describe('getScale', () => {
     expect(result.name).toBe('Mineure mélodique');
     expect(result.notes[0]).toBe('LA');
     expect(result.notes[7]).toBe('LA');
-    // Ascending: A B C D E F# G# A, Descending: G F E D C B
+    // Ascending: A B C D E F# G# A, Descending (natural): G F E D C B A
     expect(result.notes).toEqual([
       'LA', 'SI', 'DO', 'RE', 'MI', 'FA#', 'SOL#', 'LA',
-      'SOL', 'FA', 'MI', 'RE', 'DO', 'SI'
+      'SOL', 'FA', 'MI', 'RE', 'DO', 'SI', 'LA'
     ]);
   });
 
@@ -172,8 +172,8 @@ describe('getAllScales', () => {
     const results = getAllScales(3, 'major');
     for (const scale of results) {
       if (scale.name === 'Mineure mélodique') {
-        // Melodic minor: 8 ascending + 6 descending = 14
-        expect(scale.notes).toHaveLength(14);
+        // Melodic minor: 8 ascending + 7 descending (back to tonic) = 15
+        expect(scale.notes).toHaveLength(15);
       } else {
         expect(scale.notes).toHaveLength(8);
       }

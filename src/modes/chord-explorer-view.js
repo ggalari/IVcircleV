@@ -8,6 +8,8 @@ import { SLICES } from '../circle/keys.js';
 import { renderCircleZoom } from './circle-zoom.js';
 import { initAudioEngine, playChordSequence, playSingleChord, stopPlayback, isReady } from '../audio/audio-engine.js';
 import { createPlayButton } from '../audio/play-button.js';
+import { createBouncingSphere } from '../audio/bouncing-sphere.js';
+import { CHORD_TEMPO_MS, SPHERE_NOTE_OFFSET_Y } from '../config.js';
 
 function getKeyDisplayName(activeKey) {
   const slice = SLICES[activeKey.index];
@@ -138,12 +140,17 @@ function makeChordElementsInteractive(section, chords, activeKey) {
 /** @type {{ element: HTMLButtonElement, setPlaying: Function, setDisabled: Function, destroy: Function }[]} */
 let playButtons = [];
 
+/** @type {Array<{ moveTo: Function, show: Function, hide: Function, reset: Function, destroy: Function }>} */
+let spheres = [];
+
 /** @type {Function|null} */
 let unsubPlaybackState = null;
 
 function cleanupAudioControls() {
   playButtons.forEach(btn => btn.destroy());
   playButtons = [];
+  spheres.forEach(s => s.destroy());
+  spheres = [];
   if (unsubPlaybackState) {
     unsubPlaybackState();
     unsubPlaybackState = null;
@@ -171,6 +178,7 @@ function renderContent(panel, activeKey) {
   // Triads
   const triadsSection = document.createElement('div');
   triadsSection.className = 'chord-explorer__staff chord-explorer__staff--triads';
+  triadsSection.style.position = 'relative';
 
   const triadsHeader = document.createElement('div');
   triadsHeader.className = 'chord-explorer__section-header';
@@ -179,19 +187,40 @@ function renderContent(panel, activeKey) {
   triadsSubtitle.textContent = 'Triades';
   triadsHeader.appendChild(triadsSubtitle);
 
+  // Add 8th chord (tonic repeated for resolution — octave handled by ascending sequence logic)
+  const triadsWithResolution = [...triads, { ...triads[0], degree: 8 }];
+
+  // Create bouncing sphere for triads
+  const triadsSphere = createBouncingSphere(triadsSection);
+  spheres.push(triadsSphere);
+
   const triadsPlayBtn = createPlayButton({
     ariaLabel: 'Jouer les triades',
     onPlay: async () => {
       if (!isReady()) await initAudioEngine();
-      playChordSequence('chord-triads', triads, activeKey.index, activeKey.type, 1000, {
+      triadsSphere.reset();
+      playChordSequence('chord-triads', triadsWithResolution, activeKey.index, activeKey.type, CHORD_TEMPO_MS, {
         onChordStart: (index) => {
           const staffEl = triadsSection.querySelector('.abcjs-staff');
           if (!staffEl) return;
           const chordEls = staffEl.querySelectorAll('.abcjs-note');
           highlightChordElement(staffEl, chordEls, index);
+          // Position sphere above the current chord
+          const chordEl = chordEls[index];
+          if (chordEl) {
+            const containerRect = triadsSection.getBoundingClientRect();
+            const chordRect = chordEl.getBoundingClientRect();
+            const x = chordRect.left - containerRect.left + chordRect.width / 2;
+            const y = chordRect.top - containerRect.top - SPHERE_NOTE_OFFSET_Y;
+            if (index === 0) {
+              triadsSphere.show();
+            }
+            triadsSphere.moveTo(x, y, CHORD_TEMPO_MS);
+          }
         },
         onComplete: () => {
           clearChordHighlights(triadsSection);
+          triadsSphere.hide();
         }
       });
     },
@@ -203,11 +232,11 @@ function renderContent(panel, activeKey) {
   renderChordStaff(triadsSection, {
     sliceIndex: activeKey.index,
     keyType: activeKey.type,
-    chords: triads,
-    labels: triads.map(c => `${c.roman}|${getSingleNoteName(c.root)}${formatChordQuality(c.quality)}`),
+    chords: triadsWithResolution,
+    labels: triadsWithResolution.map(c => `${c.roman}|${getSingleNoteName(c.root)}${formatChordQuality(c.quality)}`),
     names: null
   });
-  makeChordElementsInteractive(triadsSection, triads, activeKey);
+  makeChordElementsInteractive(triadsSection, triadsWithResolution, activeKey);
 
   // Wrap staff and play button in a flex row
   const triadsStaffEl = triadsSection.querySelector('.abcjs-staff');
@@ -223,6 +252,7 @@ function renderContent(panel, activeKey) {
   // Sevenths
   const seventhsSection = document.createElement('div');
   seventhsSection.className = 'chord-explorer__staff chord-explorer__staff--sevenths';
+  seventhsSection.style.position = 'relative';
 
   const seventhsHeader = document.createElement('div');
   seventhsHeader.className = 'chord-explorer__section-header';
@@ -231,19 +261,40 @@ function renderContent(panel, activeKey) {
   seventhsSubtitle.textContent = 'Accords de septième';
   seventhsHeader.appendChild(seventhsSubtitle);
 
+  // Add 8th chord (tonic repeated for resolution — octave handled by ascending sequence logic)
+  const seventhsWithResolution = [...sevenths, { ...sevenths[0], degree: 8 }];
+
+  // Create bouncing sphere for sevenths
+  const seventhsSphere = createBouncingSphere(seventhsSection);
+  spheres.push(seventhsSphere);
+
   const seventhsPlayBtn = createPlayButton({
     ariaLabel: 'Jouer les accords de septième',
     onPlay: async () => {
       if (!isReady()) await initAudioEngine();
-      playChordSequence('chord-sevenths', sevenths, activeKey.index, activeKey.type, 1000, {
+      seventhsSphere.reset();
+      playChordSequence('chord-sevenths', seventhsWithResolution, activeKey.index, activeKey.type, CHORD_TEMPO_MS, {
         onChordStart: (index) => {
           const staffEl = seventhsSection.querySelector('.abcjs-staff');
           if (!staffEl) return;
           const chordEls = staffEl.querySelectorAll('.abcjs-note');
           highlightChordElement(staffEl, chordEls, index);
+          // Position sphere above the current chord
+          const chordEl = chordEls[index];
+          if (chordEl) {
+            const containerRect = seventhsSection.getBoundingClientRect();
+            const chordRect = chordEl.getBoundingClientRect();
+            const x = chordRect.left - containerRect.left + chordRect.width / 2;
+            const y = chordRect.top - containerRect.top - SPHERE_NOTE_OFFSET_Y;
+            if (index === 0) {
+              seventhsSphere.show();
+            }
+            seventhsSphere.moveTo(x, y, CHORD_TEMPO_MS);
+          }
         },
         onComplete: () => {
           clearChordHighlights(seventhsSection);
+          seventhsSphere.hide();
         }
       });
     },
@@ -255,11 +306,11 @@ function renderContent(panel, activeKey) {
   renderChordStaff(seventhsSection, {
     sliceIndex: activeKey.index,
     keyType: activeKey.type,
-    chords: sevenths,
-    labels: sevenths.map(c => `${c.roman}|${getSingleNoteName(c.root)}${formatChordQuality(c.quality)}`),
+    chords: seventhsWithResolution,
+    labels: seventhsWithResolution.map(c => `${c.roman}|${getSingleNoteName(c.root)}${formatChordQuality(c.quality)}`),
     names: null
   });
-  makeChordElementsInteractive(seventhsSection, sevenths, activeKey);
+  makeChordElementsInteractive(seventhsSection, seventhsWithResolution, activeKey);
 
   // Wrap staff and play button in a flex row
   const seventhsStaffEl = seventhsSection.querySelector('.abcjs-staff');
@@ -280,10 +331,11 @@ function renderContent(panel, activeKey) {
       const btnSectionId = idx === 0 ? 'chord-triads' : 'chord-sevenths';
       btn.setPlaying(isPlaying && sectionId === btnSectionId);
     });
-    // Clear highlights when playback stops
+    // Clear highlights and hide spheres when playback stops
     if (!isPlaying) {
       clearChordHighlights(triadsSection);
       clearChordHighlights(seventhsSection);
+      spheres.forEach(s => s.hide());
     }
   });
 }

@@ -100,46 +100,85 @@ export function frenchNoteToSampleKey(noteName, startOctave = 4) {
 }
 
 /**
- * Map a full ScaleResult notes array to sample keys with octave wrapping.
- * Octave increments when the chromatic pitch wraps past B (SI, pitch 11 → next is lower).
- * For descending portions (melodic minor), octave decrements when pitch wraps downward.
+ * Map a full ScaleResult notes array to sample keys using staff positions for octave assignment.
+ * Staff positions encode the absolute pitch direction: ascending positions mean ascending pitch.
+ * This avoids heuristic octave guessing by using the definitive staff data.
  * @param {string[]} scaleNotes - Array of French solfège note names (e.g., ["DO", "RE", ..., "DO"])
  * @param {number} [tonicOctave=4] - Starting octave for the tonic
+ * @param {number[]} [staffPositions] - Staff positions for each note (from ScaleResult)
  * @returns {string[]} Array of English scientific pitch sample keys
  */
-export function mapScaleToSampleKeys(scaleNotes, tonicOctave = 4) {
+export function mapScaleToSampleKeys(scaleNotes, tonicOctave = 4, staffPositions) {
   if (!scaleNotes || scaleNotes.length === 0) return [];
 
+  // If staff positions are provided, use them for definitive octave assignment
+  if (staffPositions && staffPositions.length === scaleNotes.length) {
+    return mapScaleUsingStaffPositions(scaleNotes, tonicOctave, staffPositions);
+  }
+
+  // Fallback: use chromatic pitch tracking (for cases without staff positions)
+  return mapScaleUsingPitchTracking(scaleNotes, tonicOctave);
+}
+
+/**
+ * Map scale notes using staff positions for definitive pitch assignment.
+ * Staff position directly encodes the note's octave:
+ *   position 0 = C4, 1 = D4, ..., 6 = B4, 7 = C5, etc.
+ *   position -1 = B3, -2 = A3, -7 = C3, etc.
+ * We combine the note name (for accidentals) with the octave from staff position.
+ */
+function mapScaleUsingStaffPositions(scaleNotes, tonicOctave, staffPositions) {
+  const result = [];
+  const baseOctaveOffset = Math.floor(staffPositions[0] / 7);
+
+  for (let i = 0; i < scaleNotes.length; i++) {
+    const noteOctaveOffset = Math.floor(staffPositions[i] / 7);
+    const octave = tonicOctave + (noteOctaveOffset - baseOctaveOffset);
+    result.push(frenchNoteToSampleKey(scaleNotes[i], octave));
+  }
+
+  return result;
+}
+
+/**
+ * Fallback: map scale notes using chromatic pitch tracking.
+ * Used when staff positions are not available.
+ */
+function mapScaleUsingPitchTracking(scaleNotes, tonicOctave) {
   const result = [];
   let currentOctave = tonicOctave;
 
-  // Get the chromatic pitch of the first note
   const firstParsed = parseNoteName(scaleNotes[0]);
   let prevPitch = ((SOLFEGE_TO_PITCH[firstParsed.base] + firstParsed.accidentalOffset) % 12 + 12) % 12;
 
   result.push(frenchNoteToSampleKey(scaleNotes[0], currentOctave));
 
+  // Compute all pitches
+  const pitches = [prevPitch];
   for (let i = 1; i < scaleNotes.length; i++) {
     const parsed = parseNoteName(scaleNotes[i]);
-    const currPitch = ((SOLFEGE_TO_PITCH[parsed.base] + parsed.accidentalOffset) % 12 + 12) % 12;
+    pitches.push(((SOLFEGE_TO_PITCH[parsed.base] + parsed.accidentalOffset) % 12 + 12) % 12);
+  }
 
-    // Calculate the ascending and descending intervals between previous and current
-    const upInterval = (currPitch - prevPitch + 12) % 12;
-    const downInterval = (prevPitch - currPitch + 12) % 12;
+  let ascending = true;
 
-    if (upInterval === 0) {
-      // Same pitch class — assume ascending (octave up) since scales repeat the tonic
-      currentOctave++;
-    } else if (upInterval <= 6) {
-      // Small ascending interval — no octave issue unless it wrapped
-      // If currPitch < prevPitch numerically, that means we crossed B→C boundary
-      if (currPitch < prevPitch) {
-        currentOctave++;
+  for (let i = 1; i < scaleNotes.length; i++) {
+    const currPitch = pitches[i];
+
+    if (ascending) {
+      if (currPitch <= prevPitch) {
+        const rawUp = (currPitch - prevPitch + 12) % 12;
+        if (rawUp <= 4) {
+          currentOctave++;
+        } else {
+          ascending = false;
+          if (currPitch > prevPitch) {
+            currentOctave--;
+          }
+        }
       }
     } else {
-      // Large ascending interval (>6) means it's actually a small descending interval
-      // If currPitch > prevPitch numerically, that means we crossed C→B boundary going down
-      if (currPitch > prevPitch) {
+      if (currPitch >= prevPitch) {
         currentOctave--;
       }
     }
@@ -176,6 +215,43 @@ export function mapChordToSampleKeys(rootNoteName, intervals, rootOctave = 4) {
     const englishName = chromaticToEnglishName(normalizedPitch, rootNoteName, interval);
     return `${englishName}${noteOctave}`;
   });
+}
+
+/**
+ * Map an ascending chord sequence to sample keys with correct octave progression.
+ * Each chord's root is assigned an octave such that the roots always ascend.
+ * When a root's pitch class is lower than or equal to the previous root's,
+ * the octave increments (same logic as mapScaleToSampleKeys for single notes).
+ * @param {Array<{ root: string, intervals: number[] }>} chords - Array of chord objects
+ * @param {number} [startOctave=4] - Starting octave for the first chord's root
+ * @returns {string[][]} Array of sample key arrays, one per chord
+ */
+export function mapChordSequenceToSampleKeys(chords, startOctave = 4) {
+  if (!chords || chords.length === 0) return [];
+
+  const result = [];
+  let currentOctave = startOctave;
+
+  // Get the chromatic pitch of the first root
+  const firstParsed = parseNoteName(chords[0].root);
+  let prevPitch = ((SOLFEGE_TO_PITCH[firstParsed.base] + firstParsed.accidentalOffset) % 12 + 12) % 12;
+
+  result.push(mapChordToSampleKeys(chords[0].root, chords[0].intervals, currentOctave));
+
+  for (let i = 1; i < chords.length; i++) {
+    const parsed = parseNoteName(chords[i].root);
+    const currPitch = ((SOLFEGE_TO_PITCH[parsed.base] + parsed.accidentalOffset) % 12 + 12) % 12;
+
+    // Ascending sequence: if pitch class doesn't go up, we've wrapped past B→C
+    if (currPitch <= prevPitch) {
+      currentOctave++;
+    }
+
+    result.push(mapChordToSampleKeys(chords[i].root, chords[i].intervals, currentOctave));
+    prevPitch = currPitch;
+  }
+
+  return result;
 }
 
 /**

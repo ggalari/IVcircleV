@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { createBouncingSphere } from '../audio/bouncing-sphere.js';
+import { SPHERE_DIAMETER, SPHERE_HIDE_DURATION_MS } from '../config.js';
 
 describe('bouncing-sphere', () => {
   let container;
@@ -24,11 +25,11 @@ describe('bouncing-sphere', () => {
       expect(sphere.tagName).toBe('DIV');
     });
 
-    it('has correct diameter (20px)', () => {
+    it('has correct diameter (15px)', () => {
       createBouncingSphere(container);
       const sphere = container.querySelector('.bouncing-sphere');
-      expect(sphere.style.width).toBe('20px');
-      expect(sphere.style.height).toBe('20px');
+      expect(sphere.style.width).toBe(`${SPHERE_DIAMETER}px`);
+      expect(sphere.style.height).toBe(`${SPHERE_DIAMETER}px`);
     });
 
     it('has radial gradient background', () => {
@@ -81,13 +82,13 @@ describe('bouncing-sphere', () => {
   });
 
   describe('hide()', () => {
-    it('sets opacity to 0 with 50ms transition', () => {
+    it('sets opacity to 0 with fade transition', () => {
       const { show, hide } = createBouncingSphere(container);
       show();
       hide();
       const sphere = container.querySelector('.bouncing-sphere');
       expect(sphere.style.opacity).toBe('0');
-      expect(sphere.style.transition).toContain('50ms');
+      expect(sphere.style.transition).toContain(`${SPHERE_HIDE_DURATION_MS}ms`);
     });
 
     it('sets display none after timeout', () => {
@@ -95,7 +96,7 @@ describe('bouncing-sphere', () => {
       const { show, hide } = createBouncingSphere(container);
       show();
       hide();
-      vi.advanceTimersByTime(60);
+      vi.advanceTimersByTime(SPHERE_HIDE_DURATION_MS + 10);
       const sphere = container.querySelector('.bouncing-sphere');
       expect(sphere.style.display).toBe('none');
       vi.useRealTimers();
@@ -107,8 +108,8 @@ describe('bouncing-sphere', () => {
       const { moveTo } = createBouncingSphere(container);
       moveTo(100, 50, 500);
       const sphere = container.querySelector('.bouncing-sphere');
-      // Position should be x - diameter/2, y - diameter/2 = 90, 40
-      expect(sphere.style.transform).toBe('translate(90px, 40px)');
+      const half = SPHERE_DIAMETER / 2;
+      expect(sphere.style.transform).toBe(`translate(${100 - half}px, ${50 - half}px)`);
     });
 
     it('first moveTo has no transition (instant appearance)', () => {
@@ -148,8 +149,8 @@ describe('bouncing-sphere', () => {
       moveTo(100, 50, 500);
       moveTo(250, 80, 400);
       const sphere = container.querySelector('.bouncing-sphere');
-      // 250 - 10 = 240, 80 - 10 = 70
-      expect(sphere.style.transform).toBe('translate(240px, 70px)');
+      const half = SPHERE_DIAMETER / 2;
+      expect(sphere.style.transform).toBe(`translate(${250 - half}px, ${80 - half}px)`);
     });
   });
 

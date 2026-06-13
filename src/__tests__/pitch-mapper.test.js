@@ -4,7 +4,8 @@ import {
   frenchNoteToMidi,
   frenchNoteToSampleKey,
   mapScaleToSampleKeys,
-  mapChordToSampleKeys
+  mapChordToSampleKeys,
+  mapChordSequenceToSampleKeys
 } from '../audio/pitch-mapper.js';
 
 describe('pitch-mapper', () => {
@@ -116,11 +117,11 @@ describe('pitch-mapper', () => {
     it('handles melodic minor (ascending then descending)', () => {
       // A melodic minor ascending: LA SI DO RE MI FA# SOL# LA
       // Then descending natural: SOL FA MI RE DO SI LA
-      const melodicMinor = ['LA', 'SI', 'DO', 'RE', 'MI', 'FA#', 'SOL#', 'LA', 'SOL', 'FA', 'MI', 'RE', 'DO', 'SI'];
+      const melodicMinor = ['LA', 'SI', 'DO', 'RE', 'MI', 'FA#', 'SOL#', 'LA', 'SOL', 'FA', 'MI', 'RE', 'DO', 'SI', 'LA'];
       const result = mapScaleToSampleKeys(melodicMinor, 4);
       expect(result).toEqual([
         'A4', 'B4', 'C5', 'D5', 'E5', 'F#5', 'G#5', 'A5',
-        'G5', 'F5', 'E5', 'D5', 'C5', 'B4'
+        'G5', 'F5', 'E5', 'D5', 'C5', 'B4', 'A4'
       ]);
     });
   });

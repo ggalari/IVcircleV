@@ -3,6 +3,7 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { get, set, subscribe } from '../state.js';
+import { CHORD_TEMPO_MS } from '../config.js';
 
 // Mock abcjs since jsdom doesn't support full SVG rendering
 vi.mock('abcjs', () => ({
@@ -50,34 +51,13 @@ vi.mock('../audio/play-button.js', () => ({
   }
 }));
 
-vi.mock('../audio/tempo-slider.js', () => ({
-  createTempoSlider: (container, onChange) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'tempo-slider-wrapper';
-    const input = document.createElement('input');
-    input.type = 'range';
-    input.className = 'tempo-slider';
-    input.min = '500';
-    input.max = '3000';
-    input.step = '100';
-    input.value = '500';
-    wrapper.appendChild(input);
-    container.appendChild(wrapper);
-    let currentValue = 500;
-    return {
-      getValue: () => currentValue,
-      setValue: (ms) => { currentValue = ms; input.value = String(ms); },
-      destroy: vi.fn(),
-    };
-  }
-}));
-
 vi.mock('../audio/bouncing-sphere.js', () => ({
   createBouncingSphere: (container) => {
     return {
       moveTo: vi.fn(),
       show: vi.fn(),
       hide: vi.fn(),
+      reset: vi.fn(),
       destroy: vi.fn(),
     };
   }
@@ -174,7 +154,7 @@ describe('chord-explorer-view', () => {
         expect.any(Array),
         0,
         'major',
-        500,
+        CHORD_TEMPO_MS,
         expect.objectContaining({ onChordStart: expect.any(Function), onComplete: expect.any(Function) })
       );
     });
@@ -210,40 +190,7 @@ describe('chord-explorer-view', () => {
           expect.any(Array),
           0,
           'major',
-          500,
-          expect.any(Object)
-        );
-      });
-    });
-  });
-
-  describe('tempo slider', () => {
-    it('renders a tempo slider', () => {
-      cleanup = initChordExplorerView(panel);
-      const slider = panel.querySelector('.tempo-slider-wrapper');
-      expect(slider).not.toBeNull();
-    });
-
-    it('uses shared tempo from state store', () => {
-      set('tempo', 1200);
-      cleanup = initChordExplorerView(panel);
-      const input = panel.querySelector('.tempo-slider');
-      expect(input.value).toBe('1200');
-    });
-
-    it('uses current tempo value when playing', async () => {
-      set('tempo', 1500);
-      mockIsReady.mockReturnValue(true);
-      cleanup = initChordExplorerView(panel);
-      const playBtns = panel.querySelectorAll('.play-button');
-      playBtns[0].click();
-      await vi.waitFor(() => {
-        expect(mockPlayChordSequence).toHaveBeenCalledWith(
-          'chord-triads',
-          expect.any(Array),
-          0,
-          'major',
-          1500,
+          CHORD_TEMPO_MS,
           expect.any(Object)
         );
       });

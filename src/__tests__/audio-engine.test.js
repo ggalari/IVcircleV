@@ -15,7 +15,8 @@ vi.mock('../audio/scheduler.js', () => ({
 
 vi.mock('../audio/pitch-mapper.js', () => ({
   mapScaleToSampleKeys: vi.fn(),
-  mapChordToSampleKeys: vi.fn()
+  mapChordToSampleKeys: vi.fn(),
+  mapChordSequenceToSampleKeys: vi.fn()
 }));
 
 // We need a real state store for subscription testing
@@ -54,7 +55,7 @@ import {
 
 import { loadSamples, getBuffer } from '../audio/sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from '../audio/scheduler.js';
-import { mapScaleToSampleKeys, mapChordToSampleKeys } from '../audio/pitch-mapper.js';
+import { mapScaleToSampleKeys, mapChordToSampleKeys, mapChordSequenceToSampleKeys } from '../audio/pitch-mapper.js';
 import { get, set, subscribe, _reset as resetState } from '../state.js';
 
 // Minimal AudioContext mock
@@ -89,6 +90,7 @@ describe('audio-engine', () => {
 
     mapScaleToSampleKeys.mockReturnValue(['C4', 'D4', 'E4']);
     mapChordToSampleKeys.mockReturnValue(['C4', 'E4', 'G4']);
+    mapChordSequenceToSampleKeys.mockReturnValue([['C4', 'E4', 'G4'], ['D4', 'F4', 'A4']]);
 
     scheduleScale.mockReturnValue({
       stopFn: vi.fn(),
@@ -185,10 +187,10 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('calls mapScaleToSampleKeys with the scale notes', () => {
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+    it('calls mapScaleToSampleKeys with the scale notes and staff positions', () => {
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, {});
-      expect(mapScaleToSampleKeys).toHaveBeenCalledWith(['DO', 'RE', 'MI'], 3);
+      expect(mapScaleToSampleKeys).toHaveBeenCalledWith(['DO', 'RE', 'MI'], 3, [0, 1, 2]);
     });
 
     it('calls scheduleScale with correct parameters', () => {
@@ -256,21 +258,20 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('calls mapChordToSampleKeys for each chord', () => {
+    it('calls mapChordSequenceToSampleKeys with chords and octave 3', () => {
       const chords = [
         { root: 'DO', intervals: [0, 4, 7] },
         { root: 'RE', intervals: [0, 3, 7] }
       ];
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
-      expect(mapChordToSampleKeys).toHaveBeenCalledTimes(2);
-      expect(mapChordToSampleKeys).toHaveBeenCalledWith('DO', [0, 4, 7], 3);
-      expect(mapChordToSampleKeys).toHaveBeenCalledWith('RE', [0, 3, 7], 3);
+      expect(mapChordSequenceToSampleKeys).toHaveBeenCalledWith(chords, 3);
     });
 
     it('calls scheduleChordSequence with mapped chord arrays', () => {
       const chords = [
         { root: 'DO', intervals: [0, 4, 7] }
       ];
+      mapChordSequenceToSampleKeys.mockReturnValue([['C4', 'E4', 'G4']]);
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
       expect(scheduleChordSequence).toHaveBeenCalledWith(
         expect.any(Object), // audioContext

@@ -3,6 +3,7 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { set, get } from '../state.js';
+import { SCALE_TEMPO_MS } from '../config.js';
 
 // Mock abcjs since jsdom doesn't support full SVG rendering
 vi.mock('abcjs', () => ({
@@ -48,32 +49,6 @@ vi.mock('../audio/play-button.js', () => ({
   })
 }));
 
-// Mock tempo slider
-vi.mock('../audio/tempo-slider.js', () => ({
-  createTempoSlider: vi.fn((container, onChange) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'tempo-slider-wrapper';
-    container.appendChild(wrapper);
-    return {
-      getValue: vi.fn(() => 500),
-      setValue: vi.fn(),
-      destroy: vi.fn()
-    };
-  })
-}));
-
-// Mock bouncing sphere
-vi.mock('../audio/bouncing-sphere.js', () => ({
-  createBouncingSphere: vi.fn((container) => {
-    return {
-      moveTo: vi.fn(),
-      show: vi.fn(),
-      hide: vi.fn(),
-      destroy: vi.fn()
-    };
-  })
-}));
-
 // Mock bouncing sphere
 vi.mock('../audio/bouncing-sphere.js', () => ({
   createBouncingSphere: vi.fn((containerEl) => {
@@ -81,6 +56,7 @@ vi.mock('../audio/bouncing-sphere.js', () => ({
       moveTo: vi.fn(),
       show: vi.fn(),
       hide: vi.fn(),
+      reset: vi.fn(),
       destroy: vi.fn()
     };
   })
@@ -89,7 +65,6 @@ vi.mock('../audio/bouncing-sphere.js', () => ({
 import { initScaleExplorerView } from '../modes/scale-explorer-view.js';
 import { initAudioEngine, playScale, playSingleNote, stopPlayback, isReady, getPlaybackState } from '../audio/audio-engine.js';
 import { createPlayButton } from '../audio/play-button.js';
-import { createTempoSlider } from '../audio/tempo-slider.js';
 import { createBouncingSphere } from '../audio/bouncing-sphere.js';
 
 describe('scale-explorer-view', () => {
@@ -99,7 +74,6 @@ describe('scale-explorer-view', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     set('activeKey', { index: 0, type: 'major' });
-    set('tempo', 500);
 
     // Create mock circle container for the zoom feature
     const circleContainer = document.createElement('div');
@@ -160,9 +134,9 @@ describe('scale-explorer-view', () => {
       cleanup = initScaleExplorerView(panel);
       const buttons = panel.querySelectorAll('.play-button');
       expect(buttons.length).toBe(4);
-      // Each button should be inside a scale-section-header
-      const headers = panel.querySelectorAll('.scale-section-header');
-      expect(headers.length).toBe(4);
+      // Each button should be inside a scale-staff-row
+      const staffRows = panel.querySelectorAll('.scale-staff-row');
+      expect(staffRows.length).toBe(4);
     });
 
     it('buttons are always enabled (audio engine initializes lazily on play)', () => {
@@ -204,7 +178,6 @@ describe('scale-explorer-view', () => {
     it('calls playScale with correct sectionId and tempo', async () => {
       isReady.mockReturnValue(true);
       cleanup = initScaleExplorerView(panel);
-      set('tempo', 1000);
 
       const onPlay = createPlayButton.mock.calls[0][0].onPlay;
       await onPlay();
@@ -212,7 +185,7 @@ describe('scale-explorer-view', () => {
       expect(playScale).toHaveBeenCalledWith(
         'scale-Majeure',
         expect.objectContaining({ name: 'Majeure' }),
-        1000,
+        SCALE_TEMPO_MS,
         expect.objectContaining({ onNoteStart: expect.any(Function), onComplete: expect.any(Function) })
       );
     });
@@ -239,43 +212,6 @@ describe('scale-explorer-view', () => {
       });
       // New buttons should be created (4 initial + 4 new)
       expect(createPlayButton).toHaveBeenCalledTimes(8);
-    });
-  });
-
-  describe('tempo slider', () => {
-    it('creates a tempo slider', () => {
-      cleanup = initScaleExplorerView(panel);
-      expect(createTempoSlider).toHaveBeenCalledTimes(1);
-    });
-
-    it('renders tempo slider container', () => {
-      cleanup = initScaleExplorerView(panel);
-      const tempoContainer = panel.querySelector('.scale-explorer-tempo');
-      expect(tempoContainer).not.toBeNull();
-    });
-
-    it('initializes tempo slider with stored value', () => {
-      set('tempo', 1500);
-      cleanup = initScaleExplorerView(panel);
-      const slider = createTempoSlider.mock.results[0].value;
-      expect(slider.setValue).toHaveBeenCalledWith(1500);
-    });
-
-    it('updates tempo state when slider changes', () => {
-      cleanup = initScaleExplorerView(panel);
-      const onChange = createTempoSlider.mock.calls[0][1];
-      onChange(2000);
-      expect(get('tempo')).toBe(2000);
-    });
-
-    it('destroys and recreates tempo slider on re-render', () => {
-      cleanup = initScaleExplorerView(panel);
-      const firstSlider = createTempoSlider.mock.results[0].value;
-
-      set('activeKey', { index: 2, type: 'major' });
-
-      expect(firstSlider.destroy).toHaveBeenCalled();
-      expect(createTempoSlider).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -348,14 +284,6 @@ describe('scale-explorer-view', () => {
       btns.forEach(btn => {
         expect(btn.destroy).toHaveBeenCalled();
       });
-      cleanup = null;
-    });
-
-    it('destroys tempo slider on cleanup', () => {
-      cleanup = initScaleExplorerView(panel);
-      const slider = createTempoSlider.mock.results[0].value;
-      cleanup();
-      expect(slider.destroy).toHaveBeenCalled();
       cleanup = null;
     });
 
@@ -458,33 +386,5 @@ describe('scale-explorer-view', () => {
       expect(createBouncingSphere).toHaveBeenCalledTimes(8);
     });
 
-    it('uses current tempo from state for sphere.moveTo', async () => {
-      isReady.mockReturnValue(true);
-      set('tempo', 1500);
-      cleanup = initScaleExplorerView(panel);
-
-      const onPlay = createPlayButton.mock.calls[0][0].onPlay;
-      await onPlay();
-
-      // Inject a mock .abcjs-note element into the container
-      const container = createBouncingSphere.mock.calls[0][0];
-      const staffEl = container.querySelector('.abcjs-staff');
-      if (staffEl) {
-        const noteEl = document.createElement('div');
-        noteEl.className = 'abcjs-note';
-        staffEl.appendChild(noteEl);
-      }
-
-      const playScaleCallbacks = playScale.mock.calls[0][3];
-      playScaleCallbacks.onNoteStart(0);
-
-      const sphere = createBouncingSphere.mock.results[0].value;
-      // In jsdom getBoundingClientRect returns zeros, so moveTo is called with calculated values
-      // The important thing is that moveTo was called with the tempo value
-      if (sphere.moveTo.mock.calls.length > 0) {
-        const lastCall = sphere.moveTo.mock.calls[sphere.moveTo.mock.calls.length - 1];
-        expect(lastCall[2]).toBe(1500);
-      }
-    });
   });
 });

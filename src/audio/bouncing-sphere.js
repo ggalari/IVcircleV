@@ -5,31 +5,39 @@
  * @module bouncing-sphere
  */
 
+import {
+  SPHERE_DIAMETER,
+  SPHERE_Z_INDEX,
+  SPHERE_ARC_MAX_HEIGHT,
+  SPHERE_ARC_RATIO,
+  SPHERE_HIDE_DURATION_MS
+} from '../config.js';
+
 /**
  * Creates a bouncing sphere visual indicator within the given container.
  *
  * @param {HTMLElement} containerEl - The container element to position the sphere within.
- * @returns {{ moveTo: (x: number, y: number, durationMs: number) => void, show: () => void, hide: () => void, destroy: () => void }}
+ * @returns {{ moveTo: (x: number, y: number, durationMs: number) => void, show: () => void, hide: () => void, reset: () => void, destroy: () => void }}
  */
 export function createBouncingSphere(containerEl) {
-  const DIAMETER = 15;
-  const Z_INDEX = 100;
+  const HALF = SPHERE_DIAMETER / 2;
 
   let hasPosition = false;
   let currentX = 0;
   let currentY = 0;
   let destroyed = false;
+  let hideTimeout = null;
 
   // Create the sphere element
   const sphere = document.createElement('div');
   sphere.className = 'bouncing-sphere';
   sphere.style.position = 'absolute';
-  sphere.style.width = `${DIAMETER}px`;
-  sphere.style.height = `${DIAMETER}px`;
+  sphere.style.width = `${SPHERE_DIAMETER}px`;
+  sphere.style.height = `${SPHERE_DIAMETER}px`;
   sphere.style.borderRadius = '50%';
   sphere.style.background = 'radial-gradient(circle at 35% 35%, rgba(255,120,120,0.95), var(--color-major, #8b0000) 60%, rgba(80,0,0,0.9))';
   sphere.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-  sphere.style.zIndex = String(Z_INDEX);
+  sphere.style.zIndex = String(SPHERE_Z_INDEX);
   sphere.style.pointerEvents = 'none';
   sphere.style.opacity = '0';
   sphere.style.display = 'none';
@@ -50,8 +58,14 @@ export function createBouncingSphere(containerEl) {
   function moveTo(x, y, durationMs) {
     if (destroyed) return;
 
-    const targetX = x - DIAMETER / 2;
-    const targetY = y - DIAMETER / 2;
+    // Cancel any pending hide — we're actively positioning
+    if (hideTimeout !== null) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+
+    const targetX = x - HALF;
+    const targetY = y - HALF;
 
     if (!hasPosition) {
       // First element: appear instantly without transition
@@ -68,7 +82,7 @@ export function createBouncingSphere(containerEl) {
     // Subsequent elements: animate with bounce arc
     // Calculate arc height based on horizontal distance for parabolic effect
     const dx = Math.abs(targetX - currentX);
-    const arcHeight = Math.min(dx * 0.3, 30); // Arc height proportional to distance, max 30px
+    const arcHeight = Math.min(dx * SPHERE_ARC_RATIO, SPHERE_ARC_MAX_HEIGHT);
 
     // Use CSS transition for the main movement with ease-out
     sphere.style.transition = `transform ${durationMs}ms cubic-bezier(0.16, 1, 0.3, 1)`;
@@ -82,8 +96,7 @@ export function createBouncingSphere(containerEl) {
         { transform: `translate(${targetX}px, ${targetY}px)` }
       ], {
         duration: durationMs,
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        fill: 'forwards'
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
       });
     }
 
@@ -93,27 +106,61 @@ export function createBouncingSphere(containerEl) {
 
   /**
    * Show the sphere (make visible).
+   * Cancels any pending hide timeout to prevent race conditions.
    */
   function show() {
     if (destroyed) return;
+    if (hideTimeout !== null) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
     sphere.style.display = 'block';
     sphere.style.opacity = '1';
   }
 
   /**
-   * Hide the sphere within 50ms.
+   * Hide the sphere within a short fade-out.
    */
   function hide() {
     if (destroyed) return;
-    sphere.style.transition = 'opacity 50ms ease-out';
+    if (hideTimeout !== null) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    sphere.style.transition = `opacity ${SPHERE_HIDE_DURATION_MS}ms ease-out`;
     sphere.style.opacity = '0';
-    // Reset position tracking so next show starts fresh
-    setTimeout(() => {
+    // Reset position tracking synchronously so next show starts fresh
+    hasPosition = false;
+    hideTimeout = setTimeout(() => {
+      hideTimeout = null;
       if (!destroyed) {
         sphere.style.display = 'none';
-        hasPosition = false;
       }
-    }, 50);
+    }, SPHERE_HIDE_DURATION_MS);
+  }
+
+  /**
+   * Reset the sphere to its initial state (hidden, no position).
+   * Call this before starting a new playback sequence.
+   * Cancels any pending hide timeouts and running animations.
+   */
+  function reset() {
+    if (destroyed) return;
+    if (hideTimeout !== null) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    // Cancel any running Web Animations to prevent stale transforms
+    if (typeof sphere.getAnimations === 'function') {
+      sphere.getAnimations().forEach(a => a.cancel());
+    }
+    sphere.style.transition = 'none';
+    sphere.style.transform = '';
+    sphere.style.opacity = '0';
+    sphere.style.display = 'none';
+    hasPosition = false;
+    currentX = 0;
+    currentY = 0;
   }
 
   /**
@@ -127,5 +174,5 @@ export function createBouncingSphere(containerEl) {
     }
   }
 
-  return { moveTo, show, hide, destroy };
+  return { moveTo, show, hide, reset, destroy };
 }
