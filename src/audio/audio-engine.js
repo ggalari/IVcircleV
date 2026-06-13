@@ -1,10 +1,11 @@
 // Audio Engine: central module managing audio lifecycle and playback.
 // Lazy AudioContext creation, sample loading, playback scheduling, and state coordination.
 
-import { mapScaleToSampleKeys, mapChordToSampleKeys, mapChordSequenceToSampleKeys } from './pitch-mapper.js';
+import { mapScaleToSampleKeys, mapChordToSampleKeysFromStaff } from './pitch-mapper.js';
 import { loadSamples, getBuffer } from './sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from './scheduler.js';
 import { get, set, subscribe } from '../state.js';
+import { getChordStaffPositions } from '../modes/staff-renderer.js';
 
 // ─── Module-level state ───────────────────────────────────────────────────────
 
@@ -183,8 +184,9 @@ export function playScale(sectionId, scaleResult, tempo, callbacks = {}) {
 
 /**
  * Play a chord sequence (7 diatonic chords).
+ * Uses staff positions as the source of truth for pitch — same approach as scales.
  * @param {string} sectionId - Unique identifier for the playing section
- * @param {Array<{ root: string, intervals: number[] }>} chords - Array of chord objects
+ * @param {Array<{ root: string, intervals: number[], noteNames?: string[] }>} chords - Array of chord objects
  * @param {number} keyIndex - Key index (0-11)
  * @param {string} keyType - 'major' or 'minor'
  * @param {number} tempo - Inter-chord spacing in ms
@@ -196,8 +198,12 @@ export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, c
   // Stop any current playback first
   stopPlaybackImmediate();
 
-  // Map the chord sequence with ascending octave logic
-  const chordSampleKeys = mapChordSequenceToSampleKeys(chords, 3);
+  // Map each chord using staff positions (same as visual rendering)
+  const chordSampleKeys = chords.map(chord => {
+    const staffPositions = getChordStaffPositions(keyIndex, keyType, chord);
+    const noteNames = chord.noteNames || [chord.root];
+    return mapChordToSampleKeysFromStaff(noteNames, staffPositions, 3);
+  });
 
   const startTime = audioContext.currentTime + 0.05;
   const { stopFn, immediateStopFn, scheduledEndTime } = scheduleChordSequence(
@@ -267,7 +273,8 @@ export function playSingleNote(noteName, sampleKey) {
 
 /**
  * Play a single chord immediately (tap playback).
- * @param {{ root: string, intervals: number[] }} chord - Chord object
+ * Uses staff positions as the source of truth for pitch — same approach as scales.
+ * @param {{ root: string, intervals: number[], noteNames?: string[] }} chord - Chord object
  * @param {number} keyIndex - Key index (0-11)
  * @param {string} keyType - 'major' or 'minor'
  */
@@ -277,7 +284,11 @@ export function playSingleChord(chord, keyIndex, keyType) {
   // Stop any current playback first
   stopPlaybackImmediate();
 
-  const sampleKeys = mapChordToSampleKeys(chord.root, chord.intervals, 3);
+  // Use staff positions (same as visual rendering) to determine pitch
+  const staffPositions = getChordStaffPositions(keyIndex, keyType, chord);
+  const noteNames = chord.noteNames || [chord.root];
+  const sampleKeys = mapChordToSampleKeysFromStaff(noteNames, staffPositions, 3);
+
   const gainPerTone = sampleKeys.length > 0 ? 1 / sampleKeys.length : 1;
   const { stopFn, immediateStopFn } = scheduleImmediate(audioContext, buffers, sampleKeys, gainPerTone);
   currentStopFn = stopFn;

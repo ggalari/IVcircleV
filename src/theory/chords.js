@@ -179,7 +179,8 @@ export function getDiatonicTriads(keyIndex, keyType) {
     root: getRootNoteName(keyIndex, keyType, i),
     quality,
     intervals: TRIAD_INTERVALS[quality],
-    staffPositions: computeStaffPositions(i + 1, 3)
+    staffPositions: computeStaffPositions(i + 1, 3),
+    noteNames: getChordToneNames(keyIndex, keyType, i, 3)
   }));
 }
 
@@ -201,6 +202,26 @@ export function getDiatonicSevenths(keyIndex, keyType) {
     root: getRootNoteName(keyIndex, keyType, i),
     quality,
     intervals: SEVENTH_INTERVALS[quality],
-    staffPositions: computeStaffPositions(i + 1, 4)
+    staffPositions: computeStaffPositions(i + 1, 4),
+    noteNames: getChordToneNames(keyIndex, keyType, i, 4)
   }));
+}
+
+/**
+ * Get the French solfège note names for each tone in a chord.
+ * A chord built on degree `degreeIndex` uses every other scale degree (stacked thirds).
+ * @param {number} keyIndex - Slice index (0-11)
+ * @param {'major' | 'minor'} keyType - Key type
+ * @param {number} degreeIndex - Root scale degree (0-6)
+ * @param {number} noteCount - Number of notes (3 for triads, 4 for sevenths)
+ * @returns {string[]} Array of French note names for each chord tone
+ */
+function getChordToneNames(keyIndex, keyType, degreeIndex, noteCount) {
+  const names = [];
+  for (let i = 0; i < noteCount; i++) {
+    // Each chord tone is 2 scale degrees above the previous (stacked thirds)
+    const scaleDegree = (degreeIndex + i * 2) % 7;
+    names.push(getRootNoteName(keyIndex, keyType, scaleDegree));
+  }
+  return names;
 }

@@ -167,6 +167,34 @@ function buildChordAbc(sliceIndex, keyType, chords, labels) {
   return `X:1\nM:none\nL:1/4\nK:${key}\n${abcChords.join(' ')} |\n${romanLine}\n${nameLine}\n`;
 }
 
+/**
+ * Compute the staff positions for each note in a chord, using the same logic
+ * as buildChordAbc. This is the source of truth for how notes are placed on the
+ * staff and therefore what pitch they represent.
+ * 
+ * @param {number} sliceIndex - Circle-of-fifths slice (0-11)
+ * @param {string} keyType - 'major' or 'minor'
+ * @param {{ degree: number, intervals: number[] }} chord - Chord object
+ * @returns {number[]} Staff positions for each note in the chord
+ */
+export function getChordStaffPositions(sliceIndex, keyType, chord) {
+  const majorTonicStaffPos = [0, 4, 1, 5, 2, 6, 3, 1, 5, 2, 6, 3];
+  const minorTonicStaffPos = [5, 2, 6, 3, 0, 4, 2, 6, 3, 0, 4, 1];
+
+  let tonicStaffPos = keyType === 'major' ? majorTonicStaffPos[sliceIndex] : minorTonicStaffPos[sliceIndex];
+  if (tonicStaffPos >= 5) tonicStaffPos -= 7;
+
+  const rootDegreeIdx = chord.degree - 1;
+  const noteCount = chord.intervals.length;
+  const positions = [];
+
+  for (let i = 0; i < noteCount; i++) {
+    positions.push(tonicStaffPos + rootDegreeIdx + (i * 2));
+  }
+
+  return positions;
+}
+
 function getTonicChromaticFromSlice(sliceIndex, keyType) {
   const majorChromatic = (sliceIndex * 7) % 12;
   if (keyType === 'major') return majorChromatic;

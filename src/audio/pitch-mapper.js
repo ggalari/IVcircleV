@@ -191,6 +191,32 @@ function mapScaleUsingPitchTracking(scaleNotes, tonicOctave) {
 }
 
 /**
+ * Map chord notes to sample keys using staff positions as the source of truth for pitch.
+ * This mirrors how scales use staff positions: the position directly encodes octave.
+ * The note names come from the key signature (handled by the sample library's key-aware lookup),
+ * while the octave is derived from the staff position.
+ *
+ * @param {string[]} noteNames - French solfège note names for each chord tone
+ * @param {number[]} staffPositions - Staff positions for each chord tone (from getChordStaffPositions)
+ * @param {number} [baseOctave=3] - Octave assigned to staff position 0 (middle C region)
+ * @returns {string[]} Array of English scientific pitch sample keys
+ */
+export function mapChordToSampleKeysFromStaff(noteNames, staffPositions, baseOctave = 3) {
+  if (!noteNames || noteNames.length === 0) return [];
+
+  const result = [];
+  // Staff position 0 = C at baseOctave. Each +7 positions = +1 octave.
+  // The first note's staff position establishes the reference: its octave = baseOctave + floor(pos/7)
+  for (let i = 0; i < noteNames.length; i++) {
+    const octaveOffset = Math.floor(staffPositions[i] / 7);
+    const octave = baseOctave + octaveOffset;
+    result.push(frenchNoteToSampleKey(noteNames[i], octave));
+  }
+
+  return result;
+}
+
+/**
  * Map a chord's root note + intervals to sample keys.
  * Each interval offset is added chromatically to the root; octave increments when wrapping past B.
  * @param {string} rootNoteName - French solfège root name (e.g., "DO", "FA#")

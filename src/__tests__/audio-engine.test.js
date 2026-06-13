@@ -16,7 +16,12 @@ vi.mock('../audio/scheduler.js', () => ({
 vi.mock('../audio/pitch-mapper.js', () => ({
   mapScaleToSampleKeys: vi.fn(),
   mapChordToSampleKeys: vi.fn(),
-  mapChordSequenceToSampleKeys: vi.fn()
+  mapChordSequenceToSampleKeys: vi.fn(),
+  mapChordToSampleKeysFromStaff: vi.fn()
+}));
+
+vi.mock('../modes/staff-renderer.js', () => ({
+  getChordStaffPositions: vi.fn()
 }));
 
 // We need a real state store for subscription testing
@@ -55,7 +60,8 @@ import {
 
 import { loadSamples, getBuffer } from '../audio/sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from '../audio/scheduler.js';
-import { mapScaleToSampleKeys, mapChordToSampleKeys, mapChordSequenceToSampleKeys } from '../audio/pitch-mapper.js';
+import { mapScaleToSampleKeys, mapChordToSampleKeys, mapChordSequenceToSampleKeys, mapChordToSampleKeysFromStaff } from '../audio/pitch-mapper.js';
+import { getChordStaffPositions } from '../modes/staff-renderer.js';
 import { get, set, subscribe, _reset as resetState } from '../state.js';
 
 // Minimal AudioContext mock
@@ -91,6 +97,8 @@ describe('audio-engine', () => {
     mapScaleToSampleKeys.mockReturnValue(['C4', 'D4', 'E4']);
     mapChordToSampleKeys.mockReturnValue(['C4', 'E4', 'G4']);
     mapChordSequenceToSampleKeys.mockReturnValue([['C4', 'E4', 'G4'], ['D4', 'F4', 'A4']]);
+    mapChordToSampleKeysFromStaff.mockReturnValue(['C3', 'E3', 'G3']);
+    getChordStaffPositions.mockReturnValue([0, 2, 4]);
 
     scheduleScale.mockReturnValue({
       stopFn: vi.fn(),
@@ -258,25 +266,26 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('calls mapChordSequenceToSampleKeys with chords and octave 3', () => {
+    it('uses staff positions for each chord via getChordStaffPositions and mapChordToSampleKeysFromStaff', () => {
       const chords = [
-        { root: 'DO', intervals: [0, 4, 7] },
-        { root: 'RE', intervals: [0, 3, 7] }
+        { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] },
+        { root: 'RE', intervals: [0, 3, 7], noteNames: ['RE', 'FA', 'LA'] }
       ];
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
-      expect(mapChordSequenceToSampleKeys).toHaveBeenCalledWith(chords, 3);
+      expect(getChordStaffPositions).toHaveBeenCalledTimes(2);
+      expect(mapChordToSampleKeysFromStaff).toHaveBeenCalledTimes(2);
     });
 
     it('calls scheduleChordSequence with mapped chord arrays', () => {
       const chords = [
-        { root: 'DO', intervals: [0, 4, 7] }
+        { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }
       ];
-      mapChordSequenceToSampleKeys.mockReturnValue([['C4', 'E4', 'G4']]);
+      mapChordToSampleKeysFromStaff.mockReturnValue(['C3', 'E3', 'G3']);
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
       expect(scheduleChordSequence).toHaveBeenCalledWith(
         expect.any(Object), // audioContext
         expect.any(Map),    // buffers
-        [['C4', 'E4', 'G4']], // chordSampleKeys (one chord)
+        [['C3', 'E3', 'G3']], // chordSampleKeys (one chord)
         expect.any(Number), // startTime
         1000,               // tempo
         expect.any(Function) // onChordStart
@@ -284,7 +293,7 @@ describe('audio-engine', () => {
     });
 
     it('updates playback state to chord type', () => {
-      const chords = [{ root: 'DO', intervals: [0, 4, 7] }];
+      const chords = [{ root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }];
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
       const state = getPlaybackState();
       expect(state.isPlaying).toBe(true);
@@ -293,7 +302,7 @@ describe('audio-engine', () => {
     });
 
     it('stops current playback before starting new chord sequence', () => {
-      const chords = [{ root: 'DO', intervals: [0, 4, 7] }];
+      const chords = [{ root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }];
       playScale('scale-1', { notes: ['DO'] }, 500, {});
       const scaleImmediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
@@ -336,20 +345,21 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('calls mapChordToSampleKeys with chord root and intervals', () => {
-      const chord = { root: 'DO', intervals: [0, 4, 7] };
+    it('uses staff positions to determine pitch via mapChordToSampleKeysFromStaff', () => {
+      const chord = { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] };
       playSingleChord(chord, 0, 'major');
-      expect(mapChordToSampleKeys).toHaveBeenCalledWith('DO', [0, 4, 7], 3);
+      expect(getChordStaffPositions).toHaveBeenCalledWith(0, 'major', chord);
+      expect(mapChordToSampleKeysFromStaff).toHaveBeenCalledWith(['DO', 'MI', 'SOL'], [0, 2, 4], 3);
     });
 
     it('calls scheduleImmediate with normalized gain', () => {
-      const chord = { root: 'DO', intervals: [0, 4, 7] };
+      const chord = { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] };
       playSingleChord(chord, 0, 'major');
-      // mapChordToSampleKeys returns ['C4', 'E4', 'G4'] (3 notes) → gain = 1/3
+      // mapChordToSampleKeysFromStaff returns ['C3', 'E3', 'G3'] (3 notes) → gain = 1/3
       expect(scheduleImmediate).toHaveBeenCalledWith(
         expect.any(Object),
         expect.any(Map),
-        ['C4', 'E4', 'G4'],
+        ['C3', 'E3', 'G3'],
         1 / 3
       );
     });
