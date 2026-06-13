@@ -2,7 +2,7 @@
 // Lazy AudioContext creation, sample loading, playback scheduling, and state coordination.
 
 import { mapScaleToSampleKeys, mapChordToSampleKeysFromStaff } from './pitch-mapper.js';
-import { loadSamples, getBuffer } from './sample-library.js';
+import { loadSamples, getBuffer, clearBuffers } from './sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from './scheduler.js';
 import { get, set, subscribe } from '../state.js';
 import { getChordStaffPositions } from '../modes/staff-renderer.js';
@@ -41,6 +41,7 @@ let completionTimeout = null;
 /** Unsubscribe functions for state subscriptions */
 let unsubscribeActiveKey = null;
 let unsubscribeCurrentMode = null;
+let unsubscribeInstrument = null;
 
 // ─── Internal helpers ─────────────────────────────────────────────────────────
 
@@ -59,6 +60,26 @@ function clearCompletionTimeout() {
   if (completionTimeout !== null) {
     clearTimeout(completionTimeout);
     completionTimeout = null;
+  }
+}
+
+/**
+ * Handle instrument state changes: stop playback, clear old buffers, load new samples.
+ * Follows the same abrupt stop pattern as activeKey changes.
+ * @param {string} newInstrument - The new instrument value ('guitar' or 'piano')
+ */
+async function onInstrumentChange(newInstrument) {
+  stopPlaybackImmediate();
+  samplesLoaded = false;
+  clearBuffers();
+
+  try {
+    const result = await loadSamples(audioContext, newInstrument);
+    buffers = result.buffers;
+    samplesLoaded = true;
+  } catch (e) {
+    console.error('Failed to load samples for instrument:', newInstrument, e);
+    samplesLoaded = false;
   }
 }
 
@@ -100,7 +121,7 @@ export async function initAudioEngine() {
   if (!loadingTriggered) {
     loadingTriggered = true;
     try {
-      const result = await loadSamples(audioContext);
+      const result = await loadSamples(audioContext, get('instrument'));
       buffers = result.buffers;
       samplesLoaded = true;
     } catch (e) {
@@ -119,6 +140,9 @@ export async function initAudioEngine() {
     unsubscribeCurrentMode = subscribe('currentMode', () => {
       stopPlaybackImmediate();
     });
+  }
+  if (!unsubscribeInstrument) {
+    unsubscribeInstrument = subscribe('instrument', onInstrumentChange);
   }
 
   return true;
@@ -376,6 +400,10 @@ export function _resetForTesting() {
     unsubscribeCurrentMode();
     unsubscribeCurrentMode = null;
   }
+  if (unsubscribeInstrument) {
+    unsubscribeInstrument();
+    unsubscribeInstrument = null;
+  }
   audioContext = null;
   loadingTriggered = false;
   samplesLoaded = false;
@@ -404,5 +432,9 @@ export function cleanupAudioEngine() {
   if (unsubscribeCurrentMode) {
     unsubscribeCurrentMode();
     unsubscribeCurrentMode = null;
+  }
+  if (unsubscribeInstrument) {
+    unsubscribeInstrument();
+    unsubscribeInstrument = null;
   }
 }

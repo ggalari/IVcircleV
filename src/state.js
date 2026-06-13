@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   activeKey: { index: 0, type: 'major' },
   currentMode: 0,
   isTransitioning: false,
+  instrument: 'guitar',
+  samplesLoading: false,
 };
 
 /**

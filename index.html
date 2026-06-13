@@ -44,6 +44,23 @@
             <svg class="dropdown-icon dropdown-icon--theme-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             <span class="dropdown-item__label">Mode sombre</span>
           </button>
+          <div class="dropdown-submenu" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            <button id="btn-instrument-menu" class="dropdown-item" type="button" aria-label="Instrument">
+              <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              <span class="dropdown-item__label">Instrument</span>
+              <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="dropdown-submenu__panel" role="menu" hidden>
+              <button class="dropdown-item dropdown-item--radio" role="menuitemradio" aria-checked="true" data-instrument="guitar">
+                <span class="dropdown-item__check" aria-hidden="true">✓</span>
+                <span class="dropdown-item__label">Guitare</span>
+              </button>
+              <button class="dropdown-item dropdown-item--radio" role="menuitemradio" aria-checked="false" data-instrument="piano">
+                <span class="dropdown-item__check" aria-hidden="true">✓</span>
+                <span class="dropdown-item__label">Piano</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="legend">

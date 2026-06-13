@@ -52,6 +52,22 @@ The `dist/` folder is a static site. Deploy to Netlify, Vercel, GitHub Pages, or
 
 Vanilla JS · Vite · abcjs (notation) · vitest · fast-check
 
+## Audio Samples
+
+The app includes two instruments: acoustic guitar and grand piano. Samples are stored in `public/samples/guitar/` and `public/samples/piano/` as individual `.mp3` files named by pitch (flat-based: `C3.mp3`, `Db3.mp3`, ..., `B5.mp3`).
+
+To re-download or update the samples:
+
+```bash
+bash scripts/download-samples.sh
+```
+
+Guitar covers C3–D5 from recorded samples (27 notes); higher pitches (Eb5–B5) use Karplus-Strong synthesis as fallback. Piano covers the full C3–B5 range (36 notes) with no synthesis fallback — missing files result in silence.
+
 ## License
 
 MIT
+
+## Credits
+
+Audio samples from [tonejs-instruments](https://github.com/nbrosowsky/tonejs-instruments) by Nicholaus P. Brosowsky, licensed under [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/). Original recordings from the University of Iowa Electronic Music Studios.

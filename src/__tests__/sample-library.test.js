@@ -63,7 +63,7 @@ describe('sample-library', () => {
 
       expect(mockFetch).toHaveBeenCalledTimes(36);
       for (const key of ALL_KEYS) {
-        expect(mockFetch).toHaveBeenCalledWith(`/samples/guitar/${key}.mp3`);
+        expect(mockFetch).toHaveBeenCalledWith(`samples/guitar/${key}.mp3`);
       }
     });
 
@@ -86,7 +86,7 @@ describe('sample-library', () => {
       const failKeys = new Set(['D3', 'Ab4', 'C5']);
 
       vi.stubGlobal('fetch', vi.fn((url) => {
-        const key = url.replace('/samples/guitar/', '').replace('.mp3', '');
+        const key = url.replace('samples/guitar/', '').replace('.mp3', '');
         if (failKeys.has(key)) {
           return Promise.resolve({ ok: false, status: 404 });
         }
@@ -207,7 +207,7 @@ describe('sample-library', () => {
     it('returns synthesized buffer for a sample whose file failed to load', async () => {
       const failKeys = new Set(['E4']);
       vi.stubGlobal('fetch', vi.fn((url) => {
-        const key = url.replace('/samples/guitar/', '').replace('.mp3', '');
+        const key = url.replace('samples/guitar/', '').replace('.mp3', '');
         if (failKeys.has(key)) {
           return Promise.resolve({ ok: false, status: 404 });
         }

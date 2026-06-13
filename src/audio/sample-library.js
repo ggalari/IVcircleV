@@ -1,6 +1,8 @@
-// Sample Library module: loading, decoding, and caching of guitar audio samples.
+// Sample Library module: loading, decoding, and caching of audio samples.
 // Manages a module-level Map for referential identity on repeated access.
-// Falls back to synthesized guitar-like tones when sample files are unavailable.
+// Supports multiple instruments:
+//   - Guitar: falls back to Karplus-Strong synthesized tones when sample files are unavailable.
+//   - Piano: no synthesis fallback; missing samples are marked as null (unavailable).
 
 import { frenchNoteToSampleKey } from './pitch-mapper.js';
 
@@ -123,17 +125,21 @@ function synthesizeTone(audioContext, midiNote) {
 }
 
 /**
- * Fetch and decode all 25 guitar samples (C3–C5 chromatic) from public/samples/guitar/.
- * Falls back to synthesized tones for any samples that fail to load.
+ * Fetch and decode all chromatic samples (C3–B5) from the appropriate instrument directory.
+ * - Guitar: fetches from `/samples/guitar/`, falls back to Karplus-Strong synthesis for missing files.
+ * - Piano: fetches from `/samples/piano/`, no synthesis fallback — failed pitches stored as `null`.
  * Uses Promise.allSettled so individual failures don't block the batch.
  *
  * @param {AudioContext} audioContext - The Web Audio API AudioContext for decoding
- * @returns {Promise<{ buffers: Map<string, AudioBuffer>, loaded: boolean, failedSamples: string[] }>}
+ * @param {string} instrument - The instrument to load samples for ('guitar' or 'piano')
+ * @returns {Promise<{ buffers: Map<string, AudioBuffer|null>, loaded: boolean, failedSamples: string[] }>}
  */
-export async function loadSamples(audioContext) {
+export async function loadSamples(audioContext, instrument = 'guitar') {
+  const sampleDir = `samples/${instrument === 'piano' ? 'piano' : 'guitar'}/`;
+
   const results = await Promise.allSettled(
     CHROMATIC_KEYS.map(async (key) => {
-      const url = `/samples/guitar/${key}.mp3`;
+      const url = `${sampleDir}${key}.mp3`;
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} for ${url}`);
@@ -154,14 +160,20 @@ export async function loadSamples(audioContext) {
     if (result.status === 'fulfilled') {
       bufferCache.set(result.value.key, result.value.audioBuffer);
     } else {
-      // Fall back to synthesized tone instead of leaving the sample missing
-      try {
-        const synth = synthesizeTone(audioContext, KEY_TO_MIDI[key]);
-        bufferCache.set(key, synth);
-        synthesizedCount++;
-      } catch (e) {
+      if (instrument === 'guitar') {
+        // Guitar: fall back to synthesized tone
+        try {
+          const synth = synthesizeTone(audioContext, KEY_TO_MIDI[key]);
+          bufferCache.set(key, synth);
+          synthesizedCount++;
+        } catch (e) {
+          failedSamples.push(key);
+          console.error(`Failed to synthesize fallback for "${key}":`, e);
+        }
+      } else {
+        // Piano: no synthesis fallback — mark pitch as unavailable
+        bufferCache.set(key, null);
         failedSamples.push(key);
-        console.error(`Failed to synthesize fallback for "${key}":`, e);
       }
     }
   }
@@ -257,18 +269,24 @@ function normalizeKey(key) {
 /**
  * Get a cached AudioBuffer for the given pitch key.
  * Handles enharmonic equivalents (e.g., "F#4" matches "Gb4" in cache).
+ * Returns null for pitches that are explicitly unavailable (e.g., failed piano samples).
  *
  * @param {string} pitchKey - e.g., "C4", "F#4", "Db3"
  * @returns {AudioBuffer|null} The cached buffer, or null if not available
  */
 export function getBuffer(pitchKey) {
-  // Try direct lookup first
-  const direct = bufferCache.get(pitchKey);
-  if (direct) return direct;
+  // Try direct lookup first — if the key exists in cache, return its value (may be null for unavailable pitches)
+  if (bufferCache.has(pitchKey)) {
+    return bufferCache.get(pitchKey);
+  }
 
   // Try normalized (enharmonic) lookup
   const normalized = normalizeKey(pitchKey);
-  return bufferCache.get(normalized) || null;
+  if (bufferCache.has(normalized)) {
+    return bufferCache.get(normalized);
+  }
+
+  return null;
 }
 
 /**
@@ -281,6 +299,16 @@ export function getBuffer(pitchKey) {
  */
 export function mapNoteToSampleKey(frenchNoteName, octave) {
   return frenchNoteToSampleKey(frenchNoteName, octave);
+}
+
+/**
+ * Clear all cached buffers and reset loading state.
+ * Called by the audio engine when switching instruments before loading new samples.
+ */
+export function clearBuffers() {
+  bufferCache.clear();
+  loaded = false;
+  failedSamples = [];
 }
 
 /**

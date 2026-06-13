@@ -48,7 +48,10 @@ export function attachHamburgerMenu() {
     }
   }
 
-  function handleItemClick() {
+  function handleItemClick(e) {
+    // Don't close menu when clicking the submenu toggle — only close on final actions
+    const target = e.currentTarget;
+    if (target.id === 'btn-instrument-menu') return;
     // Let the action's own handler fire first, then close
     setTimeout(close, 0);
   }

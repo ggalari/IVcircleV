@@ -459,6 +459,54 @@ button:hover {
   background: var(--color-surface-parchment);
 }
 
+/* ─── Instrument submenu ─────────────────────────────────────────────── */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-chevron {
+  margin-left: auto;
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.dropdown-submenu[aria-expanded="true"] .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown-submenu__panel {
+  padding: 2px 0 2px 26px;
+  overflow: hidden;
+}
+
+.dropdown-submenu__panel[hidden] {
+  display: none;
+}
+
+.dropdown-item--radio {
+  padding: 10px 16px;
+  min-height: 38px;
+  font-size: 13px;
+}
+
+.dropdown-item--radio .dropdown-item__check {
+  width: 16px;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 100ms ease;
+  flex-shrink: 0;
+}
+
+.dropdown-item--radio[aria-checked="true"] .dropdown-item__check {
+  opacity: 1;
+  color: var(--color-major);
+}
+
+.dropdown-item--radio[aria-checked="true"] {
+  font-weight: 600;
+}
+
 button:focus-visible {
   outline: 2px solid var(--color-surface-card);
   outline-offset: 2px;

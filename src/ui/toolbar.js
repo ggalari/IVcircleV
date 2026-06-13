@@ -5,6 +5,7 @@
 
 import { getCenterLabelSetting, setCenterLabelSetting, showNeighbors } from '../overlays/neighbors.js';
 import { get, set } from '../state.js';
+import { initInstrumentSelector } from './instrument-selector.js';
 import { toggleTheme, initTheme, updateThemeButton } from './theme.js';
 
 /**
@@ -123,4 +124,7 @@ export function attachToolbarListeners() {
     toggleThemeBtn.addEventListener('click', toggleTheme);
     updateThemeButton();
   }
+
+  // Initialize instrument selector (reads cookie, attaches listener, subscribes to state)
+  initInstrumentSelector();
 }
