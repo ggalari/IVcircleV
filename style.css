@@ -269,7 +269,14 @@ button:hover {
   from { opacity: 0; }
 }
 
-.legend { display: flex; gap: 12px; justify-content: center; margin-top: auto; padding-top: 12px; font-size: 13px; color: var(--color-text-faint); }
+.legend {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 8px 0;
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
 .legend .swatch { width: 18px; height: 12px; display: inline-block; border-radius: 3px; margin-right: 6px; vertical-align: middle; }
 .legend .major-swatch { background: var(--color-highlight-major); border: 1px solid var(--color-border-major); }
 .legend .minor-swatch { background: var(--color-highlight-minor); border: 1px solid var(--color-border-minor); }
