@@ -43,6 +43,9 @@ let unsubscribeActiveKey = null;
 let unsubscribeCurrentMode = null;
 let unsubscribeInstrument = null;
 
+/** Handler reference for visibilitychange listener (for cleanup) */
+let visibilityHandler = null;
+
 // ─── Internal helpers ─────────────────────────────────────────────────────────
 
 /**
@@ -60,6 +63,17 @@ function clearCompletionTimeout() {
   if (completionTimeout !== null) {
     clearTimeout(completionTimeout);
     completionTimeout = null;
+  }
+}
+
+/**
+ * Ensure the AudioContext is in 'running' state.
+ * On iOS, the context may be suspended after returning from background.
+ * Calling resume() on an already-running context is harmless (resolves immediately).
+ */
+function ensureContextRunning() {
+  if (audioContext && audioContext.state === 'suspended') {
+    audioContext.resume();
   }
 }
 
@@ -145,6 +159,16 @@ export async function initAudioEngine() {
     unsubscribeInstrument = subscribe('instrument', onInstrumentChange);
   }
 
+  // Proactively resume AudioContext when page becomes visible again (iOS suspends it on background)
+  if (!visibilityHandler) {
+    visibilityHandler = () => {
+      if (document.visibilityState === 'visible' && audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    };
+    document.addEventListener('visibilitychange', visibilityHandler);
+  }
+
   return true;
 }
 
@@ -156,6 +180,7 @@ export async function initAudioEngine() {
  * @param {{ onNoteStart?: function, onComplete?: function }} callbacks
  */
 export function playScale(sectionId, scaleResult, tempo, callbacks = {}) {
+  ensureContextRunning();
   if (!audioContext || !samplesLoaded) return;
 
   // Stop any current playback first
@@ -217,6 +242,7 @@ export function playScale(sectionId, scaleResult, tempo, callbacks = {}) {
  * @param {{ onChordStart?: function, onComplete?: function }} callbacks
  */
 export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, callbacks = {}) {
+  ensureContextRunning();
   if (!audioContext || !samplesLoaded) return;
 
   // Stop any current playback first
@@ -277,6 +303,7 @@ export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, c
  * @param {string} [sampleKey] - Optional pre-computed sample key (e.g., "C4"). If provided, bypasses pitch mapping.
  */
 export function playSingleNote(noteName, sampleKey) {
+  ensureContextRunning();
   if (!audioContext || !samplesLoaded) return;
 
   // Stop any current playback first
@@ -303,6 +330,7 @@ export function playSingleNote(noteName, sampleKey) {
  * @param {string} keyType - 'major' or 'minor'
  */
 export function playSingleChord(chord, keyIndex, keyType) {
+  ensureContextRunning();
   if (!audioContext || !samplesLoaded) return;
 
   // Stop any current playback first
@@ -404,6 +432,10 @@ export function _resetForTesting() {
     unsubscribeInstrument();
     unsubscribeInstrument = null;
   }
+  if (visibilityHandler) {
+    document.removeEventListener('visibilitychange', visibilityHandler);
+    visibilityHandler = null;
+  }
   audioContext = null;
   loadingTriggered = false;
   samplesLoaded = false;
@@ -436,5 +468,9 @@ export function cleanupAudioEngine() {
   if (unsubscribeInstrument) {
     unsubscribeInstrument();
     unsubscribeInstrument = null;
+  }
+  if (visibilityHandler) {
+    document.removeEventListener('visibilitychange', visibilityHandler);
+    visibilityHandler = null;
   }
 }
