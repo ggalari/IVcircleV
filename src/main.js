@@ -16,6 +16,7 @@ import { attachKeyboardNav } from './ui/keyboard-nav.js';
 import { attachSwipeHandler } from './modes/swipe-handler.js';
 import { hitTestKey } from './modes/hit-test.js';
 import { SLICES } from './circle/keys.js';
+import { initOrientationLock } from './ui/orientation-lock.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   try {
@@ -111,6 +112,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const type = key.type === 'major' ? 'Majeur' : 'mineur';
       liveRegion.textContent = `${name} ${type}`;
     });
+
+    // 12. Orientation lock + prompt for phone-sized screens
+    initOrientationLock();
   } catch (err) {
     document.getElementById('circle-container').innerHTML =
       `<p style="color:red">Failed to load application: ${err.message}</p>`;

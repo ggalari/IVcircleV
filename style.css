@@ -443,7 +443,7 @@ button:hover {
     margin: 4px 0;
   }
   .chevron-btn {
-    padding: 16px 12px;
+    display: none;
   }
 }
 
@@ -727,6 +727,88 @@ button:focus-visible {
 
 :root[data-theme="dark"] .bouncing-sphere {
   filter: drop-shadow(0 0 6px var(--color-major));
+}
+
+/* ─── Orientation Prompt ──────────────────────────────────────────────── */
+.orientation-prompt {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 30vh;
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.orientation-prompt__content {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  background: var(--color-surface-card);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.orientation-prompt__icon {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.orientation-prompt__text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.orientation-prompt__dismiss {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-button);
+  color: var(--color-text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.orientation-prompt__dismiss:hover {
+  background: var(--color-surface-parchment);
+  color: var(--color-text-primary);
+}
+
+.orientation-prompt__dismiss:focus-visible {
+  outline: 2px solid var(--color-major);
+  outline-offset: 2px;
+}
+
+:root[data-theme="dark"] .orientation-prompt__content {
+  background: var(--color-surface-parchment);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme="dark"] .orientation-prompt__dismiss:hover {
+  background: var(--color-surface-parchment-dark);
 }
 
 /* Reduced motion */

@@ -1,0 +1,10 @@
+{
+  "name": "Cercle des quintes",
+  "short_name": "Quintes",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#2d2b2a",
+  "theme_color": "#2d2b2a",
+  "icons": []
+}
