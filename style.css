@@ -443,7 +443,7 @@ button:hover {
     margin: 4px 0;
   }
   .chevron-btn {
-    display: none;
+    display: none !important;
   }
 }
 
