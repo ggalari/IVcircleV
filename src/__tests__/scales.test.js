@@ -1,34 +1,35 @@
 import { describe, it, expect } from 'vitest';
-import { SCALE_INTERVALS, getScale, getAllScales } from '../theory/scales.js';
+import { getScale, getAllScales } from '../theory/scales.js';
+import { SCALE_STEP_INTERVALS } from '../theory/pitch.js';
 
-describe('SCALE_INTERVALS', () => {
+describe('SCALE_STEP_INTERVALS', () => {
   it('has all four scale types', () => {
-    expect(Object.keys(SCALE_INTERVALS)).toEqual([
+    expect(Object.keys(SCALE_STEP_INTERVALS)).toEqual([
       'major', 'naturalMinor', 'harmonicMinor', 'melodicMinor'
     ]);
   });
 
   it('each interval array has 7 elements summing to 12', () => {
-    for (const [type, intervals] of Object.entries(SCALE_INTERVALS)) {
+    for (const [type, intervals] of Object.entries(SCALE_STEP_INTERVALS)) {
       expect(intervals).toHaveLength(7);
       expect(intervals.reduce((a, b) => a + b, 0)).toBe(12);
     }
   });
 
   it('major intervals are [2,2,1,2,2,2,1]', () => {
-    expect(SCALE_INTERVALS.major).toEqual([2, 2, 1, 2, 2, 2, 1]);
+    expect(SCALE_STEP_INTERVALS.major).toEqual([2, 2, 1, 2, 2, 2, 1]);
   });
 
   it('naturalMinor intervals are [2,1,2,2,1,2,2]', () => {
-    expect(SCALE_INTERVALS.naturalMinor).toEqual([2, 1, 2, 2, 1, 2, 2]);
+    expect(SCALE_STEP_INTERVALS.naturalMinor).toEqual([2, 1, 2, 2, 1, 2, 2]);
   });
 
   it('harmonicMinor intervals are [2,1,2,2,1,3,1]', () => {
-    expect(SCALE_INTERVALS.harmonicMinor).toEqual([2, 1, 2, 2, 1, 3, 1]);
+    expect(SCALE_STEP_INTERVALS.harmonicMinor).toEqual([2, 1, 2, 2, 1, 3, 1]);
   });
 
   it('melodicMinor intervals are [2,1,2,2,2,2,1]', () => {
-    expect(SCALE_INTERVALS.melodicMinor).toEqual([2, 1, 2, 2, 2, 2, 1]);
+    expect(SCALE_STEP_INTERVALS.melodicMinor).toEqual([2, 1, 2, 2, 2, 2, 1]);
   });
 });
 

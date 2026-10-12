@@ -4,3 +4,5 @@ dist/
 .vscode/
 .vite/
 .kiro/
+kilo.json
+tmp/

@@ -1,10 +1,9 @@
 // src/overlays/neighbors.js
 // Neighbor overlay — draws highlight sectors and roman numeral labels
 
-import { sectorPath, DEFAULT_CONFIG } from '../circle/geometry.js';
-import { get, set } from '../state.js';
-import { getNeighborDegrees } from '../theory/degrees.js';
-import { SLICES } from '../circle/keys.js';
+import { DEFAULT_CONFIG } from '../circle/geometry.js';
+import { set } from '../state.js';
+import { getNeighborhood, neighborhoodSector, neighborhoodLabelPoint } from './neighborhood.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -43,8 +42,9 @@ export function clearNeighbors() {
 }
 
 /**
- * Draws 6 highlight sectors (3 outer, 3 inner) with roman numeral labels
- * for the given key info.
+ * Draws the diatonic neighbourhood — 6 highlight sectors (3 outer, 3 inner),
+ * the diminished sector, their roman numerals, and the centre label — from the
+ * one neighbourhood model.
  * @param {{ index: number, type: "major" | "minor" }} keyInfo
  */
 export function showNeighbors(keyInfo) {
@@ -53,49 +53,14 @@ export function showNeighbors(keyInfo) {
     overlayGroup.innerHTML = '';
   }
 
-  const degrees = getNeighborDegrees(keyInfo.type);
-  const idx = keyInfo.index;
-  const cwIdx = (idx + 1) % 12;
-  const ccwIdx = (idx + 11) % 12;
+  const { entries, center } = getNeighborhood(keyInfo);
 
-  // Determine which ring the selected key is on
-  const tonicRing = keyInfo.type === 'major' ? 'outer' : 'inner';
-  const relativeRing = keyInfo.type === 'major' ? 'inner' : 'outer';
-
-  // Draw sectors on the tonic's ring (3 sectors: self + 2 neighbors)
-  // Color is based on the RING (outer=major/red, inner=minor/green) to match legend
-  addSector(idx, { type: 'major', ring: 'outer', isTonic: keyInfo.type === 'major' });
-  addSector(cwIdx, { type: 'major', ring: 'outer' });
-  addSector(ccwIdx, { type: 'major', ring: 'outer' });
-
-  // Draw sectors on the inner ring (3 sectors at same indices)
-  addSector(idx, { type: 'minor', ring: 'inner', isTonic: keyInfo.type === 'minor' });
-  addSector(cwIdx, { type: 'minor', ring: 'inner' });
-  addSector(ccwIdx, { type: 'minor', ring: 'inner' });
-
-  // Add roman numeral labels on the tonic's ring
-  const tonicDegrees = keyInfo.type === 'major' ? degrees.outer : degrees.inner;
-  addLabel(idx, tonicDegrees.self, tonicRing === 'outer' ? 'major' : 'minor', tonicRing);
-  addLabel(cwIdx, tonicDegrees.cw, tonicRing === 'outer' ? 'major' : 'minor', tonicRing);
-  addLabel(ccwIdx, tonicDegrees.ccw, tonicRing === 'outer' ? 'major' : 'minor', tonicRing);
-
-  // Add roman numeral labels on the relative ring
-  const relativeDegrees = keyInfo.type === 'major' ? degrees.inner : degrees.outer;
-  addLabel(idx, relativeDegrees.self, relativeRing === 'outer' ? 'major' : 'minor', relativeRing);
-  addLabel(cwIdx, relativeDegrees.cw, relativeRing === 'outer' ? 'major' : 'minor', relativeRing);
-  addLabel(ccwIdx, relativeDegrees.ccw, relativeRing === 'outer' ? 'major' : 'minor', relativeRing);
-
-  // Draw the diminished chord sector (7th degree)
-  if (degrees.dim) {
-    const dimIdx = (idx + degrees.dim.offset) % 12;
-    // Color based on which ring it's on
-    const dimType = degrees.dim.ring === 'inner' ? 'minor' : 'major';
-    addSector(dimIdx, { type: dimType, ring: degrees.dim.ring });
-    addLabel(dimIdx, degrees.dim.label, dimType, degrees.dim.ring);
+  for (const entry of entries) {
+    addSector(entry);
+    addLabel(entry);
   }
 
-  // Active key label in the center of the circle
-  addCenterLabel(keyInfo);
+  addCenterLabel(center);
 
   // Update state
   set('overlayActive', true);
@@ -106,40 +71,20 @@ export function showNeighbors(keyInfo) {
 // --- Internal helpers ---
 
 /**
- * Adds a highlight sector path to the overlay group.
- * @param {number} index - Slice index (0–11)
- * @param {{ type: string, ring: string, isTonic?: boolean }} options
+ * Adds a highlight sector path for one neighbourhood entry to the overlay group.
+ * @param {{ sliceIndex: number, ring: 'outer' | 'inner', type: string, isTonic: boolean }} entry
  */
-function addSector(index, options = {}) {
+function addSector(entry) {
   if (!overlayGroup) return;
 
-  const { centerX, centerY, outerRadius, middleRadius, innerRadius } = DEFAULT_CONFIG;
-
-  let outerR, innerR;
-  if (options.ring === 'inner') {
-    outerR = middleRadius;
-    innerR = innerRadius;
-  } else {
-    outerR = outerRadius;
-    innerR = middleRadius;
-  }
-
-  const startDeg = -90 + index * 30 - 15;
-  const endDeg = startDeg + 30;
-
-  const d = sectorPath(centerX, centerY, innerR, outerR, startDeg, endDeg);
-
   const path = document.createElementNS(SVG_NS, 'path');
-  path.setAttribute('d', d);
-
-  const type = options.type || 'major';
-  const cls = type === 'minor' ? 'highlight-minor fade-in' : 'highlight-major fade-in';
-  path.setAttribute('class', cls);
+  path.setAttribute('d', neighborhoodSector(entry.sliceIndex, entry.ring));
+  path.setAttribute('class', `highlight-${entry.type} fade-in`);
 
   // Tonic sector: stronger fill + visible border for emphasis
-  if (options.isTonic) {
+  if (entry.isTonic) {
     path.style.opacity = '1';
-    path.setAttribute('stroke', type === 'minor' ? 'var(--color-minor, #2E6B2E)' : 'var(--color-major, #8B0000)');
+    path.setAttribute('stroke', entry.type === 'minor' ? 'var(--color-minor, #2E6B2E)' : 'var(--color-major, #8B0000)');
     path.setAttribute('stroke-width', '2');
     path.setAttribute('stroke-opacity', '0.6');
   } else {
@@ -150,30 +95,19 @@ function addSector(index, options = {}) {
 }
 
 /**
- * Adds a roman numeral label text element to the overlay group.
- * @param {number} index - Slice index (0–11)
- * @param {string} numeral - Roman numeral text
- * @param {string} type - "major" or "minor"
- * @param {string} ring - "outer" or "inner"
+ * Adds the roman numeral for one neighbourhood entry to the overlay group.
+ * @param {{ sliceIndex: number, ring: 'outer' | 'inner', type: string, label: string }} entry
  */
-function addLabel(index, numeral, type, ring) {
+function addLabel(entry) {
   if (!overlayGroup) return;
 
-  const { centerX, centerY, outerRadius, middleRadius } = DEFAULT_CONFIG;
-
-  // Position near the outer edge of the ring, offset clockwise by ~12°
-  const labelRadius = ring === 'outer' ? outerRadius - 12 : middleRadius - 12;
-  const angle = (-90 + index * 30 + 12) * Math.PI / 180;
-  const x = centerX + labelRadius * Math.cos(angle);
-  const y = centerY + labelRadius * Math.sin(angle);
+  const { x, y } = neighborhoodLabelPoint(entry.sliceIndex, entry.ring);
 
   const text = document.createElementNS(SVG_NS, 'text');
   text.setAttribute('x', x);
   text.setAttribute('y', y);
-  const typeClass = type === 'minor' ? 'roman-numeral--minor' : 'roman-numeral--major';
-  const sizeClass = ring === 'outer' ? 'roman-numeral--outer' : 'roman-numeral--inner';
-  text.setAttribute('class', `roman-numeral ${typeClass} ${sizeClass} fade-in`);
-  text.textContent = numeral;
+  text.setAttribute('class', `roman-numeral roman-numeral--${entry.type} roman-numeral--${entry.ring} fade-in`);
+  text.textContent = entry.label;
 
   overlayGroup.appendChild(text);
 }
@@ -181,32 +115,28 @@ function addLabel(index, numeral, type, ring) {
 /**
  * Adds the active key name as a prominent label in the center of the circle.
  * Only renders if the 'showCenterLabel' setting is enabled.
- * @param {{ index: number, type: "major" | "minor" }} keyInfo
+ * @param {{ keyName: string, typeLabel: string, typeClass: string }} center
  */
-function addCenterLabel(keyInfo) {
+function addCenterLabel(center) {
   if (!overlayGroup) return;
   if (!getCenterLabelSetting()) return;
 
   const { centerX, centerY } = DEFAULT_CONFIG;
-  const slice = SLICES[keyInfo.index];
-  const keyName = keyInfo.type === 'major' ? slice.major : slice.minor;
-  const typeLabel = keyInfo.type === 'major' ? 'Majeur' : 'mineur';
-  const typeClass = keyInfo.type === 'major' ? 'roman-numeral--major' : 'roman-numeral--minor';
 
   // Key name (large, centered vertically above midpoint)
   const nameText = document.createElementNS(SVG_NS, 'text');
   nameText.setAttribute('x', centerX);
   nameText.setAttribute('y', centerY - 12);
-  nameText.setAttribute('class', `center-key-name ${typeClass} fade-in`);
-  nameText.textContent = keyName;
+  nameText.setAttribute('class', `center-key-name ${center.typeClass} fade-in`);
+  nameText.textContent = center.keyName;
   overlayGroup.appendChild(nameText);
 
   // Type label (below key name)
   const typeText = document.createElementNS(SVG_NS, 'text');
   typeText.setAttribute('x', centerX);
   typeText.setAttribute('y', centerY + 22);
-  typeText.setAttribute('class', `center-key-type ${typeClass} fade-in`);
-  typeText.textContent = typeLabel;
+  typeText.setAttribute('class', `center-key-type ${center.typeClass} fade-in`);
+  typeText.textContent = center.typeLabel;
   overlayGroup.appendChild(typeText);
 }
 

@@ -12,7 +12,7 @@ export const CHORD_TEMPO_MS = 1000;
 // ─── Bouncing Sphere ──────────────────────────────────────────────────────────
 
 /** Sphere diameter in pixels */
-export const SPHERE_DIAMETER = 15;
+export const SPHERE_DIAMETER = 11;
 
 /** Sphere z-index (must sit above staff SVG) */
 export const SPHERE_Z_INDEX = 100;

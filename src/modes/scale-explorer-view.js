@@ -1,18 +1,17 @@
 // Scale Explorer View — third mode panel (mode 2).
 // Displays 4 scales for the active key using abcjs.
 
-import { subscribe, get, set } from '../state.js';
+import { subscribe, get } from '../state.js';
 import { getAllScales } from '../theory/scales.js';
 import { SLICES } from '../circle/keys.js';
 import { renderScaleStaff, getSingleNoteName } from './staff-renderer.js';
 import { renderCircleZoom } from './circle-zoom.js';
 import { initAudioEngine, playScale, playSingleNote, stopPlayback, isReady, getPlaybackState } from '../audio/audio-engine.js';
-import { createPlayButton } from '../audio/play-button.js';
+import { createExplorerSection } from './explorer-section.js';
 import { createBouncingSphere } from '../audio/bouncing-sphere.js';
-import { mapScaleToSampleKeys } from '../audio/pitch-mapper.js';
+import { notesToSampleKeys } from '../theory/pitch.js';
 import {
   SCALE_TEMPO_MS,
-  SPHERE_NOTE_OFFSET_Y,
   TAP_SPHERE_VISIBLE_MS,
   TAP_SPHERE_DESTROY_DELAY_MS,
   TAP_SPHERE_OFFSET_Y,
@@ -52,7 +51,7 @@ function makeNoteElementsInteractive(scaleDiv, scale) {
   if (!noteElements.length) return;
 
   // Pre-compute sample keys for correct octave assignment
-  const sampleKeys = mapScaleToSampleKeys(scale.notes, 3, scale.staffPositions);
+  const sampleKeys = notesToSampleKeys(scale.notes, scale.staffPositions, 3);
 
   noteElements.forEach((noteEl, i) => {
     // Only process notes that correspond to scale.notes entries
@@ -175,24 +174,33 @@ function applySoundingHighlight(noteEl) {
 }
 
 /**
+ * Sync play button states with the current playback state.
+ * Also hides spheres and clears highlights when playback stops.
+ * @param {{ sections: Array }} context
+ */
+function syncPlayButtonStates(context) {
+  const state = getPlaybackState();
+  context.sections.forEach(s => s.setPlaying(state.isPlaying && state.sectionId === s.sectionId));
+  if (!state.isPlaying) {
+    context.sections.forEach(s => {
+      s.hideSphere();
+      s.clearHighlights();
+    });
+  }
+}
+
+/**
  * Render the scale explorer content.
  * @param {HTMLElement} panel - The panel to render into
  * @param {Object} activeKey - The active key object
- * @param {Object} context - Shared context for play buttons and tempo slider
+ * @param {{ sections: Array }} context - Shared context tracking sections across re-renders
  */
 function renderScales(panel, activeKey, context) {
   const scales = getAllScales(activeKey.index, activeKey.type);
   const keyName = getKeyDisplayName(activeKey);
 
-  // Destroy old play buttons
-  context.playButtons.forEach(btn => btn.destroy());
-  context.playButtons = [];
-
-  // Destroy old bouncing spheres
-  if (context.spheres) {
-    context.spheres.forEach(s => s.destroy());
-  }
-  context.spheres = [];
+  context.sections.forEach(s => s.destroy());
+  context.sections = [];
 
   // Clear panel
   panel.innerHTML = '';
@@ -212,152 +220,51 @@ function renderScales(panel, activeKey, context) {
   scalesContainer.className = 'scale-explorer-content';
 
   scales.forEach(scale => {
-    const scaleDiv = document.createElement('div');
-    scaleDiv.className = 'scale-staff-container';
-    scaleDiv.style.position = 'relative'; // Needed for absolute sphere positioning
-
     const sectionId = `scale-${scale.name}`;
 
-    // Create bouncing sphere for this section
-    const sphere = createBouncingSphere(scaleDiv);
-    context.spheres.push(sphere);
-
-    const playBtn = createPlayButton({
+    const section = createExplorerSection({
+      className: 'scale-staff-container',
+      sectionId,
+      tempo: SCALE_TEMPO_MS,
       ariaLabel: `Jouer la gamme ${scale.name.toLowerCase()}`,
-      onPlay: async () => {
-        if (!isReady()) {
-          await initAudioEngine();
-          // Enable all buttons once ready
-          if (isReady()) {
-            context.playButtons.forEach(b => b.setDisabled(false));
-          }
-        }
-        // Reset sphere to start position before new playback
-        sphere.reset();
-        playScale(sectionId, scale, SCALE_TEMPO_MS, {
-          onNoteStart: (index) => {
-            // Position sphere above the current note element and highlight note
-            const staffEl = scaleDiv.querySelector('.abcjs-staff');
-            if (staffEl) {
-              const noteEls = staffEl.querySelectorAll('.abcjs-note');
-
-              // Highlight current note, clear previous
-              noteEls.forEach(el => {
-                el.style.filter = '';
-                el.style.transform = '';
-                el.style.transition = 'filter 150ms ease-out, transform 150ms ease-out';
-              });
-              const noteEl = noteEls[index];
-              if (noteEl) {
-                noteEl.style.transition = 'filter 0ms, transform 0ms';
-                noteEl.style.filter = 'drop-shadow(0 0 6px var(--color-major, #8b0000)) drop-shadow(0 0 10px var(--color-major, #8b0000))';
-                noteEl.style.transform = 'scale(1.1)';
-                noteEl.style.transformOrigin = 'center';
-                noteEl.style.transformBox = 'fill-box';
-
-                const containerRect = scaleDiv.getBoundingClientRect();
-                const noteRect = noteEl.getBoundingClientRect();
-                const x = noteRect.left - containerRect.left + noteRect.width / 2;
-                // Position sphere directly above the note
-                const y = noteRect.top - containerRect.top - SPHERE_NOTE_OFFSET_Y;
-                if (index === 0) {
-                  sphere.show();
-                }
-                sphere.moveTo(x, y, SCALE_TEMPO_MS);
-              }
-            }
-          },
-          onComplete: () => {
-            sphere.hide();
-            // Clear note highlights
-            const staffEl = scaleDiv.querySelector('.abcjs-staff');
-            if (staffEl) {
-              staffEl.querySelectorAll('.abcjs-note').forEach(el => {
-                el.style.filter = '';
-                el.style.transform = '';
-                el.style.transition = 'filter 200ms ease-out, transform 200ms ease-out';
-              });
-            }
-          }
-        });
-      },
-      onStop: () => {
-        stopPlayback();
-      }
+      rowClassName: 'scale-staff-row',
+      renderStaff: (el) => renderScaleStaff(el, {
+        sliceIndex: activeKey.index,
+        keyType: activeKey.type,
+        scale,
+        noteLabels: getScaleNoteLabels(scale)
+      }),
+      play: ({ onStart, onComplete }) => playScale(
+        sectionId,
+        scale,
+        SCALE_TEMPO_MS,
+        { onNoteStart: onStart, onComplete }
+      )
     });
 
     // Buttons are always enabled — audio engine initializes lazily on first play
-    playBtn.setDisabled(false);
-
-    context.playButtons.push(playBtn);
-    // Store sectionId on the button for state matching
-    playBtn._sectionId = sectionId;
-
-    renderScaleStaff(scaleDiv, {
-      sliceIndex: activeKey.index,
-      keyType: activeKey.type,
-      scale,
-      noteLabels: getScaleNoteLabels(scale)
-    });
-
-    // Wrap the staff and play button in a flex row so button sits at end of staff line
-    const staffEl = scaleDiv.querySelector('.abcjs-staff');
-    if (staffEl) {
-      const staffRow = document.createElement('div');
-      staffRow.className = 'scale-staff-row';
-      staffEl.parentNode.insertBefore(staffRow, staffEl);
-      staffRow.appendChild(staffEl);
-      staffRow.appendChild(playBtn.element);
-    } else {
-      scaleDiv.appendChild(playBtn.element);
-    }
+    section.playButton.setDisabled(false);
 
     // Make individual note elements interactive (tap-to-play)
-    makeNoteElementsInteractive(scaleDiv, scale);
+    makeNoteElementsInteractive(section.element, scale);
 
-    scalesContainer.appendChild(scaleDiv);
+    context.sections.push(section);
+    scalesContainer.appendChild(section.element);
   });
 
   panel.appendChild(scalesContainer);
 
   // Sync button states with current playback state
-  syncPlayButtonStates(context, panel);
-}
-
-/**
- * Sync play button states with current playback state.
- * Also hides spheres and clears note highlights when playback stops.
- */
-function syncPlayButtonStates(context, panel) {
-  const state = getPlaybackState();
-  context.playButtons.forEach(btn => {
-    const isThisPlaying = state.isPlaying && state.sectionId === btn._sectionId;
-    btn.setPlaying(isThisPlaying);
-  });
-  // Hide all spheres and clear highlights when playback stops
-  if (!state.isPlaying) {
-    if (context.spheres) {
-      context.spheres.forEach(s => s.hide());
-    }
-    // Clear all note highlights
-    if (panel) {
-      panel.querySelectorAll('.scale-staff-container .abcjs-note').forEach(el => {
-        el.style.filter = '';
-        el.style.transform = '';
-        el.style.transition = 'filter 200ms ease-out, transform 200ms ease-out';
-      });
-    }
-  }
+  syncPlayButtonStates(context);
 }
 
 /**
  * Initialize the Scale Explorer View.
  */
 export function initScaleExplorerView(panel) {
-  // Shared context for tracking UI elements across re-renders
+  // Shared context for tracking sections across re-renders
   const context = {
-    playButtons: [],
-    spheres: []
+    sections: []
   };
 
   const activeKey = get('activeKey') || { index: 0, type: 'major' };
@@ -376,20 +283,15 @@ export function initScaleExplorerView(panel) {
 
   // Subscribe to playback state changes to update button icons
   const unsubPlayback = subscribe('playbackState', () => {
-    syncPlayButtonStates(context, panel);
+    syncPlayButtonStates(context);
   });
 
   return () => {
     unsubKey();
     unsubLabel();
     unsubPlayback();
-    // Clean up play buttons
-    context.playButtons.forEach(btn => btn.destroy());
-    context.playButtons = [];
-    // Clean up bouncing spheres
-    if (context.spheres) {
-      context.spheres.forEach(s => s.destroy());
-      context.spheres = [];
-    }
+    // Clean up sections (play buttons and bouncing spheres)
+    context.sections.forEach(s => s.destroy());
+    context.sections = [];
   };
 }

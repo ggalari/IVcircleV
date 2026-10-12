@@ -29,22 +29,6 @@ export function getSliceAngles(count) {
 }
 
 /**
- * Computes positions for each slice around the circle.
- * Returns an array of objects with major, minor, and staff coordinates.
- * @param {object} [config] - Circle configuration (defaults to DEFAULT_CONFIG)
- * @returns {Array<{major: {x: number, y: number}, minor: {x: number, y: number}, staff: {x: number, y: number}}>}
- */
-export function getPositions(config = DEFAULT_CONFIG) {
-  const { centerX, centerY, staffRadius, majorRadius, minorRadius } = config;
-  const angles = getSliceAngles(12);
-  return angles.map(angle => ({
-    major: { x: centerX + majorRadius * Math.cos(angle), y: centerY + majorRadius * Math.sin(angle) },
-    minor: { x: centerX + minorRadius * Math.cos(angle), y: centerY + minorRadius * Math.sin(angle) },
-    staff: { x: centerX + staffRadius * Math.cos(angle), y: centerY + staffRadius * Math.sin(angle) }
-  }));
-}
-
-/**
  * Generates an SVG arc path `d` string for a sector (annular wedge).
  * Used by neighbor overlay sectors.
  * @param {number} cx - Center X coordinate

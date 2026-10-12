@@ -1,0 +1,29 @@
+{
+  "name": "IVcircleV (Node 22)",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "remoteUser": "node",
+  "postCreateCommand": {
+    "install-deps": "npm install",
+    "install-browsers": "npx playwright install --with-deps chromium"
+  },
+  "forwardPorts": [3030],
+  "portsAttributes": {
+    "3030": {
+      "label": "Vite dev server",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteEnv": {
+    "TMPDIR": "${containerWorkspaceFolder}/tmp"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vitest.explorer"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}

@@ -254,18 +254,3 @@ export function renderCircle(containerId, options = {}) {
   }
   container.innerHTML = buildSVG(options);
 }
-
-export function getCircleLayout(options = {}) {
-  const config = Object.assign({}, DEFAULT_CONFIG, options);
-  const { centerX, centerY, outerRadius, middleRadius, innerRadius, staffRadius, majorRadius, minorRadius } = config;
-  const anglesDeg = Array.from({ length: SLICES.length }, (_, i) => -90 + i * 30);
-  const angles = anglesDeg.map(d => d * DEG);
-  const positions = angles.map(angle => ({
-    angleRad: angle,
-    angleDeg: angle / DEG,
-    major: { x: centerX + majorRadius * Math.cos(angle), y: centerY + majorRadius * Math.sin(angle) },
-    minor: { x: centerX + minorRadius * Math.cos(angle), y: centerY + minorRadius * Math.sin(angle) },
-    staff: { x: centerX + staffRadius * Math.cos(angle), y: centerY + staffRadius * Math.sin(angle) }
-  }));
-  return { config: { centerX, centerY, outerRadius, middleRadius, innerRadius, staffRadius, majorRadius, minorRadius }, anglesDeg, positions };
-}

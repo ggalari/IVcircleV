@@ -4,8 +4,6 @@
 //   - Guitar: falls back to Karplus-Strong synthesized tones when sample files are unavailable.
 //   - Piano: no synthesis fallback; missing samples are marked as null (unavailable).
 
-import { frenchNoteToSampleKey } from './pitch-mapper.js';
-
 /**
  * All chromatic pitch keys from C3 to B5 (37 pitches).
  * Extended range to cover all chord voicings starting at octave 4.
@@ -23,10 +21,23 @@ const KEY_TO_MIDI = {};
 CHROMATIC_KEYS.forEach((key, i) => { KEY_TO_MIDI[key] = 48 + i; });
 
 /**
- * Module-level buffer cache — provides referential identity across calls.
- * @type {Map<string, AudioBuffer>}
+ * Buffer map keyed by the flat-based slot names in CHROMATIC_KEYS. Its `get`
+ * resolves a spelled sample key (e.g. "F#4", "D##4") to that slot, so callers —
+ * including the scheduler, which only sees the raw map — can look up any spelling.
  */
-const bufferCache = new Map();
+class SampleMap extends Map {
+  get(key) {
+    if (super.has(key)) return super.get(key);
+    const slot = resolveToFileSlot(key);
+    return super.has(slot) ? super.get(slot) : undefined;
+  }
+}
+
+/**
+ * Module-level buffer cache — provides referential identity across calls.
+ * @type {SampleMap}
+ */
+const bufferCache = new SampleMap();
 
 /**
  * Tracks whether loading has completed.
@@ -182,9 +193,6 @@ export async function loadSamples(audioContext, instrument = 'guitar') {
     console.info(`Audio: ${synthesizedCount} samples synthesized (no .mp3 files found). Drop files in public/samples/guitar/ for real guitar sound.`);
   }
 
-  // Add enharmonic aliases so lookups like "F#4" also find the "Gb4" buffer
-  addEnharmonicAliases();
-
   loaded = true;
 
   return {
@@ -192,76 +200,6 @@ export async function loadSamples(audioContext, instrument = 'guitar') {
     loaded,
     failedSamples: [...failedSamples]
   };
-}
-
-/**
- * Add enharmonic aliases to the buffer cache so that both sharp and flat
- * names resolve to the same AudioBuffer.
- * E.g., if "Gb4" is in the cache, also set "F#4" → same buffer.
- * Also adds boundary cases (E#→F, B#→C, Cb→B, Fb→E) and double accidentals.
- */
-function addEnharmonicAliases() {
-  const SHARP_TO_FLAT = { 'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb' };
-  const FLAT_TO_SHARP = { 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#' };
-
-  // For each key in the cache, add the enharmonic equivalent
-  const entries = [...bufferCache.entries()];
-  for (const [key, buffer] of entries) {
-    const match = key.match(/^([A-G][#b]?)(\d+)$/);
-    if (!match) continue;
-    const [, noteName, octave] = match;
-
-    if (FLAT_TO_SHARP[noteName]) {
-      const alias = `${FLAT_TO_SHARP[noteName]}${octave}`;
-      if (!bufferCache.has(alias)) {
-        bufferCache.set(alias, buffer);
-      }
-    }
-    if (SHARP_TO_FLAT[noteName]) {
-      const alias = `${SHARP_TO_FLAT[noteName]}${octave}`;
-      if (!bufferCache.has(alias)) {
-        bufferCache.set(alias, buffer);
-      }
-    }
-  }
-
-  // Add boundary enharmonics and double accidentals for all octaves in range
-  // These map unusual note spellings to the actual buffer they should use
-  const BOUNDARY_ALIASES = [
-    // Boundary sharps: E# = F, B# = C (next octave)
-    { from: 'E#', to: 'F', octaveShift: 0 },
-    { from: 'B#', to: 'C', octaveShift: 1 },
-    // Boundary flats: Cb = B (prev octave), Fb = E
-    { from: 'Cb', to: 'B', octaveShift: -1 },
-    { from: 'Fb', to: 'E', octaveShift: 0 },
-    // Double sharps
-    { from: 'C##', to: 'D', octaveShift: 0 },
-    { from: 'D##', to: 'E', octaveShift: 0 },
-    { from: 'E##', to: 'Gb', octaveShift: 0 },
-    { from: 'F##', to: 'G', octaveShift: 0 },
-    { from: 'G##', to: 'A', octaveShift: 0 },
-    { from: 'A##', to: 'B', octaveShift: 0 },
-    { from: 'B##', to: 'Db', octaveShift: 1 },
-    // Double flats
-    { from: 'Dbb', to: 'C', octaveShift: 0 },
-    { from: 'Ebb', to: 'D', octaveShift: 0 },
-    { from: 'Fbb', to: 'Eb', octaveShift: 0 },
-    { from: 'Gbb', to: 'F', octaveShift: 0 },
-    { from: 'Abb', to: 'G', octaveShift: 0 },
-    { from: 'Bbb', to: 'A', octaveShift: 0 },
-    { from: 'Cbb', to: 'Bb', octaveShift: -1 },
-  ];
-
-  for (let oct = 3; oct <= 5; oct++) {
-    for (const { from, to, octaveShift } of BOUNDARY_ALIASES) {
-      const aliasKey = `${from}${oct}`;
-      const targetOct = oct + octaveShift;
-      const targetKey = `${to}${targetOct}`;
-      if (bufferCache.has(targetKey) && !bufferCache.has(aliasKey)) {
-        bufferCache.set(aliasKey, bufferCache.get(targetKey));
-      }
-    }
-  }
 }
 
 /**
@@ -283,13 +221,13 @@ const ENHARMONIC_MAP = {
 };
 
 /**
- * Normalize a sample key to match the CHROMATIC_KEYS naming convention (flat-based).
- * Handles sharps, flats, double-sharps, double-flats, and enharmonic boundary cases.
- * E.g., "F#4" → "Gb4", "E#4" → "F4", "B#3" → "C4", "Cb5" → "B4"
+ * Resolve a spelled sample key to the flat-based slot name used in CHROMATIC_KEYS.
+ * The single enharmonic resolver for this adapter.
+ * E.g., "F#4" → "Gb4", "E#4" → "F4", "B#3" → "C4", "Cb5" → "B4".
  * @param {string} key - Sample key like "F#4", "Gb4", "C4", "E#3", "Fbb4"
- * @returns {string} Normalized key matching CHROMATIC_KEYS
+ * @returns {string} Slot name, or the key unchanged if it needs no remapping
  */
-function normalizeKey(key) {
+function resolveToFileSlot(key) {
   // Extract note name (with any accidentals) and octave
   const match = key.match(/^([A-G][#b]*)(\d+)$/);
   if (!match) return key;
@@ -318,37 +256,14 @@ function normalizeKey(key) {
 
 /**
  * Get a cached AudioBuffer for the given pitch key.
- * Handles enharmonic equivalents (e.g., "F#4" matches "Gb4" in cache).
+ * Handles enharmonic equivalents (e.g., "F#4" matches "Gb4").
  * Returns null for pitches that are explicitly unavailable (e.g., failed piano samples).
  *
- * @param {string} pitchKey - e.g., "C4", "F#4", "Db3"
+ * @param {string} sampleKey - e.g., "C4", "F#4", "Db3"
  * @returns {AudioBuffer|null} The cached buffer, or null if not available
  */
-export function getBuffer(pitchKey) {
-  // Try direct lookup first — if the key exists in cache, return its value (may be null for unavailable pitches)
-  if (bufferCache.has(pitchKey)) {
-    return bufferCache.get(pitchKey);
-  }
-
-  // Try normalized (enharmonic) lookup
-  const normalized = normalizeKey(pitchKey);
-  if (bufferCache.has(normalized)) {
-    return bufferCache.get(normalized);
-  }
-
-  return null;
-}
-
-/**
- * Convert a French solfège note name + octave to the corresponding sample key.
- * Delegates to pitch-mapper's frenchNoteToSampleKey.
- *
- * @param {string} frenchNoteName - e.g., "DO", "FA#", "SI♭"
- * @param {number} octave - e.g., 4
- * @returns {string} Sample key like "C4", "F#4", "Bb3"
- */
-export function mapNoteToSampleKey(frenchNoteName, octave) {
-  return frenchNoteToSampleKey(frenchNoteName, octave);
+export function getBuffer(sampleKey) {
+  return bufferCache.get(sampleKey) ?? null;
 }
 
 /**

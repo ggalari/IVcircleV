@@ -13,17 +13,6 @@ vi.mock('../audio/scheduler.js', () => ({
   createImmediateStopFn: vi.fn()
 }));
 
-vi.mock('../audio/pitch-mapper.js', () => ({
-  mapScaleToSampleKeys: vi.fn(),
-  mapChordToSampleKeys: vi.fn(),
-  mapChordSequenceToSampleKeys: vi.fn(),
-  mapChordToSampleKeysFromStaff: vi.fn()
-}));
-
-vi.mock('../modes/staff-renderer.js', () => ({
-  getChordStaffPositions: vi.fn()
-}));
-
 // We need a real state store for subscription testing
 vi.mock('../state.js', () => {
   const listeners = new Map();
@@ -40,7 +29,7 @@ vi.mock('../state.js', () => {
       listeners.get(key).add(cb);
       return () => listeners.get(key).delete(cb);
     }),
-    _reset: () => { listeners.clear(); store.clear(); }
+    reset: () => { listeners.clear(); store.clear(); }
   };
 });
 
@@ -60,9 +49,7 @@ import {
 
 import { loadSamples, getBuffer } from '../audio/sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from '../audio/scheduler.js';
-import { mapScaleToSampleKeys, mapChordToSampleKeys, mapChordSequenceToSampleKeys, mapChordToSampleKeysFromStaff } from '../audio/pitch-mapper.js';
-import { getChordStaffPositions } from '../modes/staff-renderer.js';
-import { get, set, subscribe, _reset as resetState } from '../state.js';
+import { get, set, subscribe, reset as resetState } from '../state.js';
 
 // Minimal AudioContext mock
 function createMockAudioContext() {
@@ -93,12 +80,6 @@ describe('audio-engine', () => {
       loaded: true,
       failedSamples: []
     });
-
-    mapScaleToSampleKeys.mockReturnValue(['C4', 'D4', 'E4']);
-    mapChordToSampleKeys.mockReturnValue(['C4', 'E4', 'G4']);
-    mapChordSequenceToSampleKeys.mockReturnValue([['C4', 'E4', 'G4'], ['D4', 'F4', 'A4']]);
-    mapChordToSampleKeysFromStaff.mockReturnValue(['C3', 'E3', 'G3']);
-    getChordStaffPositions.mockReturnValue([0, 2, 4]);
 
     scheduleScale.mockReturnValue({
       stopFn: vi.fn(),
@@ -195,19 +176,27 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('calls mapScaleToSampleKeys with the scale notes and staff positions', () => {
+    it('maps scale notes to sample keys by staff position', () => {
       const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, {});
-      expect(mapScaleToSampleKeys).toHaveBeenCalledWith(['DO', 'RE', 'MI'], 3, [0, 1, 2]);
+      expect(scheduleScale).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.any(Map),
+        ['C3', 'D3', 'E3'],
+        expect.any(Number),
+        500,
+        0.8,
+        expect.any(Function)
+      );
     });
 
     it('calls scheduleScale with correct parameters', () => {
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, {});
       expect(scheduleScale).toHaveBeenCalledWith(
         expect.any(Object), // audioContext
         expect.any(Map),    // buffers
-        ['C4', 'D4', 'E4'], // mapped sample keys
+        ['C3', 'D3', 'E3'], // mapped sample keys
         expect.any(Number), // startTime
         500,                // tempo
         0.8,                // gain
@@ -216,7 +205,7 @@ describe('audio-engine', () => {
     });
 
     it('updates playback state to playing', () => {
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, {});
       const state = getPlaybackState();
       expect(state.isPlaying).toBe(true);
@@ -225,7 +214,7 @@ describe('audio-engine', () => {
     });
 
     it('publishes playback state to store', () => {
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, {});
       expect(set).toHaveBeenCalledWith('playbackState', expect.objectContaining({
         isPlaying: true,
@@ -235,7 +224,7 @@ describe('audio-engine', () => {
     });
 
     it('stops current playback before starting new one', () => {
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-1', scaleResult, 500, {});
       const firstImmediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
@@ -245,7 +234,7 @@ describe('audio-engine', () => {
 
     it('fires onComplete callback when playback duration elapses', () => {
       const onComplete = vi.fn();
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, { onComplete });
 
       // Advance time past the scheduled end
@@ -255,7 +244,7 @@ describe('audio-engine', () => {
 
     it('does nothing if engine is not ready', () => {
       _resetForTesting();
-      const scaleResult = { notes: ['DO', 'RE', 'MI'] };
+      const scaleResult = { notes: ['DO', 'RE', 'MI'], staffPositions: [0, 1, 2] };
       playScale('scale-major', scaleResult, 500, {});
       expect(scheduleScale).not.toHaveBeenCalled();
     });
@@ -266,21 +255,26 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('uses staff positions for each chord via getChordStaffPositions and mapChordToSampleKeysFromStaff', () => {
+    it('maps each chord by its staff positions to sample keys', () => {
       const chords = [
-        { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] },
-        { root: 'RE', intervals: [0, 3, 7], noteNames: ['RE', 'FA', 'LA'] }
+        { root: 'DO', degree: 1, intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] },
+        { root: 'RE', degree: 2, intervals: [0, 3, 7], noteNames: ['RE', 'FA', 'LA'] }
       ];
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
-      expect(getChordStaffPositions).toHaveBeenCalledTimes(2);
-      expect(mapChordToSampleKeysFromStaff).toHaveBeenCalledTimes(2);
+      expect(scheduleChordSequence).toHaveBeenCalledWith(
+        expect.any(Object), // audioContext
+        expect.any(Map),    // buffers
+        [['C3', 'E3', 'G3'], ['D3', 'F3', 'A3']], // one sample-key array per chord
+        expect.any(Number), // startTime
+        1000,               // tempo
+        expect.any(Function) // onChordStart
+      );
     });
 
     it('calls scheduleChordSequence with mapped chord arrays', () => {
       const chords = [
-        { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }
+        { root: 'DO', degree: 1, intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }
       ];
-      mapChordToSampleKeysFromStaff.mockReturnValue(['C3', 'E3', 'G3']);
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
       expect(scheduleChordSequence).toHaveBeenCalledWith(
         expect.any(Object), // audioContext
@@ -293,7 +287,7 @@ describe('audio-engine', () => {
     });
 
     it('updates playback state to chord type', () => {
-      const chords = [{ root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }];
+      const chords = [{ root: 'DO', degree: 1, intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }];
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
       const state = getPlaybackState();
       expect(state.isPlaying).toBe(true);
@@ -302,8 +296,8 @@ describe('audio-engine', () => {
     });
 
     it('stops current playback before starting new chord sequence', () => {
-      const chords = [{ root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }];
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      const chords = [{ root: 'DO', degree: 1, intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] }];
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const scaleImmediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
       playChordSequence('chords-triads', chords, 0, 'major', 1000, {});
@@ -316,9 +310,14 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('calls mapScaleToSampleKeys for the single note', () => {
+    it('maps the single note to a sample key at the base octave', () => {
       playSingleNote('FA#');
-      expect(mapScaleToSampleKeys).toHaveBeenCalledWith(['FA#'], 3);
+      expect(scheduleImmediate).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.any(Map),
+        ['F#3'],
+        1.0
+      );
     });
 
     it('calls scheduleImmediate with the mapped sample keys', () => {
@@ -326,13 +325,13 @@ describe('audio-engine', () => {
       expect(scheduleImmediate).toHaveBeenCalledWith(
         expect.any(Object), // audioContext
         expect.any(Map),    // buffers
-        ['C4', 'D4', 'E4'], // from mock return
+        ['C3'],             // DO mapped at the base octave
         1.0                 // gain
       );
     });
 
     it('stops current playback before playing single note', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const scaleImmediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
       playSingleNote('RE');
@@ -345,17 +344,21 @@ describe('audio-engine', () => {
       await initAudioEngine();
     });
 
-    it('uses staff positions to determine pitch via mapChordToSampleKeysFromStaff', () => {
-      const chord = { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] };
+    it('maps the chord by its staff positions to sample keys', () => {
+      const chord = { root: 'DO', degree: 1, intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] };
       playSingleChord(chord, 0, 'major');
-      expect(getChordStaffPositions).toHaveBeenCalledWith(0, 'major', chord);
-      expect(mapChordToSampleKeysFromStaff).toHaveBeenCalledWith(['DO', 'MI', 'SOL'], [0, 2, 4], 3);
+      expect(scheduleImmediate).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.any(Map),
+        ['C3', 'E3', 'G3'],
+        1 / 3
+      );
     });
 
     it('calls scheduleImmediate with normalized gain', () => {
-      const chord = { root: 'DO', intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] };
+      const chord = { root: 'DO', degree: 1, intervals: [0, 4, 7], noteNames: ['DO', 'MI', 'SOL'] };
       playSingleChord(chord, 0, 'major');
-      // mapChordToSampleKeysFromStaff returns ['C3', 'E3', 'G3'] (3 notes) → gain = 1/3
+      // the chord maps to 3 sample keys → gain = 1/3
       expect(scheduleImmediate).toHaveBeenCalledWith(
         expect.any(Object),
         expect.any(Map),
@@ -371,7 +374,7 @@ describe('audio-engine', () => {
     });
 
     it('calls the current stopFn', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const stopFn = scheduleScale.mock.results[0].value.stopFn;
 
       stopPlayback();
@@ -379,7 +382,7 @@ describe('audio-engine', () => {
     });
 
     it('resets playback state', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       stopPlayback();
       const state = getPlaybackState();
       expect(state.isPlaying).toBe(false);
@@ -389,7 +392,7 @@ describe('audio-engine', () => {
 
     it('cancels completion timeout', () => {
       const onComplete = vi.fn();
-      playScale('scale-1', { notes: ['DO'] }, 500, { onComplete });
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, { onComplete });
       stopPlayback();
       vi.advanceTimersByTime(5000);
       expect(onComplete).not.toHaveBeenCalled();
@@ -402,7 +405,7 @@ describe('audio-engine', () => {
     });
 
     it('stops playback immediately using immediateStopFn (no fade-out)', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const immediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
       stopPlaybackImmediate();
@@ -410,7 +413,7 @@ describe('audio-engine', () => {
     });
 
     it('resets playback state', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       stopPlaybackImmediate();
       expect(getPlaybackState().isPlaying).toBe(false);
     });
@@ -420,7 +423,7 @@ describe('audio-engine', () => {
     });
 
     it('does not call the regular stopFn (no fade-out envelope)', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const stopFn = scheduleScale.mock.results[0].value.stopFn;
 
       stopPlaybackImmediate();
@@ -434,7 +437,7 @@ describe('audio-engine', () => {
     });
 
     it('stops playback when activeKey changes (abrupt, no fade-out)', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const immediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
       const stopFn = scheduleScale.mock.results[0].value.stopFn;
 
@@ -448,7 +451,7 @@ describe('audio-engine', () => {
     });
 
     it('stops playback when currentMode changes (abrupt, no fade-out)', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const immediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
       const stopFn = scheduleScale.mock.results[0].value.stopFn;
 
@@ -462,7 +465,7 @@ describe('audio-engine', () => {
     });
 
     it('stops playback when currentMode changes away from mode 1 (Chord Explorer)', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const immediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
       const modeCallback = subscribe.mock.calls.find(c => c[0] === 'currentMode')[1];
@@ -479,14 +482,14 @@ describe('audio-engine', () => {
     });
 
     it('publishes isPlaying=true on playback start', () => {
-      playScale('scale-major', { notes: ['DO'] }, 500, {});
+      playScale('scale-major', { notes: ['DO'], staffPositions: [0] }, 500, {});
       expect(set).toHaveBeenCalledWith('playbackState', expect.objectContaining({
         isPlaying: true
       }));
     });
 
     it('publishes isPlaying=false on stop', () => {
-      playScale('scale-major', { notes: ['DO'] }, 500, {});
+      playScale('scale-major', { notes: ['DO'], staffPositions: [0] }, 500, {});
       vi.clearAllMocks();
       stopPlayback();
       expect(set).toHaveBeenCalledWith('playbackState', expect.objectContaining({
@@ -495,7 +498,7 @@ describe('audio-engine', () => {
     });
 
     it('publishes sectionId and type', () => {
-      playScale('my-section', { notes: ['DO'] }, 500, {});
+      playScale('my-section', { notes: ['DO'], staffPositions: [0] }, 500, {});
       expect(set).toHaveBeenCalledWith('playbackState', expect.objectContaining({
         sectionId: 'my-section',
         type: 'scale'
@@ -509,7 +512,7 @@ describe('audio-engine', () => {
     });
 
     it('stops any active playback', () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const immediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
       cleanupAudioEngine();
@@ -519,7 +522,7 @@ describe('audio-engine', () => {
 
     it('unsubscribes from activeKey state changes', () => {
       // After cleanup, state changes should not trigger stop on old playback
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       cleanupAudioEngine();
 
       // Start new playback after re-init
@@ -533,7 +536,7 @@ describe('audio-engine', () => {
     });
 
     it('after cleanup, state changes do not trigger stop on stale playback', async () => {
-      playScale('scale-1', { notes: ['DO'] }, 500, {});
+      playScale('scale-1', { notes: ['DO'], staffPositions: [0] }, 500, {});
       cleanupAudioEngine();
 
       // Re-initialize to create new subscriptions
@@ -547,7 +550,7 @@ describe('audio-engine', () => {
       });
 
       await initAudioEngine();
-      playScale('scale-2', { notes: ['DO'] }, 500, {});
+      playScale('scale-2', { notes: ['DO'], staffPositions: [0] }, 500, {});
       const newImmediateStopFn = scheduleScale.mock.results[0].value.immediateStopFn;
 
       // Trigger activeKey change — should work on new subscription

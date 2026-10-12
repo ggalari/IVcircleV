@@ -32,6 +32,12 @@ export function createBouncingSphere(containerEl) {
   const sphere = document.createElement('div');
   sphere.className = 'bouncing-sphere';
   sphere.style.position = 'absolute';
+  // Pin the element to the container origin so moveTo()'s transform is the only
+  // offset. Without this, `top: auto` places the sphere at its static position —
+  // which is below any preceding content (e.g. a section header) — and every
+  // moveTo lands that much too low.
+  sphere.style.top = '0';
+  sphere.style.left = '0';
   sphere.style.width = `${SPHERE_DIAMETER}px`;
   sphere.style.height = `${SPHERE_DIAMETER}px`;
   sphere.style.borderRadius = '50%';

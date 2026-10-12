@@ -5,7 +5,8 @@ import {
   MAJOR_SEVENTH_QUALITIES,
   MINOR_SEVENTH_QUALITIES,
   getDiatonicTriads,
-  getDiatonicSevenths
+  getDiatonicSevenths,
+  getChordStaffPositions
 } from '../theory/chords.js';
 
 describe('chords.js - quality arrays', () => {
@@ -64,7 +65,6 @@ describe('getDiatonicTriads', () => {
       expect(chord).toHaveProperty('root');
       expect(chord).toHaveProperty('quality');
       expect(chord).toHaveProperty('intervals');
-      expect(chord).toHaveProperty('staffPositions');
     });
   });
 
@@ -99,13 +99,6 @@ describe('getDiatonicTriads', () => {
     expect(triads[0].intervals).toEqual([0, 4, 7]);  // major
     expect(triads[1].intervals).toEqual([0, 3, 7]);  // minor
     expect(triads[6].intervals).toEqual([0, 3, 6]);  // diminished
-  });
-
-  it('staffPositions has 3 entries for each triad', () => {
-    const triads = getDiatonicTriads(0, 'major');
-    triads.forEach(chord => {
-      expect(chord.staffPositions).toHaveLength(3);
-    });
   });
 
   it('returns 7 triads for A minor (keyIndex 0)', () => {
@@ -147,7 +140,6 @@ describe('getDiatonicSevenths', () => {
       expect(chord).toHaveProperty('root');
       expect(chord).toHaveProperty('quality');
       expect(chord).toHaveProperty('intervals');
-      expect(chord).toHaveProperty('staffPositions');
     });
   });
 
@@ -161,13 +153,6 @@ describe('getDiatonicSevenths', () => {
     sevenths.forEach(chord => {
       expect(chord.intervals).toHaveLength(4);
       expect(chord.intervals[0]).toBe(0); // root is always 0
-    });
-  });
-
-  it('staffPositions has 4 entries for each seventh chord', () => {
-    const sevenths = getDiatonicSevenths(0, 'major');
-    sevenths.forEach(chord => {
-      expect(chord.staffPositions).toHaveLength(4);
     });
   });
 
@@ -195,5 +180,27 @@ describe('getDiatonicSevenths', () => {
       expect(majorSevenths).toHaveLength(7);
       expect(minorSevenths).toHaveLength(7);
     }
+  });
+});
+
+describe('getChordStaffPositions', () => {
+  it('stacks a C major tonic triad in thirds from the tonic position', () => {
+    const triad = { degree: 1, intervals: [0, 4, 7] };
+    expect(getChordStaffPositions(0, 'major', triad)).toEqual([0, 2, 4]);
+  });
+
+  it('raises the position with the scale degree (V of C major)', () => {
+    const triad = { degree: 5, intervals: [0, 4, 7] };
+    expect(getChordStaffPositions(0, 'major', triad)).toEqual([4, 6, 8]);
+  });
+
+  it('keeps the A minor tonic below middle C', () => {
+    const triad = { degree: 1, intervals: [0, 3, 7] };
+    expect(getChordStaffPositions(0, 'minor', triad)).toEqual([-2, 0, 2]);
+  });
+
+  it('produces four positions for a seventh chord', () => {
+    const seventh = { degree: 1, intervals: [0, 4, 7, 11] };
+    expect(getChordStaffPositions(0, 'major', seventh)).toEqual([0, 2, 4, 6]);
   });
 });

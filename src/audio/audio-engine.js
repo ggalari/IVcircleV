@@ -1,25 +1,24 @@
-// Audio Engine: central module managing audio lifecycle and playback.
-// Lazy AudioContext creation, sample loading, playback scheduling, and state coordination.
+// Audio Engine: playback orchestration over the AudioContext + buffer seam.
+// The context lifecycle, sample loading and readiness live in audio-context.js;
+// this module schedules playback, owns stop bookkeeping, and publishes playback
+// state to the store.
 
-import { mapScaleToSampleKeys, mapChordToSampleKeysFromStaff } from './pitch-mapper.js';
-import { loadSamples, getBuffer, clearBuffers } from './sample-library.js';
+import { notesToSampleKeys, staffPositionOctave } from '../theory/pitch.js';
+import {
+  initAudioContext,
+  loadInstrument,
+  isAudioReady,
+  ensureContextRunning,
+  getAudioContext,
+  getAudioBuffers,
+  detachVisibility,
+  resetAudioContext
+} from './audio-context.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from './scheduler.js';
-import { get, set, subscribe } from '../state.js';
-import { getChordStaffPositions } from '../modes/staff-renderer.js';
+import { set, subscribe } from '../state.js';
+import { getChordStaffPositions } from '../theory/chords.js';
 
 // ─── Module-level state ───────────────────────────────────────────────────────
-
-/** @type {AudioContext|null} */
-let audioContext = null;
-
-/** Whether sample loading has been triggered */
-let loadingTriggered = false;
-
-/** Whether samples have finished loading */
-let samplesLoaded = false;
-
-/** @type {Map<string, AudioBuffer>} */
-let buffers = new Map();
 
 /** Current playback state */
 let playbackState = {
@@ -43,9 +42,6 @@ let unsubscribeActiveKey = null;
 let unsubscribeCurrentMode = null;
 let unsubscribeInstrument = null;
 
-/** Handler reference for visibilitychange listener (for cleanup) */
-let visibilityHandler = null;
-
 // ─── Internal helpers ─────────────────────────────────────────────────────────
 
 /**
@@ -67,82 +63,25 @@ function clearCompletionTimeout() {
 }
 
 /**
- * Ensure the AudioContext is in 'running' state.
- * On iOS, the context may be suspended after returning from background.
- * Calling resume() on an already-running context is harmless (resolves immediately).
- */
-function ensureContextRunning() {
-  if (audioContext && audioContext.state === 'suspended') {
-    audioContext.resume();
-  }
-}
-
-/**
- * Handle instrument state changes: stop playback, clear old buffers, load new samples.
- * Follows the same abrupt stop pattern as activeKey changes.
+ * Handle instrument state changes: stop playback, then reload the seam's samples.
+ * The stop belongs here (orchestration); the reload belongs to the audio seam.
  * @param {string} newInstrument - The new instrument value ('guitar' or 'piano')
  */
 async function onInstrumentChange(newInstrument) {
   stopPlaybackImmediate();
-  samplesLoaded = false;
-  clearBuffers();
-
-  try {
-    const result = await loadSamples(audioContext, newInstrument);
-    buffers = result.buffers;
-    samplesLoaded = true;
-  } catch (e) {
-    console.error('Failed to load samples for instrument:', newInstrument, e);
-    samplesLoaded = false;
-  }
+  await loadInstrument(newInstrument);
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /**
- * Initialize the AudioContext (lazy, on user gesture) and begin loading samples.
- * Multiple calls return the same AudioContext; sample loading is triggered only once.
+ * Initialize the AudioContext (lazy, on user gesture), begin loading samples,
+ * and subscribe to the state changes that stop playback.
  * @returns {Promise<boolean>} true if initialization succeeded
  */
 export async function initAudioEngine() {
-  // Reuse existing AudioContext if already created
-  if (audioContext) {
-    // Wait for samples if loading is in progress but not yet done
-    if (loadingTriggered && !samplesLoaded) {
-      // Already loading — just return true since context exists
-      return true;
-    }
-    return true;
-  }
-
-  try {
-    audioContext = new AudioContext();
-  } catch (e) {
-    console.error('Failed to initialize AudioContext:', e);
-    return false;
-  }
-
-  // Resume if suspended (browser autoplay policy)
-  if (audioContext.state === 'suspended') {
-    try {
-      await audioContext.resume();
-    } catch (e) {
-      // Non-fatal: some browsers may resume later on user gesture
-    }
-  }
-
-  // Trigger sample loading exactly once
-  if (!loadingTriggered) {
-    loadingTriggered = true;
-    try {
-      const result = await loadSamples(audioContext, get('instrument'));
-      buffers = result.buffers;
-      samplesLoaded = true;
-    } catch (e) {
-      console.error('Failed to load samples:', e);
-      samplesLoaded = false;
-    }
-  }
+  const ready = await initAudioContext();
+  if (!ready) return false;
 
   // Subscribe to state changes for automatic stop
   if (!unsubscribeActiveKey) {
@@ -159,16 +98,6 @@ export async function initAudioEngine() {
     unsubscribeInstrument = subscribe('instrument', onInstrumentChange);
   }
 
-  // Proactively resume AudioContext when page becomes visible again (iOS suspends it on background)
-  if (!visibilityHandler) {
-    visibilityHandler = () => {
-      if (document.visibilityState === 'visible' && audioContext && audioContext.state === 'suspended') {
-        audioContext.resume();
-      }
-    };
-    document.addEventListener('visibilitychange', visibilityHandler);
-  }
-
   return true;
 }
 
@@ -181,17 +110,18 @@ export async function initAudioEngine() {
  */
 export function playScale(sectionId, scaleResult, tempo, callbacks = {}) {
   ensureContextRunning();
-  if (!audioContext || !samplesLoaded) return;
+  const audioContext = getAudioContext();
+  if (!audioContext || !isAudioReady()) return;
 
   // Stop any current playback first
   stopPlaybackImmediate();
 
-  const sampleKeys = mapScaleToSampleKeys(scaleResult.notes, 3, scaleResult.staffPositions);
+  const sampleKeys = notesToSampleKeys(scaleResult.notes, scaleResult.staffPositions, 3);
 
   const startTime = audioContext.currentTime + 0.05; // Small offset for scheduling
   const { stopFn, immediateStopFn, scheduledEndTime } = scheduleScale(
     audioContext,
-    buffers,
+    getAudioBuffers(),
     sampleKeys,
     startTime,
     tempo,
@@ -243,7 +173,8 @@ export function playScale(sectionId, scaleResult, tempo, callbacks = {}) {
  */
 export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, callbacks = {}) {
   ensureContextRunning();
-  if (!audioContext || !samplesLoaded) return;
+  const audioContext = getAudioContext();
+  if (!audioContext || !isAudioReady()) return;
 
   // Stop any current playback first
   stopPlaybackImmediate();
@@ -252,13 +183,13 @@ export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, c
   const chordSampleKeys = chords.map(chord => {
     const staffPositions = getChordStaffPositions(keyIndex, keyType, chord);
     const noteNames = chord.noteNames || [chord.root];
-    return mapChordToSampleKeysFromStaff(noteNames, staffPositions, 3);
+    return notesToSampleKeys(noteNames, staffPositions, staffPositionOctave(staffPositions[0]));
   });
 
   const startTime = audioContext.currentTime + 0.05;
   const { stopFn, immediateStopFn, scheduledEndTime } = scheduleChordSequence(
     audioContext,
-    buffers,
+    getAudioBuffers(),
     chordSampleKeys,
     startTime,
     tempo,
@@ -304,13 +235,14 @@ export function playChordSequence(sectionId, chords, keyIndex, keyType, tempo, c
  */
 export function playSingleNote(noteName, sampleKey) {
   ensureContextRunning();
-  if (!audioContext || !samplesLoaded) return;
+  const audioContext = getAudioContext();
+  if (!audioContext || !isAudioReady()) return;
 
   // Stop any current playback first
   stopPlaybackImmediate();
 
-  const sampleKeys = sampleKey ? [sampleKey] : mapScaleToSampleKeys([noteName], 3);
-  const { stopFn, immediateStopFn } = scheduleImmediate(audioContext, buffers, sampleKeys, 1.0);
+  const sampleKeys = sampleKey ? [sampleKey] : notesToSampleKeys([noteName], [0], 3);
+  const { stopFn, immediateStopFn } = scheduleImmediate(audioContext, getAudioBuffers(), sampleKeys, 1.0);
   currentStopFn = stopFn;
   currentImmediateStopFn = immediateStopFn;
 
@@ -331,7 +263,8 @@ export function playSingleNote(noteName, sampleKey) {
  */
 export function playSingleChord(chord, keyIndex, keyType) {
   ensureContextRunning();
-  if (!audioContext || !samplesLoaded) return;
+  const audioContext = getAudioContext();
+  if (!audioContext || !isAudioReady()) return;
 
   // Stop any current playback first
   stopPlaybackImmediate();
@@ -339,10 +272,10 @@ export function playSingleChord(chord, keyIndex, keyType) {
   // Use staff positions (same as visual rendering) to determine pitch
   const staffPositions = getChordStaffPositions(keyIndex, keyType, chord);
   const noteNames = chord.noteNames || [chord.root];
-  const sampleKeys = mapChordToSampleKeysFromStaff(noteNames, staffPositions, 3);
+  const sampleKeys = notesToSampleKeys(noteNames, staffPositions, staffPositionOctave(staffPositions[0]));
 
   const gainPerTone = sampleKeys.length > 0 ? 1 / sampleKeys.length : 1;
-  const { stopFn, immediateStopFn } = scheduleImmediate(audioContext, buffers, sampleKeys, gainPerTone);
+  const { stopFn, immediateStopFn } = scheduleImmediate(audioContext, getAudioBuffers(), sampleKeys, gainPerTone);
   currentStopFn = stopFn;
   currentImmediateStopFn = immediateStopFn;
 
@@ -374,8 +307,7 @@ export function stopPlayback() {
 
 /**
  * Stop all playback abruptly (for state changes, no fade-out).
- * Per Requirement 7.4: cancels all scheduled notes without applying
- * the normal fade-out envelope, stopping sound output abruptly.
+ * Cancels all scheduled notes without applying the normal fade-out envelope.
  */
 export function stopPlaybackImmediate() {
   clearCompletionTimeout();
@@ -404,7 +336,7 @@ export function stopPlaybackImmediate() {
  * @returns {boolean}
  */
 export function isReady() {
-  return audioContext !== null && samplesLoaded;
+  return isAudioReady();
 }
 
 /**
@@ -432,14 +364,7 @@ export function _resetForTesting() {
     unsubscribeInstrument();
     unsubscribeInstrument = null;
   }
-  if (visibilityHandler) {
-    document.removeEventListener('visibilitychange', visibilityHandler);
-    visibilityHandler = null;
-  }
-  audioContext = null;
-  loadingTriggered = false;
-  samplesLoaded = false;
-  buffers = new Map();
+  resetAudioContext();
   playbackState = {
     isPlaying: false,
     sectionId: null,
@@ -453,7 +378,7 @@ export function _resetForTesting() {
 
 /**
  * Clean up the audio engine: stop playback, unsubscribe from state changes,
- * and reset module state. Call this on view teardown to release resources.
+ * and detach the visibility listener. The AudioContext stays alive.
  */
 export function cleanupAudioEngine() {
   stopPlaybackImmediate();
@@ -469,8 +394,5 @@ export function cleanupAudioEngine() {
     unsubscribeInstrument();
     unsubscribeInstrument = null;
   }
-  if (visibilityHandler) {
-    document.removeEventListener('visibilitychange', visibilityHandler);
-    visibilityHandler = null;
-  }
+  detachVisibility();
 }

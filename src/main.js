@@ -1,15 +1,15 @@
 import '../style.css';
 import { renderCircle } from './circle/renderer.js';
-import { createOverlay } from './overlays/neighbors.js';
+import { createOverlay, showNeighbors } from './overlays/neighbors.js';
 import { attachContextMenuListeners } from './ui/context-menu.js';
 import { attachToolbarListeners } from './ui/toolbar.js';
 import { attachTouchHandlers } from './ui/touch-handler.js';
 import { attachHamburgerMenu } from './ui/hamburger.js';
-import { set, subscribe } from './state.js';
+import { get, set, subscribe } from './state.js';
 import { createModeSwitcher } from './modes/mode-switcher.js';
-import { initFullCircleView } from './modes/full-circle-view.js';
 import { initChordExplorerView } from './modes/chord-explorer-view.js';
 import { initScaleExplorerView } from './modes/scale-explorer-view.js';
+import { showOnboardingHint } from './ui/onboarding.js';
 import { createPageIndicator } from './ui/page-indicator.js';
 import { createChevrons } from './ui/chevrons.js';
 import { attachKeyboardNav } from './ui/keyboard-nav.js';
@@ -54,8 +54,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get panels from the mode switcher track
     const panels = container.querySelectorAll('.mode-panel');
 
-    // 4. Move circle into first panel
-    initFullCircleView(panels[0]);
+    // 4. Assemble the Full Circle View in the first panel: the rendered circle
+    // and legend, the onboarding hint, and the neighbour overlay that follows keys.
+    const fullCirclePanel = panels[0];
+    const fullCircleTitle = document.createElement('h2');
+    fullCircleTitle.className = 'circle-title';
+    fullCircleTitle.textContent = 'Cercle des quintes';
+    fullCirclePanel.appendChild(fullCircleTitle);
+
+    if (circleContainer) fullCirclePanel.appendChild(circleContainer);
+    const legend = document.querySelector('.card > .legend');
+    if (legend) fullCirclePanel.appendChild(legend);
+
+    showOnboardingHint(fullCirclePanel);
+
+    showNeighbors(get('activeKey') || { index: 0, type: 'major' });
+    subscribe('activeKey', (newKey) => {
+      if (newKey) showNeighbors(newKey);
+    });
 
     // 5. Set up chord view in second panel
     initChordExplorerView(panels[1]);

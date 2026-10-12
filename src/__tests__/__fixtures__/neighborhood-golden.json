@@ -1,0 +1,5330 @@
+{
+  "0:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203047 263.7258300203048 A 320 320 0 0 1 407.1779055671934 180.90373558749815 L 434.3539053029581 282.3259473478503 A 215 215 0 0 0 337.97204204489225 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "DO"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "DO"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "0:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203047 263.7258300203048 A 320 320 0 0 1 407.1779055671934 180.90373558749815 L 434.3539053029581 282.3259473478503 A 215 215 0 0 0 337.97204204489225 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "la"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "la"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "1:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 263.7258300203048 A 320 320 0 0 1 799.0962644125018 407.17790556719336 L 697.6740526521497 434.353905302958 A 215 215 0 0 0 642.0279579551077 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SOL"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "782.925407019",
+        "y": "394.822765733",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "vii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SOL"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "1:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 263.7258300203048 A 320 320 0 0 1 799.0962644125018 407.17790556719336 L 697.6740526521497 434.353905302958 A 215 215 0 0 0 642.0279579551077 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "mi"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "782.925407019",
+        "y": "394.822765733",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "ii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "mi"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "2:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 263.7258300203048 A 320 320 0 0 1 799.0962644125018 407.17790556719336 L 697.6740526521497 434.353905302958 A 215 215 0 0 0 642.0279579551077 337.9720420448923 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 407.17790556719336 A 320 320 0 0 1 799.0962644125018 572.8220944328066 L 697.6740526521497 545.6460946970419 A 215 215 0 0 0 697.6740526521497 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "RE"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "782.925407019",
+        "y": "394.822765733",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "791.269461026",
+        "y": "554.036800772",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "iii"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "RE"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "2:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 263.7258300203048 A 320 320 0 0 1 799.0962644125018 407.17790556719336 L 697.6740526521497 434.353905302958 A 215 215 0 0 0 642.0279579551077 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 407.17790556719336 A 320 320 0 0 1 799.0962644125018 572.8220944328066 L 697.6740526521497 545.6460946970419 A 215 215 0 0 0 697.6740526521497 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "si"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "782.925407019",
+        "y": "394.822765733",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "791.269461026",
+        "y": "554.036800772",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "v"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "si"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "3:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 263.7258300203048 A 320 320 0 0 1 799.0962644125018 407.17790556719336 L 697.6740526521497 434.353905302958 A 215 215 0 0 0 642.0279579551077 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 407.17790556719336 A 320 320 0 0 1 799.0962644125018 572.8220944328066 L 697.6740526521497 545.6460946970419 A 215 215 0 0 0 697.6740526521497 434.353905302958 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 572.8220944328066 A 320 320 0 0 1 716.2741699796952 716.2741699796952 L 642.0279579551077 642.0279579551077 A 215 215 0 0 0 697.6740526521497 545.6460946970419 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "LA"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "718.888606247",
+        "y": "696.092226759",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "782.925407019",
+        "y": "394.822765733",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "791.269461026",
+        "y": "554.036800772",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "vi"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "LA"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "3:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 263.7258300203048 A 320 320 0 0 1 799.0962644125018 407.17790556719336 L 697.6740526521497 434.353905302958 A 215 215 0 0 0 642.0279579551077 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 407.17790556719336 A 320 320 0 0 1 799.0962644125018 572.8220944328066 L 697.6740526521497 545.6460946970419 A 215 215 0 0 0 697.6740526521497 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 572.8220944328066 A 320 320 0 0 1 716.2741699796952 716.2741699796952 L 642.0279579551077 642.0279579551077 A 215 215 0 0 0 697.6740526521497 545.6460946970419 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "fa#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "718.888606247",
+        "y": "696.092226759",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "782.925407019",
+        "y": "394.822765733",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "791.269461026",
+        "y": "554.036800772",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "i"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "fa#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "4:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 716.2741699796952 A 320 320 0 0 1 572.8220944328066 799.0962644125018 L 545.6460946970419 697.6740526521497 A 215 215 0 0 0 642.0279579551077 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 407.17790556719336 A 320 320 0 0 1 799.0962644125018 572.8220944328066 L 697.6740526521497 545.6460946970419 A 215 215 0 0 0 697.6740526521497 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 572.8220944328066 A 320 320 0 0 1 716.2741699796952 716.2741699796952 L 642.0279579551077 642.0279579551077 A 215 215 0 0 0 697.6740526521497 545.6460946970419 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "MI"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "585.177234267",
+        "y": "782.925407019",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "718.888606247",
+        "y": "696.092226759",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "791.269461026",
+        "y": "554.036800772",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "ii"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "MI"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "4:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 716.2741699796952 A 320 320 0 0 1 572.8220944328066 799.0962644125018 L 545.6460946970419 697.6740526521497 A 215 215 0 0 0 642.0279579551077 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 407.17790556719336 A 320 320 0 0 1 799.0962644125018 572.8220944328066 L 697.6740526521497 545.6460946970419 A 215 215 0 0 0 697.6740526521497 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 572.8220944328066 A 320 320 0 0 1 716.2741699796952 716.2741699796952 L 642.0279579551077 642.0279579551077 A 215 215 0 0 0 697.6740526521497 545.6460946970419 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 434.353905302958 A 215 215 0 0 1 697.6740526521497 545.6460946970419 L 596.2518408917975 518.4700949612773 A 110 110 0 0 0 596.2518408917975 461.52990503872275 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "do#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "585.177234267",
+        "y": "782.925407019",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "718.888606247",
+        "y": "696.092226759",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "791.269461026",
+        "y": "554.036800772",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "688.563962949",
+        "y": "532.206073236",
+        "text": "iv"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "do#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "5:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 799.0962644125018 A 320 320 0 0 1 407.1779055671933 799.0962644125018 L 434.353905302958 697.6740526521497 A 215 215 0 0 0 545.6460946970419 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 716.2741699796952 A 320 320 0 0 1 572.8220944328066 799.0962644125018 L 545.6460946970419 697.6740526521497 A 215 215 0 0 0 642.0279579551077 642.0279579551077 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 572.8220944328066 A 320 320 0 0 1 716.2741699796952 716.2741699796952 L 642.0279579551077 642.0279579551077 A 215 215 0 0 0 697.6740526521497 545.6460946970419 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SI"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "425.963199228",
+        "y": "791.269461026",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "585.177234267",
+        "y": "782.925407019",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "718.888606247",
+        "y": "696.092226759",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "ii"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SI"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "5:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 799.0962644125018 A 320 320 0 0 1 407.1779055671933 799.0962644125018 L 434.353905302958 697.6740526521497 A 215 215 0 0 0 545.6460946970419 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 716.2741699796952 A 320 320 0 0 1 572.8220944328066 799.0962644125018 L 545.6460946970419 697.6740526521497 A 215 215 0 0 0 642.0279579551077 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 799.0962644125018 572.8220944328066 A 320 320 0 0 1 716.2741699796952 716.2741699796952 L 642.0279579551077 642.0279579551077 A 215 215 0 0 0 697.6740526521497 545.6460946970419 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 697.6740526521497 545.6460946970419 A 215 215 0 0 1 642.0279579551077 642.0279579551077 L 567.7817459305202 567.7817459305202 A 110 110 0 0 0 596.2518408917975 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "sol#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "425.963199228",
+        "y": "791.269461026",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "585.177234267",
+        "y": "782.925407019",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "718.888606247",
+        "y": "696.092226759",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "640.858399572",
+        "y": "625.833513091",
+        "text": "iv"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "sol#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "6:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 799.0962644125018 A 320 320 0 0 1 263.7258300203048 716.2741699796952 L 337.9720420448923 642.0279579551077 A 215 215 0 0 0 434.353905302958 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 799.0962644125018 A 320 320 0 0 1 407.1779055671933 799.0962644125018 L 434.353905302958 697.6740526521497 A 215 215 0 0 0 545.6460946970419 697.6740526521497 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 716.2741699796952 A 320 320 0 0 1 572.8220944328066 799.0962644125018 L 545.6460946970419 697.6740526521497 A 215 215 0 0 0 642.0279579551077 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SOL♭/FA#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "283.907773241",
+        "y": "718.888606247",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "425.963199228",
+        "y": "791.269461026",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "585.177234267",
+        "y": "782.925407019",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "ii"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SOL♭/FA#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "6:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 799.0962644125018 A 320 320 0 0 1 263.7258300203048 716.2741699796952 L 337.9720420448923 642.0279579551077 A 215 215 0 0 0 434.353905302958 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 799.0962644125018 A 320 320 0 0 1 407.1779055671933 799.0962644125018 L 434.353905302958 697.6740526521497 A 215 215 0 0 0 545.6460946970419 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 716.2741699796952 716.2741699796952 A 320 320 0 0 1 572.8220944328066 799.0962644125018 L 545.6460946970419 697.6740526521497 A 215 215 0 0 0 642.0279579551077 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 642.0279579551077 642.0279579551077 A 215 215 0 0 1 545.6460946970419 697.6740526521497 L 518.4700949612773 596.2518408917975 A 110 110 0 0 0 567.7817459305202 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "mi♭/ré#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "283.907773241",
+        "y": "718.888606247",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "425.963199228",
+        "y": "791.269461026",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "585.177234267",
+        "y": "782.925407019",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "552.730449858",
+        "y": "683.064472808",
+        "text": "iv"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "mi♭/ré#"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "7:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203048 716.2741699796952 A 320 320 0 0 1 180.9037355874982 572.8220944328067 L 282.32594734785033 545.646094697042 A 215 215 0 0 0 337.9720420448923 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 799.0962644125018 A 320 320 0 0 1 263.7258300203048 716.2741699796952 L 337.9720420448923 642.0279579551077 A 215 215 0 0 0 434.353905302958 697.6740526521497 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 799.0962644125018 A 320 320 0 0 1 407.1779055671933 799.0962644125018 L 434.353905302958 697.6740526521497 A 215 215 0 0 0 545.6460946970419 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "RE♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "197.074592981",
+        "y": "585.177234267",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "283.907773241",
+        "y": "718.888606247",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "425.963199228",
+        "y": "791.269461026",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "ii"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "RE♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "7:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203048 716.2741699796952 A 320 320 0 0 1 180.9037355874982 572.8220944328067 L 282.32594734785033 545.646094697042 A 215 215 0 0 0 337.9720420448923 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 799.0962644125018 A 320 320 0 0 1 263.7258300203048 716.2741699796952 L 337.9720420448923 642.0279579551077 A 215 215 0 0 0 434.353905302958 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 572.8220944328066 799.0962644125018 A 320 320 0 0 1 407.1779055671933 799.0962644125018 L 434.353905302958 697.6740526521497 A 215 215 0 0 0 545.6460946970419 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 697.6740526521497 A 215 215 0 0 1 434.353905302958 697.6740526521497 L 461.5299050387227 596.2518408917975 A 110 110 0 0 0 518.4700949612773 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "si♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "197.074592981",
+        "y": "585.177234267",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "283.907773241",
+        "y": "718.888606247",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "425.963199228",
+        "y": "791.269461026",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "447.793926764",
+        "y": "688.563962949",
+        "text": "iv"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "si♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "8:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.9037355874982 572.8220944328067 A 320 320 0 0 1 180.90373558749815 407.17790556719336 L 282.3259473478503 434.353905302958 A 215 215 0 0 0 282.32594734785033 545.646094697042 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203048 716.2741699796952 A 320 320 0 0 1 180.9037355874982 572.8220944328067 L 282.32594734785033 545.646094697042 A 215 215 0 0 0 337.9720420448923 642.0279579551077 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 799.0962644125018 A 320 320 0 0 1 263.7258300203048 716.2741699796952 L 337.9720420448923 642.0279579551077 A 215 215 0 0 0 434.353905302958 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "LA♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "188.730538974",
+        "y": "425.963199228",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "197.074592981",
+        "y": "585.177234267",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "283.907773241",
+        "y": "718.888606247",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "vii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "ii"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "LA♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "8:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.9037355874982 572.8220944328067 A 320 320 0 0 1 180.90373558749815 407.17790556719336 L 282.3259473478503 434.353905302958 A 215 215 0 0 0 282.32594734785033 545.646094697042 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203048 716.2741699796952 A 320 320 0 0 1 180.9037355874982 572.8220944328067 L 282.32594734785033 545.646094697042 A 215 215 0 0 0 337.9720420448923 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 799.0962644125018 A 320 320 0 0 1 263.7258300203048 716.2741699796952 L 337.9720420448923 642.0279579551077 A 215 215 0 0 0 434.353905302958 697.6740526521497 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 697.6740526521497 A 215 215 0 0 1 337.9720420448923 642.0279579551077 L 412.21825406947977 567.7817459305202 A 110 110 0 0 0 461.5299050387227 596.2518408917975 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "fa"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "188.730538974",
+        "y": "425.963199228",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "197.074592981",
+        "y": "585.177234267",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "283.907773241",
+        "y": "718.888606247",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "ii°"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "354.166486909",
+        "y": "640.858399572",
+        "text": "iv"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "fa"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "9:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.90373558749815 407.17790556719336 A 320 320 0 0 1 263.7258300203047 263.7258300203048 L 337.97204204489225 337.9720420448923 A 215 215 0 0 0 282.3259473478503 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.9037355874982 572.8220944328067 A 320 320 0 0 1 180.90373558749815 407.17790556719336 L 282.3259473478503 434.353905302958 A 215 215 0 0 0 282.32594734785033 545.646094697042 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203048 716.2741699796952 A 320 320 0 0 1 180.9037355874982 572.8220944328067 L 282.32594734785033 545.646094697042 A 215 215 0 0 0 337.9720420448923 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "MI♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "188.730538974",
+        "y": "425.963199228",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "197.074592981",
+        "y": "585.177234267",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "261.111393753",
+        "y": "283.907773241",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "vii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "MI♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "9:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.90373558749815 407.17790556719336 A 320 320 0 0 1 263.7258300203047 263.7258300203048 L 337.97204204489225 337.9720420448923 A 215 215 0 0 0 282.3259473478503 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.9037355874982 572.8220944328067 A 320 320 0 0 1 180.90373558749815 407.17790556719336 L 282.3259473478503 434.353905302958 A 215 215 0 0 0 282.32594734785033 545.646094697042 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203048 716.2741699796952 A 320 320 0 0 1 180.9037355874982 572.8220944328067 L 282.32594734785033 545.646094697042 A 215 215 0 0 0 337.9720420448923 642.0279579551077 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.9720420448923 642.0279579551077 A 215 215 0 0 1 282.32594734785033 545.646094697042 L 383.7481591082025 518.4700949612773 A 110 110 0 0 0 412.21825406947977 567.7817459305202 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "do"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "188.730538974",
+        "y": "425.963199228",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "197.074592981",
+        "y": "585.177234267",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "261.111393753",
+        "y": "283.907773241",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "296.935527192",
+        "y": "552.730449858",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "do"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "10:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.90373558749815 407.17790556719336 A 320 320 0 0 1 263.7258300203047 263.7258300203048 L 337.97204204489225 337.9720420448923 A 215 215 0 0 0 282.3259473478503 434.353905302958 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.9037355874982 572.8220944328067 A 320 320 0 0 1 180.90373558749815 407.17790556719336 L 282.3259473478503 434.353905302958 A 215 215 0 0 0 282.32594734785033 545.646094697042 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203047 263.7258300203048 A 320 320 0 0 1 407.1779055671934 180.90373558749815 L 434.3539053029581 282.3259473478503 A 215 215 0 0 0 337.97204204489225 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SI♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "188.730538974",
+        "y": "425.963199228",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "261.111393753",
+        "y": "283.907773241",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "SI♭"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "10:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.90373558749815 407.17790556719336 A 320 320 0 0 1 263.7258300203047 263.7258300203048 L 337.97204204489225 337.9720420448923 A 215 215 0 0 0 282.3259473478503 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.9037355874982 572.8220944328067 A 320 320 0 0 1 180.90373558749815 407.17790556719336 L 282.3259473478503 434.353905302958 A 215 215 0 0 0 282.32594734785033 545.646094697042 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203047 263.7258300203048 A 320 320 0 0 1 407.1779055671934 180.90373558749815 L 434.3539053029581 282.3259473478503 A 215 215 0 0 0 337.97204204489225 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.32594734785033 545.646094697042 A 215 215 0 0 1 282.3259473478503 434.353905302958 L 383.74815910820246 461.5299050387227 A 110 110 0 0 0 383.7481591082025 518.4700949612773 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "sol"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "188.730538974",
+        "y": "425.963199228",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "261.111393753",
+        "y": "283.907773241",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "291.436037051",
+        "y": "447.793926764",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "ii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "sol"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  },
+  "11:major": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.90373558749815 407.17790556719336 A 320 320 0 0 1 263.7258300203047 263.7258300203048 L 337.97204204489225 337.9720420448923 A 215 215 0 0 0 282.3259473478503 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203047 263.7258300203048 A 320 320 0 0 1 407.1779055671934 180.90373558749815 L 434.3539053029581 282.3259473478503 A 215 215 0 0 0 337.97204204489225 337.9720420448923 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "FA"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "261.111393753",
+        "y": "283.907773241",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "vii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "1",
+        "stroke": "var(--color-major, #8B0000)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--major",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "FA"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--major",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "Majeur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "IV"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "I"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "V"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "ii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "vi"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "iii"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "vii°"
+      }
+    ]
+  },
+  "11:minor": {
+    "overlay": [
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 180.90373558749815 407.17790556719336 A 320 320 0 0 1 263.7258300203047 263.7258300203048 L 337.97204204489225 337.9720420448923 A 215 215 0 0 0 282.3259473478503 434.353905302958 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 263.7258300203047 263.7258300203048 A 320 320 0 0 1 407.1779055671934 180.90373558749815 L 434.3539053029581 282.3259473478503 A 215 215 0 0 0 337.97204204489225 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major fade-in",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 282.3259473478503 434.353905302958 A 215 215 0 0 1 337.97204204489225 337.9720420448923 L 412.21825406947977 412.21825406947977 A 110 110 0 0 0 383.74815910820246 461.5299050387227 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 337.97204204489225 337.9720420448923 A 215 215 0 0 1 434.3539053029581 282.3259473478503 L 461.52990503872275 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor fade-in",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "ré"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor fade-in",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "261.111393753",
+        "y": "283.907773241",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer fade-in",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "339.141600428",
+        "y": "354.166486909",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner fade-in",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "ii°"
+      }
+    ],
+    "zoom": [
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 263.7258300203048 263.7258300203048 A 320 320 0 0 1 407.1779055671933 180.90373558749815 L 434.353905302958 282.3259473478503 A 215 215 0 0 0 337.9720420448923 337.9720420448923 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 407.1779055671933 180.90373558749815 A 320 320 0 0 1 572.8220944328066 180.90373558749815 L 545.6460946970419 282.3259473478503 A 215 215 0 0 0 434.353905302958 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-major",
+        "d": "M 572.8220944328066 180.90373558749815 A 320 320 0 0 1 716.2741699796952 263.7258300203048 L 642.0279579551077 337.9720420448923 A 215 215 0 0 0 545.6460946970419 282.3259473478503 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 337.9720420448923 337.9720420448923 A 215 215 0 0 1 434.353905302958 282.3259473478503 L 461.5299050387227 383.74815910820246 A 110 110 0 0 0 412.21825406947977 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 434.353905302958 282.3259473478503 A 215 215 0 0 1 545.6460946970419 282.3259473478503 L 518.4700949612773 383.74815910820246 A 110 110 0 0 0 461.5299050387227 383.74815910820246 Z",
+        "opacity": "1",
+        "stroke": "var(--color-minor, #2E6B2E)",
+        "stroke-width": "2",
+        "stroke-opacity": "0.6"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 545.6460946970419 282.3259473478503 A 215 215 0 0 1 642.0279579551077 337.9720420448923 L 567.7817459305202 412.21825406947977 A 110 110 0 0 0 518.4700949612773 383.74815910820246 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "path",
+        "class": "highlight-minor",
+        "d": "M 642.0279579551077 337.9720420448923 A 215 215 0 0 1 697.6740526521497 434.353905302958 L 596.2518408917975 461.52990503872275 A 110 110 0 0 0 567.7817459305202 412.21825406947977 Z",
+        "opacity": "0.45"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-name roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "478.000000000",
+        "text": "ré"
+      },
+      {
+        "tag": "text",
+        "class": "center-key-type roman-numeral--minor",
+        "x": "490.000000000",
+        "y": "512.000000000",
+        "text": "mineur"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "394.822765733",
+        "y": "197.074592981",
+        "text": "VI"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "554.036800772",
+        "y": "188.730538974",
+        "text": "III"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--major roman-numeral--outer",
+        "x": "696.092226759",
+        "y": "261.111393753",
+        "text": "VII"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "427.269550142",
+        "y": "296.935527192",
+        "text": "iv"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "532.206073236",
+        "y": "291.436037051",
+        "text": "i"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "625.833513091",
+        "y": "339.141600428",
+        "text": "v"
+      },
+      {
+        "tag": "text",
+        "class": "roman-numeral roman-numeral--minor roman-numeral--inner",
+        "x": "683.064472808",
+        "y": "427.269550142",
+        "text": "ii°"
+      }
+    ]
+  }
+}

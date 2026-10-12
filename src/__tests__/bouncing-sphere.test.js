@@ -25,11 +25,19 @@ describe('bouncing-sphere', () => {
       expect(sphere.tagName).toBe('DIV');
     });
 
-    it('has correct diameter (15px)', () => {
+    it('has the configured diameter', () => {
       createBouncingSphere(container);
       const sphere = container.querySelector('.bouncing-sphere');
       expect(sphere.style.width).toBe(`${SPHERE_DIAMETER}px`);
       expect(sphere.style.height).toBe(`${SPHERE_DIAMETER}px`);
+    });
+
+    it('is pinned to the container origin so moveTo() is the only offset', () => {
+      createBouncingSphere(container);
+      const sphere = container.querySelector('.bouncing-sphere');
+      expect(sphere.style.position).toBe('absolute');
+      expect(parseFloat(sphere.style.top)).toBe(0);
+      expect(parseFloat(sphere.style.left)).toBe(0);
     });
 
     it('has radial gradient background', () => {

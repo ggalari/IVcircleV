@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { DEFAULT_CONFIG, DEG, getSliceAngles, getPositions, sectorPath } from '../circle/geometry.js';
+import { DEFAULT_CONFIG, DEG, getSliceAngles, sectorPath } from '../circle/geometry.js';
 
 describe('circle/geometry', () => {
   describe('DEFAULT_CONFIG', () => {
@@ -43,33 +43,6 @@ describe('circle/geometry', () => {
     it('returns correct count for arbitrary values', () => {
       expect(getSliceAngles(6)).toHaveLength(6);
       expect(getSliceAngles(1)).toHaveLength(1);
-    });
-  });
-
-  describe('getPositions', () => {
-    it('returns 12 position objects by default', () => {
-      const positions = getPositions();
-      expect(positions).toHaveLength(12);
-    });
-
-    it('each position has major, minor, and staff coordinates', () => {
-      const positions = getPositions();
-      positions.forEach(pos => {
-        expect(pos.major).toHaveProperty('x');
-        expect(pos.major).toHaveProperty('y');
-        expect(pos.minor).toHaveProperty('x');
-        expect(pos.minor).toHaveProperty('y');
-        expect(pos.staff).toHaveProperty('x');
-        expect(pos.staff).toHaveProperty('y');
-      });
-    });
-
-    it('first position is at the top (angle -90°)', () => {
-      const positions = getPositions();
-      // At -90°, cos=-0 (≈0), sin=-1
-      // major.x should be near centerX, major.y should be centerY - majorRadius
-      expect(positions[0].major.x).toBeCloseTo(DEFAULT_CONFIG.centerX);
-      expect(positions[0].major.y).toBeCloseTo(DEFAULT_CONFIG.centerY - DEFAULT_CONFIG.majorRadius);
     });
   });
 

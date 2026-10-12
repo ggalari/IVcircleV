@@ -5,8 +5,7 @@
 
 import { DEFAULT_CONFIG, sectorPath } from '../circle/geometry.js';
 import { drawSlice, buildStyleBlock } from '../circle/renderer.js';
-import { getNeighborDegrees } from '../theory/degrees.js';
-import { SLICES } from '../circle/keys.js';
+import { getNeighborhood, neighborhoodSector, neighborhoodLabelPoint } from '../overlays/neighborhood.js';
 import { getCenterLabelSetting } from '../overlays/neighbors.js';
 import { set } from '../state.js';
 
@@ -93,7 +92,7 @@ function buildNeighborSVG(activeKey) {
   const { centerX, centerY, outerRadius, middleRadius, innerRadius } = config;
 
   const zoomSlices = getZoomSlices(activeKey.index, activeKey.type);
-  const degrees = getNeighborDegrees(activeKey.type);
+  const { entries, center } = getNeighborhood(activeKey);
 
   // Compute the arc extent
   const positions = zoomSlices.map(s => s.position);
@@ -121,83 +120,19 @@ function buildNeighborSVG(activeKey) {
   parts.push(`<line x1="${centerX + middleRadius * Math.cos(pos1EndDeg)}" y1="${centerY + middleRadius * Math.sin(pos1EndDeg)}" x2="${centerX + outerRadius * Math.cos(pos1EndDeg)}" y2="${centerY + outerRadius * Math.sin(pos1EndDeg)}" class="radial-line"/>`);
 
   // Draw overlay highlights (outer ring = major/red, inner ring = minor/green — matches legend)
-  zoomSlices.forEach(({ position, show }) => {
-    const angleDeg = -90 + position * 30;
-    const startDeg = angleDeg - 15;
-    const endDeg = angleDeg + 15;
-    const isImmediate = Math.abs(position) <= 1;
-    const isDim = position === 2; // dim is always at position +2 on inner ring
-    const isTonic = position === 0;
-
-    if (isImmediate) {
-      // Outer ring = major/red
-      if (show.major || show.majorBg) {
-        const outerD = sectorPath(centerX, centerY, middleRadius, outerRadius, startDeg, endDeg);
-        const opacity = (isTonic && activeKey.type === 'major') ? 1 : 0.45;
-        const stroke = (isTonic && activeKey.type === 'major') ? ' stroke="var(--color-major, #8B0000)" stroke-width="2" stroke-opacity="0.6"' : '';
-        parts.push(`<path d="${outerD}" class="highlight-major" opacity="${opacity}"${stroke} style="pointer-events:none"/>`);
-      }
-      // Inner ring = minor/green
-      if (show.minor || show.minorBg) {
-        const innerD = sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg);
-        const opacity = (isTonic && activeKey.type === 'minor') ? 1 : 0.45;
-        const stroke = (isTonic && activeKey.type === 'minor') ? ' stroke="var(--color-minor, #2E6B2E)" stroke-width="2" stroke-opacity="0.6"' : '';
-        parts.push(`<path d="${innerD}" class="highlight-minor" opacity="${opacity}"${stroke} style="pointer-events:none"/>`);
-      }
-    }
-    if (isDim) {
-      // Dim chord is always on the inner ring = green
-      const dimD = sectorPath(centerX, centerY, innerRadius, middleRadius, startDeg, endDeg);
-      parts.push(`<path d="${dimD}" class="highlight-minor" opacity="0.45" style="pointer-events:none"/>`);
-    }
+  entries.forEach((entry) => {
+    const d = neighborhoodSector(entry.position, entry.ring);
+    const opacity = entry.isTonic ? 1 : 0.45;
+    const stroke = entry.isTonic
+      ? ` stroke="${entry.type === 'minor' ? 'var(--color-minor, #2E6B2E)' : 'var(--color-major, #8B0000)'}" stroke-width="2" stroke-opacity="0.6"`
+      : '';
+    parts.push(`<path d="${d}" class="highlight-${entry.type}" opacity="${opacity}"${stroke} style="pointer-events:none"/>`);
   });
 
   // Roman numeral labels
-  zoomSlices.forEach(({ position, show }) => {
-    const angleDeg = -90 + position * 30;
-    const isImmediate = Math.abs(position) <= 1;
-    const isDim = position === 2; // dim always at +2
-
-    if (!isImmediate && !isDim) return;
-
-    const tonicRing = activeKey.type === 'major' ? 'outer' : 'inner';
-    const relativeRing = activeKey.type === 'major' ? 'inner' : 'outer';
-
-    if (isImmediate) {
-      // Tonic ring roman numeral
-      const romanLabel = getRomanLabel(activeKey.type, position, degrees);
-      if (romanLabel) {
-        const lr = tonicRing === 'outer' ? outerRadius - 12 : middleRadius - 12;
-        const la = (angleDeg + 12) * DEG;
-        const lx = centerX + lr * Math.cos(la);
-        const ly = centerY + lr * Math.sin(la);
-        const typeClass = tonicRing === 'outer' ? 'roman-numeral--major' : 'roman-numeral--minor';
-        const sizeClass = tonicRing === 'outer' ? 'roman-numeral--outer' : 'roman-numeral--inner';
-        parts.push(`<text x="${lx}" y="${ly}" class="roman-numeral ${typeClass} ${sizeClass}">${romanLabel}</text>`);
-      }
-
-      // Relative ring roman numeral
-      const relRoman = getRelativeRomanLabel(activeKey.type, position, degrees);
-      if (relRoman) {
-        const rlr = relativeRing === 'outer' ? outerRadius - 12 : middleRadius - 12;
-        const rla = (angleDeg + 12) * DEG;
-        const rlx = centerX + rlr * Math.cos(rla);
-        const rly = centerY + rlr * Math.sin(rla);
-        const rTypeClass = relativeRing === 'outer' ? 'roman-numeral--major' : 'roman-numeral--minor';
-        const rSizeClass = relativeRing === 'outer' ? 'roman-numeral--outer' : 'roman-numeral--inner';
-        parts.push(`<text x="${rlx}" y="${rly}" class="roman-numeral ${rTypeClass} ${rSizeClass}">${relRoman}</text>`);
-      }
-    }
-
-    // Diminished chord label — always on the inner ring (green)
-    if (isDim) {
-      const dimLabel = degrees.dim.label;
-      const lr = middleRadius - 12; // inner ring label position
-      const la = (angleDeg + 12) * DEG;
-      const lx = centerX + lr * Math.cos(la);
-      const ly = centerY + lr * Math.sin(la);
-      parts.push(`<text x="${lx}" y="${ly}" class="roman-numeral roman-numeral--minor roman-numeral--inner">${dimLabel}</text>`);
-    }
+  entries.forEach((entry) => {
+    const { x, y } = neighborhoodLabelPoint(entry.position, entry.ring);
+    parts.push(`<text x="${x}" y="${y}" class="roman-numeral roman-numeral--${entry.type} roman-numeral--${entry.ring}">${entry.label}</text>`);
   });
 
   // Center area: card-colored background (arc only, matching visible slices) + active key label
@@ -216,45 +151,12 @@ function buildNeighborSVG(activeKey) {
   parts.push(`<path d="M ${ix1} ${iy1} A ${innerRadius} ${innerRadius} 0 0 1 ${ix2} ${iy2}" fill="none" stroke="var(--color-border-ring, #999)" stroke-width="1"/>`);
 
   if (getCenterLabelSetting()) {
-    const slice = SLICES[activeKey.index];
-    const keyName = activeKey.type === 'major' ? slice.major : slice.minor;
-    const typeLabel = activeKey.type === 'major' ? 'Majeur' : 'mineur';
-    const typeClass = activeKey.type === 'major' ? 'roman-numeral--major' : 'roman-numeral--minor';
-    parts.push(`<text x="${centerX}" y="${centerY - 12}" class="center-key-name ${typeClass}">${keyName}</text>`);
-    parts.push(`<text x="${centerX}" y="${centerY + 22}" class="center-key-type ${typeClass}">${typeLabel}</text>`);
+    parts.push(`<text x="${centerX}" y="${centerY - 12}" class="center-key-name ${center.typeClass}">${center.keyName}</text>`);
+    parts.push(`<text x="${centerX}" y="${centerY + 22}" class="center-key-type ${center.typeClass}">${center.typeLabel}</text>`);
   }
 
   parts.push('</svg>');
   return parts.join('');
-}
-
-function getRomanLabel(keyType, offset, degrees) {
-  if (keyType === 'major') {
-    if (offset === 0) return degrees.outer.self;
-    if (offset === 1) return degrees.outer.cw;
-    if (offset === -1) return degrees.outer.ccw;
-    if (offset === 2) return degrees.dim.label;
-  } else {
-    if (offset === 0) return degrees.inner.self;
-    if (offset === 1) return degrees.inner.cw;
-    if (offset === -1) return degrees.inner.ccw;
-    if (offset === -2) return degrees.dim.label;
-  }
-  return null;
-}
-
-function getRelativeRomanLabel(keyType, offset, degrees) {
-  if (Math.abs(offset) > 1) return null;
-  if (keyType === 'major') {
-    if (offset === 0) return degrees.inner.self;
-    if (offset === 1) return degrees.inner.cw;
-    if (offset === -1) return degrees.inner.ccw;
-  } else {
-    if (offset === 0) return degrees.outer.self;
-    if (offset === 1) return degrees.outer.cw;
-    if (offset === -1) return degrees.outer.ccw;
-  }
-  return null;
 }
 
 /**

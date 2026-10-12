@@ -1,6 +1,6 @@
 {
   "name": "circle-of-fifths",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Circle of Fifths interactive SVG application",
   "private": true,
   "type": "module",

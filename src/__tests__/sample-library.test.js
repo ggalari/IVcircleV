@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { loadSamples, getBuffer, mapNoteToSampleKey, _resetForTesting } from '../audio/sample-library.js';
+import { loadSamples, getBuffer, _resetForTesting } from '../audio/sample-library.js';
 
 /**
  * Create a mock AudioBuffer object.
@@ -243,35 +243,44 @@ describe('sample-library', () => {
       const buffer2 = getBuffer('G3');
       expect(buffer1).toBe(buffer2);
     });
-  });
 
-  describe('mapNoteToSampleKey', () => {
-    it('delegates to pitch-mapper frenchNoteToSampleKey', () => {
-      expect(mapNoteToSampleKey('DO', 4)).toBe('C4');
+    it('resolves a sharp spelling to the loaded flat slot', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8))
+      }));
+
+      const audioContext = createMockAudioContext();
+      await loadSamples(audioContext);
+
+      // 'Gb4' is the loaded slot; 'F#4' is the same pitch spelled differently
+      expect(getBuffer('F#4')).toBe(getBuffer('Gb4'));
     });
 
-    it('converts FA# at octave 4 to F#4', () => {
-      expect(mapNoteToSampleKey('FA#', 4)).toBe('F#4');
+    it('resolves a double accidental across the enharmonic boundary', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8))
+      }));
+
+      const audioContext = createMockAudioContext();
+      await loadSamples(audioContext);
+
+      // D𝄪 = E, so the spelled key must reach the loaded 'E4' slot
+      expect(getBuffer('D##4')).toBe(getBuffer('E4'));
     });
 
-    it('converts SI♭ at octave 3 to Bb3', () => {
-      expect(mapNoteToSampleKey('SI♭', 3)).toBe('Bb3');
-    });
+    it('exposes the raw buffers map so the scheduler resolves spelled keys', async () => {
+      vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+        ok: true,
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(8))
+      }));
 
-    it('converts SOL at octave 5 to G5', () => {
-      expect(mapNoteToSampleKey('SOL', 5)).toBe('G5');
-    });
+      const audioContext = createMockAudioContext();
+      const { buffers } = await loadSamples(audioContext);
 
-    it('converts RE at octave 3 to D3', () => {
-      expect(mapNoteToSampleKey('RE', 3)).toBe('D3');
-    });
-
-    it('converts LA at octave 4 to A4', () => {
-      expect(mapNoteToSampleKey('LA', 4)).toBe('A4');
-    });
-
-    it('converts MI at octave 4 to E4', () => {
-      expect(mapNoteToSampleKey('MI', 4)).toBe('E4');
+      // The scheduler looks notes up directly on the map; a spelled key must resolve
+      expect(buffers.get('F#4')).toBe(buffers.get('Gb4'));
     });
   });
 });

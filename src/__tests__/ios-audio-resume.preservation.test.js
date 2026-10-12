@@ -15,14 +15,12 @@ vi.mock('../audio/scheduler.js', () => ({
   createImmediateStopFn: vi.fn()
 }));
 
-vi.mock('../audio/pitch-mapper.js', () => ({
-  mapScaleToSampleKeys: vi.fn(),
-  mapChordToSampleKeys: vi.fn(),
-  mapChordSequenceToSampleKeys: vi.fn(),
-  mapChordToSampleKeysFromStaff: vi.fn()
+vi.mock('../theory/pitch.js', () => ({
+  notesToSampleKeys: vi.fn(),
+  staffPositionOctave: vi.fn(() => 3)
 }));
 
-vi.mock('../modes/staff-renderer.js', () => ({
+vi.mock('../theory/chords.js', () => ({
   getChordStaffPositions: vi.fn()
 }));
 
@@ -41,7 +39,7 @@ vi.mock('../state.js', () => {
       listeners.get(key).add(cb);
       return () => listeners.get(key).delete(cb);
     }),
-    _reset: () => { listeners.clear(); store.clear(); }
+    reset: () => { listeners.clear(); store.clear(); }
   };
 });
 
@@ -57,9 +55,9 @@ import {
 
 import { loadSamples } from '../audio/sample-library.js';
 import { scheduleScale, scheduleChordSequence, scheduleImmediate } from '../audio/scheduler.js';
-import { mapScaleToSampleKeys, mapChordToSampleKeysFromStaff } from '../audio/pitch-mapper.js';
-import { getChordStaffPositions } from '../modes/staff-renderer.js';
-import { _reset as resetState } from '../state.js';
+import { notesToSampleKeys } from '../theory/pitch.js';
+import { getChordStaffPositions } from '../theory/chords.js';
+import { reset as resetState } from '../state.js';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -118,8 +116,7 @@ describe('iOS Audio Resume - Preservation Properties', () => {
       failedSamples: []
     });
 
-    mapScaleToSampleKeys.mockReturnValue(['C4', 'D4', 'E4']);
-    mapChordToSampleKeysFromStaff.mockReturnValue(['C3', 'E3', 'G3']);
+    notesToSampleKeys.mockReturnValue(['C3', 'E3', 'G3']);
     getChordStaffPositions.mockReturnValue([0, 2, 4]);
 
     scheduleScale.mockReturnValue({
