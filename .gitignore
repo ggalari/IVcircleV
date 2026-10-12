@@ -6,3 +6,8 @@ dist/
 .kiro/
 kilo.json
 tmp/
+.agents/
+.claude/
+skills/
+skills-lock.json
+.devcontainer/devcontainer-lock.json
