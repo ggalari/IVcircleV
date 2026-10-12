@@ -1,7 +1,13 @@
 {
   "name": "IVcircleV (Node 22)",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
   "remoteUser": "node",
+  "mounts": [
+    "source=${localEnv:HOME}/.config/gh,target=/home/node/.config/gh,type=bind,readonly"
+  ],
   "postCreateCommand": {
     "install-deps": "npm install",
     "install-browsers": "npx playwright install --with-deps chromium"
